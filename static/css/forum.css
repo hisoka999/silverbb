@@ -1,0 +1,29 @@
+textarea{
+	width: 90%;
+	height: 250px;
+}
+.viewforum{
+    margin: 0px auto;
+    display: table-row;
+    width: 100%;
+}
+.viewthread{
+    width: auto;
+    display: table-cell;
+    background-color: #EFEFEF;
+    margin: 0px auto;
+    border-bottom: 1px solid black;
+    
+}
+#buttonline{
+    
+}
+.forum
+{
+    display: table;
+    margin: 0px auto;
+    width: 95%;
+    border: 1px solid black;
+    margin-top: 1em;
+    background-color: #EFEFEF;
+}

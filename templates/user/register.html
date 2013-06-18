@@ -1,0 +1,42 @@
+{% extends BASE_PATH %}
+{% load i18n %}
+
+{% block head %}
+<style type="text/css">
+	@import url("{{STATIC_THEME}}css/forum.css");
+
+</style>
+{% endblock %}
+{% block content %}
+<div class="forum">
+	<div class="viewforum">
+		<form method="post" action="{% url users.views.register %}">
+			<fieldset>
+				<legend>{% trans "General User Data"%}</legend>
+				{% for field in form %}
+				<div class="fieldWrapper">
+					{{ field.errors }}
+					<div class="lbl">
+						{{ field.label_tag }}:
+					</div>
+					{{ field }}
+				</div>
+				{% endfor %}
+			</fieldset>
+			
+			<fieldset>
+				{% for field in f_profile %}
+				<div class="fieldWrapper">
+					{{ field.errors }}
+					<div class="lbl">
+						{{ field.label_tag }}:
+					</div>
+					{{ field }}
+				</div>
+				{% endfor %}
+			</fieldset>
+			<input type="submit" value="register" />
+		</form>
+	</div>
+</div>
+{% endblock %}

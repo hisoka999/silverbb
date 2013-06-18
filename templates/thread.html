@@ -1,0 +1,100 @@
+{% extends BASE_PATH %}
+{% load i18n %}
+{% block head %}
+<script type="text/javascript" src="{{ STATIC_URL }}js/scriptaculous.js?load=effects,builder"></script>
+    <script src="{{STATIC_URL}}js/board.js" type="text/javascript" ></script>
+<script type="text/javascript">
+	LightboxOptions = Object.extend({
+    fileLoadingImage:        '{{ STATIC_THEME }}images/loading.gif',     
+    fileBottomNavCloseImage: '{{ STATIC_THEME }}images/closelabel.gif',
+
+
+    overlayOpacity: 0.8,   // controls transparency of shadow overlay
+
+    animate: true,         // toggles resizing animations
+    resizeSpeed: 7,        // controls the speed of the image resizing animations (1=slowest and 10=fastest)
+
+    borderSize: 10,         //if you adjust the padding in the CSS, you will need to update this variable
+
+	// When grouping images this is used to write: Image # of #.
+	// Change it for non-english localization
+	labelImage: "Image",
+	labelOf: "of"
+}, window.LightboxOptions || {});
+</script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/lightbox.js?path={{ STATIC_URL }}"></script>
+<link rel="stylesheet" href="{{STATIC_THEME}}css/lightbox.css" type="text/css" media="screen" />
+    <style type="text/css">
+    @import url("{{STATIC_THEME}}css/post.css");
+    @import url("{{STATIC_THEME}}css/forum.css");
+    </style>
+{% endblock %}
+{% block content %}
+    <div class="forum">
+    		<a href="{% url board.views.index %}">Silver-Boards Beta Forum</a>&raquo; {% autoescape off %}{{thread.board.get_path}}
+    		&raquo; {{thread.name}}
+    		{% endautoescape %}
+		<br />
+    	<h2>{{thread.name}}</h2>
+    </div>
+<div id="thread_body">
+	{% for tmp in t_posts %}
+	<div class="post">
+		<div class="userdata">
+			{% if tmp.user.get_profile.avatar %}
+			<p>
+    				<img src="{{ STATIC_URL }}{{tmp.user.get_profile.avatar}}" />
+    		</p>
+    		{% endif %}
+    		<p>
+    			<strong>
+    				<a href="{% url users.views.show tmp.user.id,tmp.user.username %}">{{tmp.user.username}}</a>
+    			</strong>
+    		</p>
+    		{% if tmp.user.get_profile.get_rank.name %}
+    		<p><b>{{tmp.user.get_profile.get_rank.name}}</b></p>
+    		{% for r in tmp.user.get_profile.get_rank.make_list %}
+    		<img src="{{ STATIC_THEME }}images/{{tmp.user.get_profile.get_rank.image}}" />
+    		{% empty %}
+    		<img src="{{ STATIC_THEME }}images/{{tmp.user.get_profile.get_rank.image}}" />
+    		{% endfor %}
+    		{% endif %}
+    		<p>Posts:{{tmp.user.get_profile.posts}}</p>
+		    <p>Alter:38</p>
+  		</div>
+		<div class="content">
+			{% if forloop.last %}
+			<a name="last"></a>
+			{% else %}
+			<a name="{{tmp.id}}"></a>
+			{% endif %}
+			{% blocktrans with tmp.time_created as time_created %}
+			<i>Created at {{time_created}}</i>
+			{% endblocktrans %}
+			<div class="button_area">
+			{% if user == tmp.user and not thread.closed %}
+				<a href="{% url board.views.edit_post tmp.id %}">{%trans 'edit' %}</a>
+			{% endif %}
+			</div>
+			<hr />
+			<pre>{% autoescape off %}{{tmp.get_cleaned_post}}{% endautoescape %}<br /></pre>
+		</div>
+		<div style="clear: both;"></div>
+	</div>
+	{% endfor %}
+	{% if user.is_staff %}
+	<form method="post" action="{% url board.views.mod_thread thread.id %}">
+		{{moderation}}
+		<input type="submit" value="Ok" />
+	</form>
+	{% endif %}
+	<select name="board" onchange="boardChange();"  onclick="boardChange();" id="selector">
+	{% for board in boards %}
+		{{board.list}}
+	{% endfor %}
+	</select>
+	{% if rights.can_post and not thread.closed %}
+	<a href="{% url board.views.create_post thread.id %}" class="button">{%trans 'create post'%}</a>
+	{% endif %}
+</div>
+{% endblock %}

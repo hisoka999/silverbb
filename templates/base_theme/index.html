@@ -1,0 +1,66 @@
+{% extends BASE_PATH %}
+{% load i18n %}
+{% block content %}
+<!-- Board display //-->
+<div class="forum">
+
+	{% for board in boards %}
+	<!-- begin category //-->
+	<div class="category_cat">
+		<a href="{% url board.views.show_board board.id,board.get_name_for_url %}">{{board.name}}</a>
+		{% for child in board.get_children %}
+		<div class="board_cat">
+			<div class="board_info">
+				<p class="boardtitle">
+					<a href="{% url board.views.show_board child.id,child.get_name_for_url%}">{{child.name}}</a>
+				</p>
+				<p class="board">{{board.description}}</p>
+				<p class="board">
+					{% if child.moderators.count > 0 %}
+					{% trans "Moderators" %}:
+					{% for mod in child.moderators.all %}
+					<a href="{% url users.views.show mod.id,mod.username %}">{{mod.username}}</a>{% if not forloop.last %},{% endif %}
+					{% endfor %}
+					{% else %}
+					<br />
+					{% endif %}
+				</p>
+			</div>
+			<p class="board">
+				{% blocktrans with child.threads as c_threads and child.posts as c_posts%}Threads: {{c_threads}} and Posts:{{c_posts}}{% endblocktrans %}
+			</p>
+			<p class="board">
+				{% trans "last post"%}
+			</p>
+		</div>
+		<div class="spacer"></div>
+		{% endfor %}
+	</div>
+	<!-- end category //-->
+	{% endfor %}
+	
+	
+</div>
+<!-- board display end //-->
+
+
+<div class="statistic_body">
+	<div class="statistic_header">
+		{% blocktrans with users.count as user_count %}There are {{user_count}} users and {{guest_count}} guests online.{% endblocktrans %}
+	</div>
+	<div class="statistic">
+		{% for u in users%}{% if not forloop.first%},{%endif%} <a href="{% url users.views.show u.user.id,u.user.username%}">{{u.user.username}}</a>
+		{% endfor %}
+	</div>
+</div>
+<br />
+<div class="statistic_body">
+	<div class="statistic_header">
+		{%trans "statistics" %}
+	</div>
+	<div class="statistic">
+		{% blocktrans %}This community does have {{all_user}} user, {{all_threads}} threads {{all_posts}}
+		and posts. The last user that registrated himself was {% endblocktrans %}<a href="{% url users.views.show last_user.id,last_user.username%}">{{last_user.username}}</a>
+	</div>
+</div>
+{% endblock %}

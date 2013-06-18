@@ -1,0 +1,98 @@
+{% load i18n %}
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+	<head>
+		<title>Silver-Boards Beta Forum- Forenliste</title>
+		<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+		<style type="text/css">
+			@import url("{{STATIC_THEME}}css/global.css");
+			@import url("{{STATIC_THEME}}css/board.css");
+			@import url("{{STATIC_THEME}}css/statistic.css");
+			#navigation {
+				background-image: url({{STATIC_THEME}}images/nav.gif);
+				height: 22px;
+				width: 100%;
+				display: table;
+			}
+			body {
+				background-image: url({{STATIC_THEME}}images/bg.jpg);
+			}
+			#head {
+				background-image: url({{STATIC_THEME}}images/logo.gif);
+			}
+		</style>
+		<script type="text/javascript" src="{{ STATIC_URL }}js/prototype.js"></script>
+		{% block head%}{% endblock %}
+
+	</head>
+	<body>
+		<div id="body">
+			<!-- Header //-->
+			<div id="head">
+
+			</div>
+			<div id="navigation">
+				{% block navigation %}
+				<a href="/" class="headerbtn">{% trans "Home" %}</a>
+				{% if user.is_authenticated %}
+				<a href="{% url users.views.base_profile %}" class="headerbtn">{% trans "Profile"%}</a>
+				<a href="{% url msg.views.inbox %}" class="headerbtn">{% trans "Inbox" %}</a>
+				{% else %}
+				<a href="{% url users.views.register %}" class="headerbtn">{% trans "Register" %}</a>
+				{% endif %}
+				<a href="{% url users.views.index %}" class="headerbtn">{% trans "Users" %}</a>
+				<a href="{% url users.views.team %}" class="headerbtn">{% trans "Team" %}</a>
+				<a href="{% url faq.views.index %}" class="headerbtn">{% trans "FAQ" %}</a>
+				{% if user.is_staff %}
+				<a href="{% url admin:index %}" class="headerbtn">{% trans "Administration" %}</a>
+				{% endif %}
+				{% endblock %}
+			</div>
+			<!-- Header Ende //-->
+			<div id="content">
+				<br />
+				<div class="login">
+					{% block auth%}
+					{% if user.is_authenticated %}
+					{{user.username}}<a href="{% url users.views.logout_view %}">[{% trans "Logout" %}]</a>
+					<br />
+					<strong>{% trans "private messages" %}</strong>
+					<br />
+					{% trans "New" %}: {{msg_new}}
+					<br />
+					{% trans "Total" %}: {{msg_all}}
+					<br />
+					{% else %}
+					<form method="post" action="{% url users.views.login_view %}">
+						{% csrf_token %} <b>{% trans "Login" %}:</b>
+						<br />
+						{{auth_form}}
+						<input type="submit" value="{% trans 'login' %}" />
+					</form>
+					{% endif %}
+					<form action="{% url django.views.i18n.set_language %}" method="post">
+						{% csrf_token %}
+						<select name="language">
+							{% for lang in LANGUAGES %}
+							<option value="{{ lang.0 }}">{{ lang.1 }}</option>
+							{% endfor %}
+						</select>
+						<input type="submit" value="Go" />
+					</form>
+					{% endblock %}
+				</div>
+				{% block content%}
+
+				{% endblock %}
+			</div>
+			<div id="footer">
+					<a href="http://www.silver-boards.de" >Silver Boards Version {{version}}-{{revision}}</a>
+		 			&copy; 2011-2012 by Stefan L&uuml;dtke
+
+			</div>
+			<br />
+		</div>
+
+	</body>
+</html>

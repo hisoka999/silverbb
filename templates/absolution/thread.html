@@ -1,0 +1,154 @@
+{% extends BASE_PATH %}
+{% load i18n %}
+{% block title %}{{thread.name}}{% endblock %}
+{% block head %}
+<script type="text/javascript" src="{{ STATIC_URL }}js/scriptaculous.js?load=effects,builder"></script>
+    <script src="{{STATIC_URL}}js/board.js" type="text/javascript" ></script>
+<script type="text/javascript">
+	LightboxOptions = Object.extend({
+    fileLoadingImage:        '{{ STATIC_THEME }}images/loading.gif',     
+    fileBottomNavCloseImage: '{{ STATIC_THEME }}images/closelabel.gif',
+
+
+    overlayOpacity: 0.8,   // controls transparency of shadow overlay
+
+    animate: true,         // toggles resizing animations
+    resizeSpeed: 7,        // controls the speed of the image resizing animations (1=slowest and 10=fastest)
+
+    borderSize: 10,         //if you adjust the padding in the CSS, you will need to update this variable
+
+	// When grouping images this is used to write: Image # of #.
+	// Change it for non-english localization
+	labelImage: "Image",
+	labelOf: "of"
+}, window.LightboxOptions || {});
+</script>
+	<script type="text/javascript" src="{{ STATIC_URL }}tiny_mce/tiny_mce.js"></script>
+	<script type="text/javascript">
+
+	function edit_post(object,id){
+		  		tinyMCE.init({
+	        theme : "advanced",
+	        mode : "exact",
+	        elements : "id_text,elm2",
+	        plugins : "bbcode",
+	        theme_advanced_buttons1 : "bold,italic,underline,undo,redo,link,unlink,image,forecolor,styleselect,removeformat,cleanup,code",
+	        theme_advanced_buttons2 : "",
+	        theme_advanced_buttons3 : "",
+	        theme_advanced_toolbar_location : "bottom",
+	        theme_advanced_toolbar_align : "center",
+	        theme_advanced_styles : "Code=codeStyle;Quote=quoteStyle",
+	        content_css : "{{ STATIC_THEME }}css/bbcode.css",
+	        entity_encoding : "raw",
+	        add_unload_trigger : false,
+	        remove_linebreaks : false,
+	        inline_styles : false,
+	        convert_fonts_to_spans : false
+		});
+		new Ajax.Updater(object, '{% url board.views.edit_post %}'+id+"/",{
+  			method : 'get',
+  			onComplete: function(transport) {
+  				tinyMCE.execCommand("mceAddControl", true, "id_text");
+  			}
+  		});
+
+		
+	}
+	</script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/lightbox.js?path={{ STATIC_URL }}"></script>
+<link rel="stylesheet" href="{{STATIC_THEME}}css/lightbox.css" type="text/css" media="screen" />
+    <style type="text/css">
+    @import url("{{STATIC_THEME}}css/post.css");
+    @import url("{{STATIC_THEME}}css/forum.css");
+    </style>
+{% endblock %}
+{% block content %}
+    <div class="forum">
+    		<a href="{% url board.views.index %}">{{CURRENT_SITE.name}}</a>&raquo; {% autoescape off %}{{thread.board.get_path}}
+    		&raquo; {{thread.name}}
+    		{% endautoescape %}
+		<br />
+    	<h2>{{thread.name}}</h2>
+    </div>
+    	{% for tmp in t_posts %}
+        	<div class="vtouter" id="p{{forloop.counter}}">
+            	<div class="vtinner">
+                	<div class="vtdatebar">
+                    	<div class="floatleft">
+                        	<h3 class="vtsubject mp user-offline"><a href="{% url board.views.show_thread thread.id,thread.get_url_name %}#p{{forloop.counter}}">{{thread.name}}</a></h3>
+                        </div>
+                        <div class="floatright">
+                        	<span class="vtdate"><a href=""><img src="icon_post_target.gif" width="11" height="9" alt="Post" title="Post" /></a>{{tmp.time_created}}</span>
+                        </div>
+                        <div style="clear: both;"></div>
+                    </div>
+                    
+                    <div class="vtprofilepanel">
+                    	<div style="text-align: center;">
+                        	<span class="vtusername"><a href="{% url users.views.show tmp.user.id,tmp.user.username %}">{{tmp.user.username}}</a></span>
+                            						
+					{% if tmp.user.get_profile.avatar %}
+					<span>
+		    				<img src="{{ STATIC_URL }}{{tmp.user.get_profile.avatar}}" />
+		    		</span>
+		    		{% endif %}                                
+            		{% if tmp.user.get_profile.get_rank.name %}
+    		<span class="ranktitle">{{tmp.user.get_profile.get_rank.name}}</span>
+    		{% for r in tmp.user.get_profile.get_rank.make_list %}
+    		<img src="{{ STATIC_THEME }}images/{{tmp.user.get_profile.get_rank.image}}" />
+    		{% empty %}
+    		<img src="{{ STATIC_THEME }}images/{{tmp.user.get_profile.get_rank.image}}" />
+    		{% endfor %}
+    		{% endif %}                    
+                                
+                            
+                        </div>
+                        <br />
+                        <div class="vtprofileinfo">
+                            
+                            <strong>Posts:</strong> {{tmp.user.get_profile.posts}}<br />
+                                                                                                                     
+                        </div>
+                    </div>
+                    
+                    
+                    <div class="vtcontent">
+                    	
+                        <div class="vtcontrolbuttons">
+                                                    	
+                        </div>
+                        
+                        <div style="clear: both;"></div>
+                        
+                        
+            
+                        <div class="content" id="postdiv1">{% autoescape off %}{{tmp.get_cleaned_post|linebreaks}}{% endautoescape %}	
+                        	</div>
+                        <div class="content" id="postdiv2"><hr />{% autoescape off %}{{tmp.user.get_profile.get_cleaned_signature}}{% endautoescape %}</div>
+            
+                                             
+                    </div>
+                    
+                    <div style="clear: both;"></div>
+                	
+
+                </div>
+            </div>
+            <br /> <!-- our cutting-edge spacer -->
+            {% endfor %}
+	{% if user.is_staff %}
+	<form method="post" action="{% url board.views.mod_thread thread.id %}">
+		{{moderation}}
+		<input type="submit" value="Ok" />
+	</form>
+	{% endif %}
+	<select name="board" onchange="boardChange();"  onclick="boardChange();" id="selector">
+	{% for board in boards %}
+		{{board.list}}
+	{% endfor %}
+	</select>
+	{% if rights.can_post and not thread.closed %}
+	<a href="{% url board.views.create_post thread.id %}" class="button">{%trans 'create post'%}</a>
+	{% endif %}
+	
+{% endblock %}

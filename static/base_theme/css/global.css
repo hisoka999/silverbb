@@ -1,0 +1,106 @@
+      .headerbtn{
+
+        color: #000;        
+        text-decoration: none;
+        padding-left: 2px;         
+        padding-right: 2px;
+               vertical-align: middle;
+        display: table-cell;
+      }
+      a.headerbtn:hover{
+        color: #FFFFFF;
+        
+      }
+      .header{
+        display:block;
+        width:100%;
+        background-color: #CDCDCD;
+        margin-bottom: 2%;
+        border-bottom:1px solid #000000;
+        text-align: right;
+      }
+		#logo{
+			background-color: #787878;
+			border-bottom: 1px solid black;
+			height: 100px;
+			display:block;
+		}
+		#logo a{
+			margin: 0px auto;
+			display: block;
+		}
+      .login{
+        border: 1px solid black;
+        display:block;
+        background-color: #CDCDCD;
+        width: 95%;
+        text-align: left;
+        margin: 0px auto;
+        margin-bottom: 1em;
+        	-webkit-box-shadow: 0 8px 6px -6px black;
+	   -moz-box-shadow: 0 8px 6px -6px black;
+	        box-shadow: 0 8px 6px -6px black;
+        
+      }
+      #body{
+        background-color: #EFEFEF;
+        font-family: Arial;
+        font-size:10px;
+        text-align: left;
+        width: 935px;
+        margin: 0px auto;
+        	-webkit-box-shadow: 0 8px 6px -6px black;
+	   -moz-box-shadow: 0 8px 6px -6px black;
+	        box-shadow: 0 8px 6px -6px black;
+        
+      }
+      a{
+        color: #000000;
+        text-decoration: none;
+      }
+      .main{
+        border: 1px solid #000000;
+        margin:1px auto;
+        width: 95%;
+        text-align: left;
+        background-color: #CDCDEF;
+        vertical-align: middle;
+        
+      }
+      #footer{
+        border: 1px solid #000000;
+        background-color: #CDCDCD;
+        display: block;
+        margin: 0px auto;
+        margin-bottom: 5px;
+        width: 35%;
+        text-align: center;
+        margin-top: 1em;
+        -webkit-box-shadow: 0 8px 6px -6px black;
+	   	-moz-box-shadow: 0 8px 6px -6px black;
+	    box-shadow: 0 8px 6px -6px black;
+      }
+      .button{
+        border: 1px solid #000000;
+        background-color: #3F3F3F;
+        color: #FFFFFF;
+        text-decoration: none;
+               
+      }
+      .button:hover{
+        background-color: #EFEFEF;
+        color: #000000;
+      }
+      img{
+        border: 0;
+      }
+      img.post-img{
+		max-width: 500px;
+		max-height: 500px;
+	}
+	#head{
+		height:136px;
+	}
+      pre{
+      	word-wrap: break-word;
+      }

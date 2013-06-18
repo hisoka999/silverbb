@@ -1,0 +1,35 @@
+{% extends BASE_PATH %}
+{% load i18n %}
+{% block navigation %}
+	{% for page in pages %}
+		{% if page.link %}
+			<a href="{{page.link}}" class="headerbtn">{{page.title}}</a>
+		{% else %}
+			<a href="{% url cms.views.page page.id,page.get_url_name %}" class="headerbtn">{{page.title}}</a>	
+		{%endif %}
+	{% endfor %}
+		{% if user.is_staff %}
+			<a href="{% url admin:index %}" class="headerbtn">{% trans "Administration" %}</a>
+		{% endif %}
+{% endblock %}
+{% block content %}
+<!-- Board display //-->
+<div class="forum">
+	{% for item in news %}
+	<div class="category_cat">
+		<div class="board_cat">
+			<div class="board_info">
+				<p class="boardtitle">
+					<i>{{item.time}} - </i><b>{{item.title}}</b>
+				</p>
+				<p class="board"><pre>{% autoescape off %}{{item.content}}</pre>{% endautoescape %}
+				</p>
+			</div>
+		</div>
+		<div class="spacer"></div>
+	</div>
+	{% endfor %}
+
+</div>
+<!-- board display end //-->
+{% endblock %}

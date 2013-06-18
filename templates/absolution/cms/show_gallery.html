@@ -1,0 +1,41 @@
+{% extends BASE_PATH %}
+
+{% block head %}
+
+
+{%endblock %}
+{% load i18n %}
+{% block navigation %}
+		{% with menu_path=THEME_PATH|add:"cms/menu.html" %}
+		{% include menu_path %}
+		{% endwith %}
+{% endblock %}
+{% block content %}
+<!-- Board display //-->
+<div class="catglow">
+	<div class="cathead-m">
+		<div class="cathead-r">
+			<div class="cathead-l">
+				Gallery
+			</div>
+		</div>
+	</div>
+	<div class="collapsethis">
+		<div class="statspanel">
+				<p>
+					{% for item in gallery.all %}
+					<strong><a href="{% url cms.views.gallery item.id,item.get_url_name %}">{{item.name}}</a></strong>
+					<ul>
+						{% for sub in item.gallery_set.all %}
+						<li><a href="{% url cms.views.gallery sub.id,sub.get_url_name %}">{{sub.name}}</a>({{sub.image_set.count}})</li>
+						{% endfor %}
+					</ul>
+					{% endfor %}
+				</p>
+			</div>
+		</div>
+	</div>
+
+</div>
+<!-- board display end //-->
+{% endblock %}

@@ -1,0 +1,70 @@
+{% extends BASE_PATH %}
+{% load i18n %}
+{% block title %}{{board.name}}{% endblock %}
+{% block head %}
+<style type="text/css">
+	@import url("{{STATIC_THEME}}css/forum.css");
+
+</style>
+<script src="{{STATIC_URL}}js/board.js" type="text/javascript" ></script>
+<link rel="alternate" type="application/rss+xml" title="RSS" href="{% url blog-rss %}">
+<link rel="alternate" type="application/rss+xml" title="Atom" href="{% url blog-atom %}">
+{% endblock %}
+{% block navigation %}
+		{% with menu_path=THEME_PATH|add:"cms/menu.html" %}
+		{% include menu_path %}
+		{% endwith %}
+{% endblock %}
+{% block content %}
+<div class="forum">
+	<a href="{% url board.views.index %}">{{CURRENT_SITE.name}}</a>&raquo; <a href ="{% url blog.views.index %}">Blog</a> &raquo;
+	{{entry.title}}
+</div>
+<br />
+<div class="catglow">
+	<div class="cathead-m">
+		<div class="cathead-r">
+			<div class="cathead-l">
+				{{entry.title}} by {{entry.user}}
+			</div>
+		</div>
+	</div>
+	<div class="collapsethis">
+		<div class="statspanel">
+			<p>
+				{{entry.created_at}}
+			</p>
+			<pre>{% autoescape off %}{{entry.content}}{% endautoescape %}</pre>
+			<hr />
+			<P>
+				Tags: {% for tag in entry.tags.all %}<a href="{%url blog.views.tag_search tag.name %}"> {{tag.name}}</a>,{% endfor %}
+			</P>
+		</div>
+		<div class="statspanel">
+			<h3>Comments:</h3>
+			{% for comment in entry.comment_set.all %}
+			<strong>{{comment.user_name}}</strong>
+			<pre>{{comment.content}}</pre>
+			<hr />
+			{%endfor%}
+		</div>
+		<div class="statspanel">
+			<form method="post" action="{% url blog.views.blog_post entry.id %}" >
+				{% for field in form %}
+				<div class="fieldWrapper">
+					{{ field.errors }}
+					<div class="lbl">
+						{{ field.label_tag }}:
+					</div>
+					{{ field }}
+				</div>
+				{% endfor %}
+				<input type="submit" value="{%trans 'add comment' %}" class="button2"/>
+			</form>
+
+		</div>
+
+	</div>
+</div>
+
+{% endblock %}

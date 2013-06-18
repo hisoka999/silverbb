@@ -1,0 +1,72 @@
+{% extends BASE_PATH %}
+{%load i18n %}
+{% block head %}
+<style type="text/css">
+	@import url("{{STATIC_THEME}}css/forum.css");
+	.lbl {
+		width: 200px;
+		display: inline-block;
+	}
+	input {
+		border: 1px solid black;
+	}
+	legend {
+		font-weight: bold;
+	}
+	fieldset {
+		border: 1px solid black;
+		margin: 5px;
+	}
+</style>
+{% endblock %}
+{% block content %}
+<div class="forum">
+	{% if commit %}
+	<p>
+		<strong>{%trans "Your changes were saved."%}</strong>
+	</p>
+	{% endif %}
+	<form method="post" action="{% url users.views.base_profile %}" enctype="multipart/form-data">
+		<fieldset>
+			<legend>
+				{% trans "change password" %}
+			</legend>
+			{% for field in f_pw %}
+			<div class="fieldWrapper">
+				{{ field.errors }}
+				<div class="lbl">
+					{{ field.label_tag }}:
+				</div>
+				{{ field }}
+			</div>
+			{% endfor %}
+		</fieldset>
+		<fieldset>
+			<legend>
+				{% trans "change profile" %}
+			</legend>
+			{% for field in profile %}
+			<div class="fieldWrapper">
+				{{ field.errors }}
+				<div class="lbl">
+					{{ field.label_tag }}:
+				</div>
+				{{ field }}
+			</div>
+			{% endfor %}
+		</fieldset>
+		<fieldset>
+			{% for field in f_user %}
+			<div class="fieldWrapper">
+				{{ field.errors }}
+				<div class="lbl">
+					{{ field.label_tag }}:
+				</div>
+				{{ field }}
+			</div>
+			{% endfor %}
+		</fieldset>
+		<input type="submit" value="{%trans 'change' %}" class="button"/>
+	</form>
+</div>
+{% endblock %}

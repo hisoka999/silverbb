@@ -1,0 +1,8 @@
+table{
+	width: 100%;
+	text-align: center;
+}
+td,th{
+	border-bottom: 1px solid black;
+	margin: 0px auto;
+}

@@ -1,0 +1,29 @@
+{%load i18n %}
+	<div class="forumbg forumbg-table">
+		<div class="inner"><span class="corners-top"><span></span></span>
+
+		<table class="table1" cellspacing="1" id="memberlist">
+		<thead>
+		<tr>
+			<th class="name"><span class="rank-img"><a href="{% url users.views.index %}?column=username" onclick="orderby('username');return false;">Rank</a></span><a href="./memberlist.php?style=875&amp;mode=&amp;sk=a&amp;sd=a">Username</a></th>
+			<th class="posts"><a href="{% url users.views.index %}?column=userprofile__posts" onclick="orderby('userprofile__posts');return false;">Posts</a></th>
+			<th class="info"><a href="{% url users.views.index %}?column=userprofile__website" onclick="orderby('userprofile__website');return false;">Website</a>, <a href="./memberlist.php?style=875&amp;mode=&amp;sk=b&amp;sd=a">Location</a></th>
+			<th class="joined"><a href="{% url users.views.index %}?column=date_joined" onclick="orderby('date_joined');return false;">Joined</a></th>
+			
+		</tr>
+		</thead>
+		<tbody>
+	
+	{% for user in users %}
+	<tr class="bg1">
+		<td><a href="{% url users.views.show user.pk,user.username %}">{{user.username}}</a></td>
+		<td class="posts"><a href="./search.php?style=875&amp;author_id=2&amp;sr=posts" title="Search user’s posts">{{user.get_profile.posts}}</a></td>
+		<td class="info">&nbsp;</td>
+		<td>{{user.date_joined|date:"d.M.Y" }}</td>
+		
+	</tr>
+	{% endfor %}
+	</tbody>
+	</table>
+
+	<span class="corners-bottom"><span></span></span></div>

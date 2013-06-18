@@ -1,0 +1,14 @@
+.statistic_body{
+   background-color: #CDCDCD;
+   margin: 0px auto;
+   width: 95%;
+   border: 1px solid #000000;
+   text-align: left;   
+   	-webkit-box-shadow: 0 8px 6px -6px black;
+	   -moz-box-shadow: 0 8px 6px -6px black;
+	        box-shadow: 0 8px 6px -6px black;
+}
+.statistic{
+  background-color: #EFEFEF;
+  border-top: 1px solid #000000;
+}

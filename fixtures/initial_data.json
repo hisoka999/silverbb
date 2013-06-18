@@ -1,0 +1,490 @@
+[
+{
+		"pk": 1,
+		"model": "auth.group",
+		"fields": {
+			"name": "Administrator"
+		}
+	}, {
+		"pk": 2,
+		"model": "auth.group",
+		"fields": {
+			"name": "Gast"
+		}
+	}, {
+		"pk": 3,
+		"model": "auth.group",
+		"fields": {
+			"name": "User"
+		}
+	}, {
+		"pk": 4,
+		"model": "auth.group",
+		"fields": {
+			"name": "Moderator"
+		}
+	},
+{
+		"pk": 1,
+		"model": "users.rank",
+		"fields": {
+			"group": 1,
+			"image": "nadmin.gif",
+			"posts": 0,
+			"name": "Administrator",
+			"times": 0
+		}
+	}, {
+		"pk": 2,
+		"model": "users.rank",
+		"fields": {
+			"group": 4,
+			"image": "star-red.png",
+			"posts": 0,
+			"name": "Moderator",
+			"times": 5
+		}
+	}, {
+		"pk": 3,
+		"model": "users.rank",
+		"fields": {
+			"group": 3,
+			"image": "star-grey.png",
+			"posts": 0,
+			"name": "Neuling",
+			"times": 1
+		}
+	}, {
+		"pk": 4,
+		"model": "users.rank",
+		"fields": {
+			"group": 3,
+			"image": "star-grey.png",
+			"posts": 10,
+			"name": "Nutzer",
+			"times": 2
+		}
+	}, {
+		"pk": 1,
+		"model": "backend.bbcode",
+		"fields": {
+			"search": "\\[b\\](.*?)\\[\\/b\\](?uism)",
+			"name": "Bold",
+			"replace": "<strong>\\g<1></strong>"
+		}
+	}, {
+		"pk": 2,
+		"model": "backend.bbcode",
+		"fields": {
+			"search": "\\[i\\](.*?)\\[\\/i\\](?uism)",
+			"name": "Italic",
+			"replace": "<i>\\g<1></i>"
+		}
+	}, {
+		"pk": 3,
+		"model": "backend.bbcode",
+		"fields": {
+			"search": "\\[url\\](.*?)\\[\\/url\\]",
+			"name": "url",
+			"replace": "<a href=\"\\g<1>\">\\g<1></a>"
+		}
+	}, {
+		"pk": 4,
+		"model": "backend.bbcode",
+		"fields": {
+			"search": "\\[img\\](.*?)\\[\\/img\\]",
+			"name": "img",
+			"replace": "<a href=\"\\g<1>\" rel=\"lightbox\"><img src=\"\\g<1>\" class=\"post-img\"/></a>"
+		}
+	}, {
+		"pk": 5,
+		"model": "backend.bbcode",
+		"fields": {
+			"search": "\\[color=(.*?)\\](.*?)\\[/color\\](?uism)",
+			"name": "Color",
+			"replace": "<span style=\"color: \\g<1>\">\\g<2></span>"
+		}
+	}, {
+		"pk": 7,
+		"model": "backend.bbcode",
+		"fields": {
+			"search": "\\[quote\\](.*?)\\[/quote\\](?uism)",
+			"name": "Quote",
+			"replace": "<div class=\"quote\"><b>Zitat:</b><hr />\\g<1></div>"
+		}
+	}, {
+		"pk": 1,
+		"model": "backend.smilie",
+		"fields": {
+			"emoticon": "Very Happy",
+			"code": ":D",
+			"smile_url": "icon_biggrin.gif"
+		}
+	}, {
+		"pk": 2,
+		"model": "backend.smilie",
+		"fields": {
+			"emoticon": "Very Happy",
+			"code": ":-D",
+			"smile_url": "icon_biggrin.gif"
+		}
+	}, {
+		"pk": 3,
+		"model": "backend.smilie",
+		"fields": {
+			"emoticon": "Very Happy",
+			"code": ":grin:",
+			"smile_url": "icon_biggrin.gif"
+		}
+	}, {
+		"pk": 4,
+		"model": "backend.smilie",
+		"fields": {
+			"emoticon": "Smile",
+			"code": ":)",
+			"smile_url": "icon_smile.gif"
+		}
+	}, {
+		"pk": 5,
+		"model": "backend.smilie",
+		"fields": {
+			"emoticon": "Smile",
+			"code": ":-)",
+			"smile_url": "icon_smile.gif"
+		}
+	}, {
+		"pk": 6,
+		"model": "backend.smilie",
+		"fields": {
+			"emoticon": "Smile",
+			"code": ":smile:",
+			"smile_url": "icon_smile.gif"
+		}
+	}, {
+		"pk": 7,
+		"model": "backend.smilie",
+		"fields": {
+			"emoticon": "Sad",
+			"code": ":(",
+			"smile_url": "icon_sad.gif"
+		}
+	}, {
+		"pk": 8,
+		"model": "backend.smilie",
+		"fields": {
+			"emoticon": "Sad",
+			"code": ":-(",
+			"smile_url": "icon_sad.gif"
+		}
+	}, {
+		"pk": 9,
+		"model": "backend.smilie",
+		"fields": {
+			"emoticon": "Sad",
+			"code": ":sad:",
+			"smile_url": "icon_sad.gif"
+		}
+	}, {
+		"pk": 10,
+		"model": "backend.smilie",
+		"fields": {
+			"emoticon": "Surprised",
+			"code": ":o",
+			"smile_url": "icon_surprised.gif"
+		}
+	}, {
+		"pk": 11,
+		"model": "backend.smilie",
+		"fields": {
+			"emoticon": "Surprised",
+			"code": ":-o",
+			"smile_url": "icon_surprised.gif"
+		}
+	}, {
+		"pk": 12,
+		"model": "backend.smilie",
+		"fields": {
+			"emoticon": "Surprised",
+			"code": ":eek:",
+			"smile_url": "icon_surprised.gif"
+		}
+	}, {
+		"pk": 13,
+		"model": "backend.smilie",
+		"fields": {
+			"emoticon": "Shocked",
+			"code": ":shock:",
+			"smile_url": "icon_eek.gif"
+		}
+	}, {
+		"pk": 14,
+		"model": "backend.smilie",
+		"fields": {
+			"emoticon": "Confused",
+			"code": ":?",
+			"smile_url": "icon_confused.gif"
+		}
+	}, {
+		"pk": 15,
+		"model": "backend.smilie",
+		"fields": {
+			"emoticon": "Confused",
+			"code": ":-?",
+			"smile_url": "icon_confused.gif"
+		}
+	}, {
+		"pk": 16,
+		"model": "backend.smilie",
+		"fields": {
+			"emoticon": "Confused",
+			"code": ":???:",
+			"smile_url": "icon_confused.gif"
+		}
+	}, {
+		"pk": 17,
+		"model": "backend.smilie",
+		"fields": {
+			"emoticon": "Cool",
+			"code": "8)",
+			"smile_url": "icon_cool.gif"
+		}
+	}, {
+		"pk": 18,
+		"model": "backend.smilie",
+		"fields": {
+			"emoticon": "Cool",
+			"code": "8-)",
+			"smile_url": "icon_cool.gif"
+		}
+	}, {
+		"pk": 19,
+		"model": "backend.smilie",
+		"fields": {
+			"emoticon": "Cool",
+			"code": ":cool:",
+			"smile_url": "icon_cool.gif"
+		}
+	}, {
+		"pk": 20,
+		"model": "backend.smilie",
+		"fields": {
+			"emoticon": "Laughing",
+			"code": ":lol:",
+			"smile_url": "icon_lol.gif"
+		}
+	}, {
+		"pk": 21,
+		"model": "backend.smilie",
+		"fields": {
+			"emoticon": "Mad",
+			"code": ":x",
+			"smile_url": "icon_mad.gif"
+		}
+	}, {
+		"pk": 22,
+		"model": "backend.smilie",
+		"fields": {
+			"emoticon": "Mad",
+			"code": ":-x",
+			"smile_url": "icon_mad.gif"
+		}
+	}, {
+		"pk": 23,
+		"model": "backend.smilie",
+		"fields": {
+			"emoticon": "Mad",
+			"code": ":mad:",
+			"smile_url": "icon_mad.gif"
+		}
+	}, {
+		"pk": 24,
+		"model": "backend.smilie",
+		"fields": {
+			"emoticon": "Razz",
+			"code": ":P",
+			"smile_url": "icon_razz.gif"
+		}
+	}, {
+		"pk": 25,
+		"model": "backend.smilie",
+		"fields": {
+			"emoticon": "Razz",
+			"code": ":-P",
+			"smile_url": "icon_razz.gif"
+		}
+	}, {
+		"pk": 26,
+		"model": "backend.smilie",
+		"fields": {
+			"emoticon": "Razz",
+			"code": ":razz:",
+			"smile_url": "icon_razz.gif"
+		}
+	}, {
+		"pk": 27,
+		"model": "backend.smilie",
+		"fields": {
+			"emoticon": "Embarassed",
+			"code": ":oops:",
+			"smile_url": "icon_redface.gif"
+		}
+	}, {
+		"pk": 28,
+		"model": "backend.smilie",
+		"fields": {
+			"emoticon": "Crying or Very sad",
+			"code": ":cry:",
+			"smile_url": "icon_cry.gif"
+		}
+	}, {
+		"pk": 29,
+		"model": "backend.smilie",
+		"fields": {
+			"emoticon": "Evil or Very Mad",
+			"code": ":evil:",
+			"smile_url": "icon_evil.gif"
+		}
+	}, {
+		"pk": 30,
+		"model": "backend.smilie",
+		"fields": {
+			"emoticon": "Twisted Evil",
+			"code": ":twisted:",
+			"smile_url": "icon_twisted.gif"
+		}
+	}, {
+		"pk": 31,
+		"model": "backend.smilie",
+		"fields": {
+			"emoticon": "Rolling Eyes",
+			"code": ":roll:",
+			"smile_url": "icon_rolleyes.gif"
+		}
+	}, {
+		"pk": 32,
+		"model": "backend.smilie",
+		"fields": {
+			"emoticon": "Wink",
+			"code": ":wink:",
+			"smile_url": "icon_wink.gif"
+		}
+	}, {
+		"pk": 33,
+		"model": "backend.smilie",
+		"fields": {
+			"emoticon": "Wink",
+			"code": ";)",
+			"smile_url": "icon_wink.gif"
+		}
+	}, {
+		"pk": 34,
+		"model": "backend.smilie",
+		"fields": {
+			"emoticon": "Wink",
+			"code": ";-)",
+			"smile_url": "icon_wink.gif"
+		}
+	}, {
+		"pk": 35,
+		"model": "backend.smilie",
+		"fields": {
+			"emoticon": "Exclamation",
+			"code": ":!:",
+			"smile_url": "icon_exclaim.gif"
+		}
+	}, {
+		"pk": 36,
+		"model": "backend.smilie",
+		"fields": {
+			"emoticon": "Question",
+			"code": ":?:",
+			"smile_url": "icon_question.gif"
+		}
+	}, {
+		"pk": 37,
+		"model": "backend.smilie",
+		"fields": {
+			"emoticon": "Idea",
+			"code": ":idea:",
+			"smile_url": "icon_idea.gif"
+		}
+	}, {
+		"pk": 38,
+		"model": "backend.smilie",
+		"fields": {
+			"emoticon": "Arrow",
+			"code": ":arrow:",
+			"smile_url": "icon_arrow.gif"
+		}
+	}, {
+		"pk": 39,
+		"model": "backend.smilie",
+		"fields": {
+			"emoticon": "Neutral",
+			"code": ":|",
+			"smile_url": "icon_neutral.gif"
+		}
+	}, {
+		"pk": 40,
+		"model": "backend.smilie",
+		"fields": {
+			"emoticon": "Neutral",
+			"code": ":-|",
+			"smile_url": "icon_neutral.gif"
+		}
+	}, {
+		"pk": 41,
+		"model": "backend.smilie",
+		"fields": {
+			"emoticon": "Neutral",
+			"code": ":neutral:",
+			"smile_url": "icon_neutral.gif"
+		}
+	}, {
+		"pk": 42,
+		"model": "backend.smilie",
+		"fields": {
+			"emoticon": "Mr. Green",
+			"code": ":mrgreen:",
+			"smile_url": "icon_mrgreen.gif"
+		}
+	}, {
+		"pk": 1,
+		"model": "backend.theme",
+		"fields": {
+			"default": false,
+			"folder": "",
+			"version": 1,
+			"name": "Base"
+		}
+	}, {
+		"pk": 2,
+		"model": "backend.theme",
+		"fields": {
+			"default": true,
+			"folder": "base_theme/",
+			"version": 1,
+			"name": "New Base Theme"
+		}
+	}, {
+		"pk": 1,
+		"model": "faq.category",
+		"fields": {
+			"name": "Hilfe - H\u00e4ufig gestellte Fragen"
+		}
+	}, {
+		"pk": 2,
+		"model": "faq.category",
+		"fields": {
+			"name": "Hilfe - Fragen zum Forum"
+		}
+	}, {
+		"pk": 1,
+		"model": "faq.topic",
+		"fields": {
+			"answer": "Diese kleinen Grafiken nennt man Benutzerbilder oder Avatare. Sie werden in jedem deiner Beitr\u00e4ge neben deinem Benutzernamen angezeigt. Du kannst Benutzerbilder von deinem Computer selbst in unser System hochladen.\r\n\r\nWir stellen auch einen Satz Benutzerbilder zur Verf\u00fcgung, aus dem du dir ein Bild ausw\u00e4hlen kannst.\r\n\r\nDas Benutzerbild darf die Gr\u00f6\u00dfe von 110 x 110 Pixel haben und soll die Gr\u00f6\u00dfe von 20 kb nicht \u00fcberschreiten.",
+			"category": 1,
+			"question": "Wie kann ich ein Benutzerbild neben meinem Namen anzeigen lassen?"
+		}
+	}
+]

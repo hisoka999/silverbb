@@ -1,0 +1,197 @@
+{% load i18n %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-gb" xml:lang="en-gb">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+		<title>{{CURRENT_SITE.name}} • {% block title %}Index page{% endblock %}</title>
+
+		<!--
+		phpBB style name: Absolution
+		Based on style:   prosilver (this is the default phpBB3 style)
+		Original author:  Tom Beddard ( http://www.subBlue.com/ )
+		Modified by:      Christian Bullock ( http://www.ChristianBullock.com/ )
+
+		-->
+
+		<script type="text/javascript" src="{{ STATIC_THEME }}js/forum_fn.js"></script>
+
+		<script type="text/javascript" src="{{STATIC_THEME}}js/jquery-1.7.1.min.js"></script>
+		<script type="text/javascript" src="{{ STATIC_THEME }}js/jquery.tipsy.js"></script>
+		<script type="text/javascript" src="{{ STATIC_THEME }}js/jquery.hoverIntent.min.js"></script>
+		<script type="text/javascript" src="{{ STATIC_THEME }}js/jquery.cookie.js"></script>
+		<script type="text/javascript" src="{{ STATIC_THEME }}js/jquery.collapse.js"></script>
+
+		<script type="text/javascript">
+			// <![CDATA[
+			$(function() {
+				$([window, document]).blur(function() {
+					$('ul.drop').css({
+						display : 'none'
+					});
+				});
+				$("#nav ul li").hoverIntent(function() {
+					$(this).children("ul").slideDown();
+				}, function() {
+					$(this).children("ul").slideUp();
+				});
+			});
+			// ]]>
+		</script>
+
+		<link href="{{STATIC_THEME}}css/print.css" rel="stylesheet" type="text/css" media="print" title="printonly">
+
+		<link href="{{STATIC_THEME}}css/normal.css" rel="stylesheet" type="text/css" title="A">
+		<link href="{{STATIC_THEME}}css/medium.css" rel="alternate stylesheet" type="text/css" title="A+">
+		<link href="{{STATIC_THEME}}css/large.css" rel="alternate stylesheet" type="text/css" title="A++">
+		{%block head %}
+		
+		{%endblock %}
+		<link href="{% url backend.views.show_css 'base' %}" rel="stylesheet" type="text/css">
+		<!--[if IE]>
+		<link rel="stylesheet" type="text/css" href="{{STATIC_THEME}}css/ie.css" />
+		<![endif]-->
+		<style type="text/css">
+		@import url("{% url backend.views.show_css 'base' %}");
+	</style>
+
+	</head>
+
+	<body id="phpbb" class="section-index ltr js">
+		<script type="text/javascript">
+			// <![CDATA[
+			$("body").removeClass("nojs").addClass("js");
+			// ]]>
+		</script>
+
+		<div class="noise">
+			<div id="wrap" style="width: 80%;">
+
+				<p class="skiplink">
+					<a href="#start_here">Skip to content</a>
+				</p>
+				<a id="top" name="top" accesskey="t"></a>
+
+				<div id="header">
+					<div class="float-left">
+
+						<h1>{{CURRENT_SITE.name}}</h1>
+
+					</div>
+
+					<div class="float-right">
+						<div class="quicksearch">
+
+							<form action="{% url board.views.search %}" method="get" id="search">
+								<fieldset>
+									<input name="keywords" id="keywords" type="text" maxlength="128" value="Search…" onclick="if(this.value==&#39;Search…&#39;)this.value=&#39;&#39;;" onblur="if(this.value==&#39;&#39;)this.value=&#39;Search…&#39;;">
+									<!--<input class="button2" value="Search" type="submit" />-->
+									<br>
+									<input type="hidden" name="style" value="875">
+
+								</fieldset>
+							</form>
+
+						</div>
+					</div>
+					<div style="clear: both;"></div>
+				</div><!-- /header --><div style="clear: both;"></div>
+				<div id="nav-wrap-left"></div>
+				<div id="nav-wrap-right"></div>
+
+				<div id="nav">
+					{% block navigation %}
+					<ul>
+						{% url users.views.base_profile as profile_url %}
+						{% url msg.views.inbox as inbox_url %}
+						{% if request.get_full_path == "/" %}
+						<li class="active">
+						{%else %}
+						<li class="float-right">
+						{%endif%}
+							<a href="{% url board.views.index %}"><img src="{{STATIC_THEME}}images/nav-home.png" width="16" height="16" alt="">Board index</a>
+						</li>
+						<li class="divider"></li>
+						{% if user.is_authenticated %}
+						{% if request.get_full_path == profile_url %}
+						<li class="active">
+						{%else%}
+						<li class="float-right">
+						{%endif%}
+							<a href="{% url users.views.base_profile %}"><img src="{{STATIC_THEME}}images/key.png" width="16" height="16" alt="">{% trans "Profile"%}</a>
+						</li>
+						<li class="float-right">
+							<a href="{% url users.views.index %}"><img src="{{STATIC_THEME}}images/nav-members.png" width="16" height="16" alt="">{% trans "Members" %}</a>
+						</li>
+						<li class="float-right">
+							<a href="{% url msg.views.inbox %}"><img src="{{STATIC_THEME}}images/nav-pm.png" width="16" height="16" alt="">{% trans "Inbox" %}</a>
+						</li>
+						<li class="float-right">
+							<a href="{% url users.views.logout_view %}"><img src="{{STATIC_THEME}}images/logout.png" width="16" height="16" alt="">{%trans "Logout" %}</a>
+
+						</li>						
+						{% else %}
+						<li class="float-right">
+							<a href=""><img src="{{STATIC_THEME}}images/key.png" width="16" height="16" alt="">Login</a>
+						</li>
+						<li class="divider float-right"></li>
+
+						<li class="float-right">
+							<a href="{% url users.views.register %}"><img src="{{STATIC_THEME}}images/add.png" width="16" height="16" alt="">Register</a>
+						</li>
+						{% endif %}
+
+					</ul>
+					{% endblock %}
+				</div>
+
+				<a name="start_here"></a>
+				<div id="page-body">
+					<div class="contentpadding">
+					{% if messages %}
+					  {% for message in messages %}
+					<div {% if message.tags %} class="msg_{{ message.tags }}"{% endif %}>
+					    <li>{{ message }}</li>
+					</div>
+					{% endfor %}
+					{% endif %}
+											
+				{% block content%}
+				
+				{% endblock %}
+
+
+					</div>
+
+				</div><!-- /contentpadding -->
+
+			</div><!-- /wrap -->
+
+			<div style="clear: both;"></div>
+
+			<div class="footer" style="width: 80%;">
+				<!-- Please do not remove the following credit line. This style is free, and attribution such as this helps to keep it in development. Thanks -->
+				© Absolution design by <a href="http://www.christianbullock.com/">Christian Bullock</a>. <!-- Please do not remove the above credit line. This style is free, and attribution such as this helps to keep it in development. Thanks -->
+				<br>
+				Powered by <a href="http://www.silver-boards.com/">silverBB</a>® Forum Software © Stefan L&uuml;dtke
+			</div>
+
+		</div><!-- /noise -->
+
+		<script type="text/javascript">
+			// <![CDATA[
+			$(function() {
+				$('.tip').tipsy({
+					fade : true,
+					gravity : 's'
+				});
+			});
+			// ]]>
+		</script>
+		<div>
+			<a id="bottom" name="bottom" accesskey="z"></a>
+
+		</div>
+
+	</body>
+</html>

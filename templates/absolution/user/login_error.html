@@ -1,0 +1,11 @@
+{% extends BASE_PATH %}
+{% load i18n %}
+{% block auth %}
+{% endblock %}
+{% block content %}
+<form method="post" action="{% url users.views.login_view %}">
+{{form}}
+<input type="submit" value="{% trans 'login' %}" />
+</form>
+
+{% endblock %}

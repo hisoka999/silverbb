@@ -1,0 +1,25 @@
+{% load i18n %}
+<ul>
+	{% for page1 in menu %}
+	{% if page1.module == resolved_url.url_name %}
+	<li class="active">
+
+		{% elif page1.topic.id == page.topic_set.all.0.id and page1.topic.id != None %}
+	<li class="active">
+		{% else %}
+	<li class="float-right">
+		{% endif %}
+		{% if page1.module_path %}
+		<a href="{{page1.module_path}}"><img src="{{STATIC_THEME}}images/nav-home.png" width="16" height="16" alt="">{{page1.title}}</a>
+		{% else %}
+		<a href="{% url cms.views.page page1.id,page1.get_url_name %}"><img src="{{STATIC_THEME}}images/nav-home.png" width="16" height="16" alt="">{{page1.title}}</a>
+		{%endif %}
+	</li>
+	{% endfor %}
+
+	{% if user.is_staff %}
+	<li class="float-right">
+		<a href="{% url admin:index %}"><img src="{{STATIC_THEME}}images/nav-home.png" width="16" height="16" alt="">{% trans "Admin" %}</a>
+	</li>
+	{% endif %}
+</ul>

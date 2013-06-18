@@ -1,0 +1,12 @@
+{% extends BASE_PATH %}
+{% load i18n%}
+{% block head %}
+<meta http-equiv="REFRESH" content="3; url={{referer}}" />
+{% endblock %}
+{% block content %}
+<b>{%trans "Your login was successful."%}</b>
+<br />
+{% blocktrans  %}
+If you are not redirected automaticcly, please click <a href="{{referer}}">here</a>.
+{% endblocktrans %}
+{% endblock %}

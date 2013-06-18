@@ -1,0 +1,76 @@
+{% extends BASE_PATH %}
+{% load i18n %}
+{% block head %}
+    <style type="text/css">
+    @import url("{{STATIC_THEME}}css/forum.css");
+
+    </style>
+    <script src="{{STATIC_URL}}js/board.js" type="text/javascript" ></script>
+{% endblock %}
+{% block content %}
+    <div class="forum">
+    		<a href="{% url board.views.index %}">Silver-Boards Beta Forum</a>&raquo; {% autoescape off %}{{board.get_path}}
+    		{% endautoescape %}
+    </div>
+    {% if board.get_children.count > 0 %}
+    <div class="forum">
+		<div>
+		{% for child in board.get_children %}
+			<p><a href="{% url board.views.show_board child.id,child.get_name_for_url%}">{{child.name}}</a></p>
+		{% endfor %}
+		</div>     
+    </div>
+    {% endif %}
+    <div class="forum">
+    <div class="viewforum">
+      <div class="viewthread"><strong>{%trans "Topic" %}</strong></div>
+      <div class="viewthread"><strong>{% trans "Author" %}</strong></div>
+      <div class="viewthread"><strong>{% trans "Stats"%}</strong></div>
+      <div class="viewthread"><strong>{% trans "Last post"%}</strong></div>  
+    </div>
+    {% for thread in threads.object_list %}
+    <div class="viewforum">
+      <div class="viewthread">
+      	{% if thread.moved_from == board %}<i>moved</i>{% endif %}
+      	<a href="{% url board.views.show_thread thread.id,thread.get_url_name %}">{{thread.name}}</a></div>
+      <div class="viewthread"><a href="{% url users.views.show thread.author.id,thread.author.username %}">{{thread.author.username }}</a></div>
+      <div class="viewthread">{% trans "Answers" %} : {{thread.posts}}<br />
+      	{% trans "Views" %} : {{thread.views}}
+      </div>
+      <div class="viewthread"><b><a href="{% url board.views.show_thread thread.id,thread.get_url_name %}#last">{%trans "last post"%}</a></b> von 
+        <b><a href="{% url users.views.show thread.get_last_post.user.id,thread.get_last_post.user.username %}">{{thread.get_last_post.user}}</a></b> am 
+        <i>{{thread.get_last_post.time_created}}</i>
+        
+        </div>  
+    </div> 
+		{% endfor %}
+	<select name="board" onchange="boardChange();" onclick="boardChange();" id="selector">
+	{% for board in boards %}
+		{{board.list}}
+	{% endfor %}
+	</select>
+	<div class="pagination">
+    <span class="step-links">
+        {% if threads.has_previous %}
+            <a href="?page={{ threads.previous_page_number }}">{% trans "previous" %}</a>
+        {% endif %}
+
+        <span class="current">
+        	{% blocktrans with threads.number as cur_page and threads.paginator.num_pages as all_pages  %}
+            Page {{ cur_page }} of {{ all_pages }}.
+            {% endblocktrans %}
+        </span>
+
+        {% if threads.has_next %}
+            <a href="?page={{ threads.next_page_number }}">{% trans "next" %}</a>
+        {% endif %}
+    </span>
+	</div>
+    <div class="viewforum">
+    {% if rights.can_thread %}
+      <a href="{% url board.views.create_thread board.id %}" class="button">{% trans "create thread"%}</a>
+    {% endif %}
+    </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,67 @@
+{% extends BASE_PATH %}
+{% block head %}
+<script type="text/javascript" src="{{ STATIC_URL }}js/scriptaculous.js?load=effects,builder"></script>
+<script type="text/javascript">
+	LightboxOptions = Object.extend({
+    fileLoadingImage:        '{{ STATIC_THEME }}images/loading.gif',     
+    fileBottomNavCloseImage: '{{ STATIC_THEME }}images/closelabel.gif',
+
+
+    overlayOpacity: 0.8,   // controls transparency of shadow overlay
+
+    animate: true,         // toggles resizing animations
+    resizeSpeed: 7,        // controls the speed of the image resizing animations (1=slowest and 10=fastest)
+
+    borderSize: 10,         //if you adjust the padding in the CSS, you will need to update this variable
+
+	// When grouping images this is used to write: Image # of #.
+	// Change it for non-english localization
+	labelImage: "Image",
+	labelOf: "of"
+}, window.LightboxOptions || {});
+</script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/lightbox.js?path={{ STATIC_URL }}"></script>
+<link rel="stylesheet" href="{{STATIC_THEME}}css/lightbox.css" type="text/css" media="screen" />
+{%endblock %}
+{% load i18n %}
+{% block navigation %}
+	{% for page in pages %}
+		{% if page.link %}
+			
+			<a href="{{page.link}}" class="headerbtn">{{page.title}}</a>
+		{% else %}
+			<a href="{% url cms.views.page page.id,page.get_url_name %}" class="headerbtn">{{page.title}}</a>
+		{%endif %}
+	{% endfor %}
+		{% if user.is_staff %}
+			<a href="{% url admin:index %}" class="headerbtn">{% trans "Administration" %}</a>
+		{% endif %}
+{% endblock %}
+{% block content %}
+<!-- Board display //-->
+<div class="forum">
+	<div class="category_cat">
+		<div class="board_cat">
+			<div class="board_info">
+				<p class="boardtitle">
+					<i><b>{{page.title}}</b>
+				</p>
+				<p class="board"><pre>{% autoescape off %}{{page.content}}</pre>{% endautoescape %}
+				</p>
+				<p class="boardtitle">
+					<i><b>{% trans "Gallary" %}</b>
+				</p>
+				<p>
+					{% for image in page.gallery.image_set.all %}
+					 
+					 <a href="{{ STATIC_URL }}/{{image.image}}" rel="lightbox"><img src="{{ STATIC_URL }}/{{image.thumb}}" class="post-img"/></a>
+					{% endfor %}
+				</p>
+			</div>
+		</div>
+		<div class="spacer"></div>
+	</div>
+
+</div>
+<!-- board display end //-->
+{% endblock %}

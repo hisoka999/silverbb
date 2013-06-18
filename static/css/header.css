@@ -1,0 +1,15 @@
+      .headerbtn{
+        border-right: 1px solid #000000;
+        background-color: #CDCDCD;
+        color: #FFFFFF;        
+        text-decoration: none;
+        padding: 2px; 
+      }
+      a.headerbtn:hover{
+        background-color: #363636;
+      }
+      #header{
+        width:100%;
+        background-color: #CDCDCD;
+        margin-bottom: 2%;
+      }
