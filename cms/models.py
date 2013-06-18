@@ -36,7 +36,7 @@ class Image(models.Model):
         if not self.image:
             return
         
-        from PIL import Image
+        import PIL
         from cStringIO import StringIO
         from django.core.files.uploadedfile import SimpleUploadedFile
         import os
@@ -54,7 +54,7 @@ class Image(models.Model):
             FILE_EXTENSION = 'png'
         
         # Open original photo which we want to thumbnail using PIL's Image
-        image = Image.open(StringIO(self.image.read()))
+        image = PIL.Image.open(StringIO(self.image.read()))
         
         # Convert to RGB if necessary
         # Thanks to Limodou on DjangoSnippets.org

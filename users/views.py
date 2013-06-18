@@ -4,12 +4,12 @@ from django.shortcuts import redirect
 from django.template import RequestContext
 from django.contrib.auth import login,logout, forms
 from django.contrib.auth.models import Group
-from silverbb.backend.functions import render_to_response
-from silverbb import settings
+from backend.functions import render_to_response
+from django.conf import settings
 from django.core.mail import send_mail
 from models import UserProfile,UserSession
 from django.http import Http404
-from silverbb.backend.models import Theme
+from backend.models import Theme
 from django.db import transaction
 from django.contrib import messages
 from django.core import urlresolvers
@@ -112,7 +112,8 @@ def login_view(request):
                 profile.save()
                 user.save()
         messages.add_message(request, messages.INFO, 'Login successfull!')
-        return redirect(urlresolvers.reverse('board.views.index'))
+        #return redirect(urlresolvers.reverse('board.views.index'))
+        return redirect(referer)
         #return render_to_response('user/login_successful.html',{'referer':referer},context_instance=RequestContext(request))
     return render_to_response('user/login_error.html',{'form':form},context_instance=RequestContext(request))
 
@@ -125,8 +126,13 @@ def logout_view(request):
     messages.add_message(request, messages.INFO, 'Logout successfull!')
     return redirect('board.views.index')
 
-def team(request):
-    groups=Group.objects.filter(user__is_staff=True)
+def team(request,team_name=None):
+    if (request.method == 'POST'):
+        team_name = request.POST['team_name']
+    if (team_name is None):
+        groups=Group.objects.filter(user__is_staff=True)
+    else:
+        groups=Group.objects.filter(user__is_staff=True,name=team_name)
     return render_to_response('user/team.html',{'groups':groups},context_instance=RequestContext(request))
 
 def base_profile(request):

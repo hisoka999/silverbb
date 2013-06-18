@@ -9,6 +9,7 @@ urlpatterns = patterns('',
     (r'^logout/$','users.views.logout_view'),
     (r'^register/$','users.views.register'),
     (r'^team/$','users.views.team'),
+    (r'^team/(?P<team_name>\w+)/$','users.views.team'),
     (r'^profile/$','users.views.base_profile'),
     (r'^activate/(?P<uuid>\S+)/$','users.views.activate'),
 )

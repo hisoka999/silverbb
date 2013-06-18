@@ -3,6 +3,7 @@ from django.conf import settings
 #from functions import get_path
 
 import re
+from django.db.models.query_utils import Q
 
 class BBCode(models.Model):
     name    = models.CharField(max_length=10)
@@ -19,6 +20,14 @@ class Theme(models.Model):
     version     = models.IntegerField(default=1)
     folder      = models.CharField(max_length=200,default='',null=True,blank=True)
     default     = models.BooleanField(default=False)
+    
+    def update_default(self):
+        if (self.default==True):
+            Theme.objects.filter(~Q(pk=self.id)).update(default=False)
+    
+    def save(self):
+        self.update_default()
+        super(Theme,self).save()
     
     def __unicode__(self):
         return self.name

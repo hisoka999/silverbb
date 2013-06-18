@@ -13,7 +13,7 @@ class BBCodeAdmin(admin.ModelAdmin):
     list_display = ['name','search','replace']
 
 class ThemeAdmin(admin.ModelAdmin):
-    list_display = ['name','version','folder']
+    list_display = ['name','version','folder','default']
 
 admin.site.register(Theme,ThemeAdmin)
 admin.site.register(Smilie,SmilieAdmin)
