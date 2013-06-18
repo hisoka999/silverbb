@@ -1,0 +1,13 @@
+{% load i18n %}
+	{% for page1 in menu %}
+		{% if page1.link %}
+			<a href="{{page.link}}" class="headerbtn">{{page.title}}</a>
+		{% elif page1.module_path %}
+			<a href="{{page1.module_path}}" class="headerbtn">{{page1.title}}</a>
+		{% else %}
+			<a href="{% url cms.views.page page1.id,page1.get_url_name %}" class="headerbtn">{{page1.title}}</a>	
+		{%endif %}
+	{% endfor %}
+		{% if user.is_staff %}
+			<a href="{% url admin:index %}" class="headerbtn">{% trans "Administration" %}</a>
+		{% endif %}

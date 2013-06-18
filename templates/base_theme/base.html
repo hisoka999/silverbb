@@ -82,6 +82,15 @@
 					</form>
 					{% endblock %}
 				</div>
+				<div class="forum">
+					{% if messages %}
+						{% for message in messages %}
+						<div {% if message.tags %} class="msg_{{ message.tags }}"{% endif %}>
+					    	<li>{{ message }}</li>
+						</div>
+						{% endfor %}
+					{% endif %}
+				</div>
 				{% block content%}
 
 				{% endblock %}
