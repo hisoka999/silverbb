@@ -104,7 +104,8 @@
 					<ul>
 						{% url users.views.base_profile as profile_url %}
 						{% url msg.views.inbox as inbox_url %}
-						{% if request.get_full_path == "/" %}
+						{% url board.views.index as index_url %}
+						{% if request.get_full_path == index_url %}
 						<li class="active">
 						{%else %}
 						<li class="float-right">
@@ -129,7 +130,12 @@
 						<li class="float-right">
 							<a href="{% url users.views.logout_view %}"><img src="{{STATIC_THEME}}images/logout.png" width="16" height="16" alt="">{%trans "Logout" %}</a>
 
-						</li>						
+						</li>
+						{% if user.is_staff %}
+						<li class="float-right">
+							<a href="{% url admin:index %}"><img src="{{STATIC_THEME}}images/nav-home.png" width="16" height="16" alt="">{% trans "Admin" %}</a>
+						</li>
+						{% endif %}						
 						{% else %}
 						<li class="float-right">
 							<a href=""><img src="{{STATIC_THEME}}images/key.png" width="16" height="16" alt="">Login</a>
