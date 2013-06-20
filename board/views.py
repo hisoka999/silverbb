@@ -15,6 +15,7 @@ from django.core import urlresolvers
 from silverbb.backend.functions import render_to_response
 from django.db.models import Q
 from django.db.models.aggregates import Count
+from board.models import Track
 
 def index(request):
     try:
@@ -42,6 +43,14 @@ def index(request):
          ,'all_posts':all_posts
          ,'last_user':last_user},context_instance=RequestContext(request))
 
+def mark_read(request,board_id,display=True):
+    track,created = Track.objects.get_or_create(board_id=board_id,user_id = request.user.id,defaults={'marked': datetime.now()})
+    if (created):
+        print "board_id = %d"%(board_id)
+    track.marked = datetime.now()
+    track.save()
+    if (display):
+        None ## redirect 
 
 def show_board(request,board_id,board_name=""):
 
@@ -85,6 +94,7 @@ def show_thread(request,thread_id,thread_name=""):
         thread.views = thread.views+1
         thread.save()
         posts = Post.objects.filter(thread=thread_id)
+        mark_read(request, thread.board_id, False)
         return render_to_response('thread.html',{'thread':thread,
                                                  't_posts':posts,
                                                  'rights':rights,

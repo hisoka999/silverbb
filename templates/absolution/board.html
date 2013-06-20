@@ -13,6 +13,7 @@
 	<a href="{% url board.views.index %}">{{CURRENT_SITE.name}}</a>&raquo; {% autoescape off %}{{board.get_path}}
 	{% endautoescape %}
 </div>
+<br />
 {% if board.get_children.count > 0 %}
 <div class="catglow">
 	<div class="cathead-m">
@@ -24,35 +25,36 @@
 	</div>
 	<div class="collapsethis">
 		<table class="cat" cellpadding="0" cellspacing="0" width="100%">
-											{% for child in board.get_children %}
-											<tr>
-												<td class="forumicon"><img src="{{STATIC_THEME}}images/forum_read.gif" width="38" height="38" alt="No unread posts" title="No unread posts"></td>
-												<td class="forumdetails"><a href="{% url board.views.show_board child.id,child.get_name_for_url%}" class="forumtitle">{{child.name}}</a>
-												<br>
-												<span class="forum-descriptions">{{child.description}}</span></td>
+			{% for child in board.get_children %}
+			<tr>
+				<td class="forumicon"><img src="{{STATIC_THEME}}images/forum_read.gif" width="38" height="38" alt="No unread posts" title="No unread posts"></td>
+				<td class="forumdetails"><a href="{% url board.views.show_board child.id,child.get_name_for_url%}" class="forumtitle">{{child.name}}</a>
+				<br>
+				<span class="forum-descriptions">{{child.description}}</span></td>
 
-												<td class="forumlastpost"><span class="fade">No posts</span>
-												<br>
-												&nbsp; </td>
-												<td class="forumtopics">
-												<div class="statbubble">
-													<span>{{child.threads}}</span>
-													<br>
-													Topics
-												</div></td>
-												<td class="forumposts">
-												<div class="statbubble">
-													<span>{{child.posts}}</span>
-													<br>
-													Posts
-												</div></td>
+				<td class="forumlastpost"><span class="fade">No posts</span>
+				<br>
+				&nbsp; </td>
+				<td class="forumtopics">
+				<div class="statbubble">
+					<span>{{child.threads}}</span>
+					<br>
+					Topics
+				</div></td>
+				<td class="forumposts">
+				<div class="statbubble">
+					<span>{{child.posts}}</span>
+					<br>
+					Posts
+				</div></td>
 
-											</tr>
-											{% endfor %}
+			</tr>
+			{% endfor %}
 		</table>
 	</div>
 </div>
 {% endif %}
+{% load filter %}
 <div class="catglow">
 	<div class="cathead-m">
 		<div class="cathead-r">
@@ -63,9 +65,14 @@
 	</div>
 	<div class="collapsethis">
 		<table class="cat" cellpadding="0" cellspacing="0" width="100%">
-	{% for thread in threads.object_list %}
+			{% for thread in threads.object_list %}
 			<tr>
-				<td class="forumicon"><img src="sticky_read.gif" width="38" height="38" alt="No unread posts" title="No unread posts" /></td>
+				<td class="forumicon">{% if thread.id|is_new_thread:request.user.id %}
+					<img src="{{STATIC_THEME}}images/forum_unread.gif" width="38" height="38" alt="No unread posts" title="No unread posts" />
+					{% else %}
+					<img src="{{STATIC_THEME}}images/forum_read.gif" width="38" height="38" alt="No unread posts" title="No unread posts" />
+					{% endif %}
+				</td>
 				<td class="forumdetails"><a href="{% url board.views.show_thread thread.id,thread.get_url_name %}" class="topictitle">{{thread.name}}</a>
 				<br />
 				<span class="forum-descriptions">by <a href="{% url users.views.show thread.author.id,thread.author.username %}">{{thread.author.username}}</a> &raquo; {{thread.get_first_post.time_created}}</span></td>
@@ -87,46 +94,53 @@
 				<span class="fade">{{last_post.time_created}}</span></td>
 				{% endwith %}
 			</tr>
-	
-	<!--
-	
-	<div class="viewforum">
-		<div class="viewthread">
+
+			<!--
+
+			<div class="viewforum">
+			<div class="viewthread">
 			{% if thread.moved_from == board %}<i>moved</i>{% endif %} <a href="{% url board.views.show_thread thread.id,thread.get_url_name %}">{{thread.name}}</a>
-		</div>
-		<div class="viewthread">
+			</div>
+			<div class="viewthread">
 			<a href="{% url users.views.show thread.author.id,thread.author.username %}">{{thread.author.username }}</a>
-		</div>
-		<div class="viewthread">
+			</div>
+			<div class="viewthread">
 			{% trans "Answers" %} : {{thread.posts}}
 			<br />
 			{% trans "Views" %} : {{thread.views}}
-		</div>
-		<div class="viewthread">
+			</div>
+			<div class="viewthread">
 			<b><a href="{% url board.views.show_thread thread.id,thread.get_url_name %}#last">{%trans "last post"%}</a></b> von <b><a href="{% url users.views.show thread.get_last_post.user.id,thread.get_last_post.user.username %}">{{thread.get_last_post.user}}</a></b> am <i>{{thread.get_last_post.time_created}}</i>
 
-		</div>
-	</div>
-	-->
-	{% endfor %}
+			</div>
+			</div>
+			-->
+			{% endfor %}
 		</table>
 	</div>
 </div>
 
 <br />
-	<select name="board" onchange="boardChange();" onclick="boardChange();" id="selector">
-		{% for board in boards %}
-		{{board.list}}
-		{% endfor %}
-	</select>
-	<div class="pagination">
-		<span class="step-links"> {% if threads.has_previous %} <a href="?page={{ threads.previous_page_number }}">{% trans "previous" %}</a> {% endif %} <span class="current"> {% blocktrans with threads.number as cur_page and threads.paginator.num_pages as all_pages  %}
-				Page {{ cur_page }} of {{ all_pages }}.
-				{% endblocktrans %} </span> {% if threads.has_next %} <a href="?page={{ threads.next_page_number }}">{% trans "next" %}</a> {% endif %} </span>
-	</div>
-	<div class="viewforum">
+<select name="board" onchange="boardChange();" onclick="boardChange();" id="selector">
+	{% for board in boards %}
+	{{board.list}}
+	{% endfor %}
+</select>
+<div class="pagination">
+	<span class="step-links"> {% if threads.has_previous %} <a href="?page={{ threads.previous_page_number }}">{% trans "previous" %}</a> {% endif %} <span class="current"> {% blocktrans with threads.number as cur_page and threads.paginator.num_pages as all_pages  %}
+			Page {{ cur_page }} of {{ all_pages }}.
+			{% endblocktrans %} </span> {% if threads.has_next %} <a href="?page={{ threads.next_page_number }}">{% trans "next" %}</a> {% endif %} </span>
+</div>
+
+<div class="topic-actions">
+	<div class="buttons">
 		{% if rights.can_thread %}
-		<a href="{% url board.views.create_thread board.id %}" class="button">{% trans "create thread"%}</a>
+		<div class="post-icon" title="Post a new Topic">
+			<a href="{% url board.views.create_thread board.id %}">
+			<span></span>
+			Post a new Topic
+			</a>
+		</div>
 		{% endif %}
 	</div>
 </div>

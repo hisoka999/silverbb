@@ -6,7 +6,7 @@
 	tinyMCE.init({
 		theme : "advanced",
 		mode : "specific_textareas",
-		editor_selector: "inputbox",
+		editor_selector : "inputbox",
 		plugins : "bbcode",
 		theme_advanced_buttons1 : "bold,italic,underline,undo,redo,link,unlink,image,forecolor,styleselect,removeformat,cleanup,code",
 		theme_advanced_buttons2 : "",
@@ -24,20 +24,19 @@
 	var panels = new Array('options-panel', 'attach-panel', 'poll-panel');
 	var show_panel = 'options-panel';
 
-
-function insert_text(text,test){
-    tinyMCE.activeEditor.execCommand('mceInsertContent', false, text);
-}
+	function insert_text(text, test) {
+		tinyMCE.activeEditor.execCommand('mceInsertContent', false, text);
+	}
 </script>
 {% endblock%}
 {% block content %}
 
 <form id="postform" method="post" action="{% url board.views.create_post thread_id %}" enctype="multipart/form-data">
-    {# Include the hidden fields #}
-    {% for hidden in f_post.hidden_fields %}
-    {{ hidden }}
-    {% endfor %}
-    {# Include the visible fields #}
+	{# Include the hidden fields #}
+	{% for hidden in f_post.hidden_fields %}
+	{{ hidden }}
+	{% endfor %}
+	{# Include the visible fields #}
 	<div class="panel" id="postingbox">
 		<div class="inner">
 			<span class="corners-top"><span></span></span>
@@ -79,11 +78,9 @@ function insert_text(text,test){
 					<strong>Smilies</strong>
 					<br />
 					{% for smilie in smilies %}
-						<a href="#" onclick="insert_text('{{smilie.code}}', true); return false;">
-							<img src="{{STATIC_THEME}}images/smiles/{{smilie.smile_url}}" width="15" height="17" alt=":D" title="{{smilie.emoticon}}" />
-						</a>
+					<a href="#" onclick="insert_text('{{smilie.code}}', true); return false;"> <img src="{{STATIC_THEME}}images/smiles/{{smilie.smile_url}}" width="15" height="17" alt=":D" title="{{smilie.emoticon}}" /> </a>
 					{% endfor %}
-				<hr />
+					<hr />
 					<a href="./faq.php?mode=bbcode">BBCode</a> is <em>ON</em>
 					<br />
 
@@ -213,14 +210,13 @@ function insert_text(text,test){
 					</dt>
 					<dd>
 						<textarea name="filecomment" id="filecomment" rows="1" cols="40" class="inputbox autowidth"></textarea>
-</dd>				</dl>
+					</dd>
+				</dl>
 			</fieldset>
 
 			<span class="corners-bottom"><span></span></span>
 		</div>
 	</div>
-	
-
 
 	<hr />
 
@@ -230,8 +226,8 @@ function insert_text(text,test){
 
 </form>
 <script type="text/javascript">
-// <![CDATA[
+	// <![CDATA[
 	subPanels(show_panel);
-// ]]>
+	// ]]>
 </script>
 {% endblock %}

@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.contrib import auth
-from silverbb.backend.models import get_clean_text
+from backend.models import get_clean_text
 from django.core.urlresolvers import reverse
 from django.template.loader import render_to_string
 from django.shortcuts import render
@@ -16,6 +16,18 @@ class Board(models.Model):
     moderators  = models.ManyToManyField(User,blank=True)
     rights      = models.ManyToManyField(auth.models.Group,through='BoardRights')
     
+    def get_last_post(self):
+        return None
+    
+    def is_new(self,user):
+        try:
+            track = Track.objects.get(board_id = self.id,user_id = user.id)
+            if(track.marked < self.get_last_post().time_created):
+                return True
+            else:
+                return False
+        except:
+            return False
     def get_name_for_url(self):
         return self.name.replace(' ','_').lower()
         
@@ -39,6 +51,11 @@ class Board(models.Model):
             ret = b.list(parent+1)
         return render_to_string('board/list.html',{'board':self,'list':ret,'parent':'&nbsp;'*parent*2})
 
+class Track(models.Model):
+    board = models.ForeignKey(Board)
+    user  = models.ForeignKey(auth.models.User)
+    marked = models.DateTimeField()
+
 class BoardRights(models.Model):
     board = models.ForeignKey(Board)
     group = models.ForeignKey(auth.models.Group)
@@ -56,6 +73,22 @@ class Thread(models.Model):
     moved_from = models.ForeignKey(Board,blank=True,null=True,related_name='moved_from')
     closed = models.BooleanField(blank=True,default=False)
     views  = models.IntegerField(default=0)
+
+    def is_new(self,user):
+        try:
+            print "board id: %d"%(self.board.id)
+            print "user id : %d"%(user)
+            track = Track.objects.get(board_id = self.board.id,user_id = user)
+            time = self.get_last_post().time_created
+            print "track time: "+str(track.marked)
+            print "thread_time: "+str(time)
+            if(track.marked < time):
+                return True
+            else:
+                return False
+        except Exception,e:
+            print e
+            return False
     
     def get_url_name(self):
         return self.name.replace(' ','_')

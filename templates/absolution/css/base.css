@@ -3122,11 +3122,11 @@ a.forumtitle:hover, a.topictitle:hover {
 
 /* Back to top of page */
 a.top {
-	background-image: url("./styles/absolution_14665/imageset/icon_back_top.gif");
+	background-image: url("{{STATIC_THEME}}images/icon_back_top.gif");
 }
 
 a.top2 {
-	background-image: url("./styles/absolution_14665/imageset/icon_back_top.gif");
+	background-image: url("{{STATIC_THEME}}images/icon_back_top.gif");
 }
 
 /* Arrow links  */
@@ -3171,11 +3171,11 @@ ul.topiclist dd {
 }
 
 ul.topiclist li.row dt a.subforum.read {
-	background-image: url("./styles/absolution_14665/imageset/subforum_read.gif");
+	background-image: url("{{STATIC_THEME}}images/subforum_read.gif");
 }
 
 ul.topiclist li.row dt a.subforum.unread {
-	background-image: url("./styles/absolution_14665/imageset/subforum_unread.gif");
+	background-image: url("{{STATIC_THEME}}images/subforum_unread.gif");
 }
 
 li.row {
@@ -3428,7 +3428,7 @@ fieldset.polls dd div {
 }
 
 .online {
-	background-image: url("./styles/absolution_14665/imageset/en/icon_user_online.png");
+	background-image: url("{{STATIC_THEME}}images/en/icon_user_online.png");
 	background-repeat: no-repeat;
 	margin-top: -5px;
 }
@@ -3443,12 +3443,12 @@ Colours and backgrounds for buttons.css
 -------------------------------------------------------------- */
 
 /* Big button images */
-.reply-icon span	{ background-image: url("./styles/absolution_14665/imageset/en/button_topic_reply.gif"); }
-.post-icon span		{ background-image: url("./styles/absolution_14665/imageset/en/button_topic_new.gif"); }
-.locked-icon span	{ background-image: url("./styles/absolution_14665/imageset/en/button_topic_locked.gif"); }
-.pmreply-icon span	{ background-image: url("./styles/absolution_14665/imageset/en/button_pm_reply.gif") ;}
-.newpm-icon span 	{ background-image: url("./styles/absolution_14665/imageset/en/button_pm_new.gif") ;}
-.forwardpm-icon span	{ background-image: url("./styles/absolution_14665/imageset/en/button_pm_forward.gif") ;}
+.reply-icon span	{ background-image: url("{{STATIC_THEME}}images/en/button_topic_reply.gif"); }
+.post-icon span		{ background-image: url("{{STATIC_THEME}}images/en/button_topic_new.gif"); }
+.locked-icon span	{ background-image: url("{{STATIC_THEME}}images/en/button_topic_locked.gif"); }
+.pmreply-icon span	{ background-image: url("{{STATIC_THEME}}images/en/button_pm_reply.gif") ;}
+.newpm-icon span 	{ background-image: url("{{STATIC_THEME}}images/en/button_pm_new.gif") ;}
+.forwardpm-icon span	{ background-image: url("{{STATIC_THEME}}images/en/button_pm_forward.gif") ;}
 
 a.print {
 	background-image: url("{{STATIC_THEME}}images/icon_print.gif");
@@ -3479,22 +3479,22 @@ a.fontsize {
 .icon-search					{ background-image: url("{{STATIC_THEME}}images/icon_search.gif"); }
 
 /* Profile & navigation icons */
-.email-icon, .email-icon a		{ background-image: url("./styles/absolution_14665/imageset/icon_contact_email.gif"); }
-.aim-icon, .aim-icon a			{ background-image: url("./styles/absolution_14665/imageset/icon_contact_aim.gif"); }
-.yahoo-icon, .yahoo-icon a		{ background-image: url("./styles/absolution_14665/imageset/icon_contact_yahoo.gif"); }
-.web-icon, .web-icon a			{ background-image: url("./styles/absolution_14665/imageset/icon_contact_www.gif"); }
-.msnm-icon, .msnm-icon a			{ background-image: url("./styles/absolution_14665/imageset/icon_contact_msnm.gif"); }
-.icq-icon, .icq-icon a			{ background-image: url("./styles/absolution_14665/imageset/icon_contact_icq.gif"); }
-.jabber-icon, .jabber-icon a		{ background-image: url("./styles/absolution_14665/imageset/icon_contact_jabber.gif"); }
-.pm-icon, .pm-icon a				{ background-image: url("./styles/absolution_14665/imageset/en/icon_contact_pm.gif"); }
-.quote-icon, .quote-icon a		{ background-image: url("./styles/absolution_14665/imageset/en/icon-quote.png"); }
+.email-icon, .email-icon a		{ background-image: url("{{STATIC_THEME}}images/icon_contact_email.gif"); }
+.aim-icon, .aim-icon a			{ background-image: url("{{STATIC_THEME}}images/icon_contact_aim.gif"); }
+.yahoo-icon, .yahoo-icon a		{ background-image: url("{{STATIC_THEME}}images/icon_contact_yahoo.gif"); }
+.web-icon, .web-icon a			{ background-image: url("{{STATIC_THEME}}images/icon_contact_www.gif"); }
+.msnm-icon, .msnm-icon a			{ background-image: url("{{STATIC_THEME}}images/icon_contact_msnm.gif"); }
+.icq-icon, .icq-icon a			{ background-image: url("{{STATIC_THEME}}images/icon_contact_icq.gif"); }
+.jabber-icon, .jabber-icon a		{ background-image: url("{{STATIC_THEME}}images/icon_contact_jabber.gif"); }
+.pm-icon, .pm-icon a				{ background-image: url("{{STATIC_THEME}}images/en/icon_contact_pm.gif"); }
+.quote-icon, .quote-icon a		{ background-image: url("{{STATIC_THEME}}images/en/icon-quote.png"); }
 
 /* Moderator icons */
-.report-icon, .report-icon a		{ background-image: url("./styles/absolution_14665/imageset/en/icon-report.png"); }
-.edit-icon, .edit-icon a			{ background-image: url("./styles/absolution_14665/imageset/en/icon-edit.png"); }
-.delete-icon, .delete-icon a		{ background-image: url("./styles/absolution_14665/imageset/en/icon-delete.png"); }
-.info-icon, .info-icon a			{ background-image: url("./styles/absolution_14665/imageset/en/icon-info.png"); }
-.warn-icon, .warn-icon a			{ background-image: url("./styles/absolution_14665/imageset/en/icon-warn.png"); } /* Need updated warn icon */
+.report-icon, .report-icon a		{ background-image: url("{{STATIC_THEME}}images/en/icon-report.png"); }
+.edit-icon, .edit-icon a			{ background-image: url("{{STATIC_THEME}}images/en/icon-edit.png"); }
+.delete-icon, .delete-icon a		{ background-image: url("{{STATIC_THEME}}images/en/icon-delete.png"); }
+.info-icon, .info-icon a			{ background-image: url("{{STATIC_THEME}}images/en/icon-info.png"); }
+.warn-icon, .warn-icon a			{ background-image: url("{{STATIC_THEME}}images/en/icon-warn.png"); } /* Need updated warn icon */
 
 /*  	
 --------------------------------------------------------------
