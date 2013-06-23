@@ -145,27 +145,34 @@ def create_post(request,thread_id):
         else:
             f_post = PostForm(initial=options)
     else:
-        if (request.user.id is None):
-            f_post = PostGuestForm(request.POST)
-        else:
-            f_post = PostForm(request.POST)
-        if(f_post.is_valid()):
-            thread = Thread.objects.get(pk=thread_id)
+        if 'preview' in request.POST:
+            # show a preview
+            f_post = PostForm(data=request.POST)
             post = f_post.save(commit=False)
-            post.thread = thread
-            if (request.user.id is not None):
-                post.user = request.user
-            post.save()
-            thread.posts = thread.posts+1
-            thread.save()
-            #board=Board.objects.get()
-            thread.board.posts = thread.board.posts + 1
-            thread.board.save()
-            if (request.user.id is not None):
-                profile = request.user.get_profile() 
-                profile.posts=profile.posts+1
-                profile.save()
-            return render_to_response('create_thread_success.html',{'thread':thread,},context_instance=RequestContext(request))
+            if(f_post.is_valid()):          
+                return render_to_response('create_post.html',{'f_post':f_post,'thread_id':thread_id,'preview':True,'preview_post':post},context_instance=RequestContext(request))
+        else:
+            if (request.user.id is None):
+                f_post = PostGuestForm(request.POST)
+            else:
+                f_post = PostForm(request.POST)
+            if(f_post.is_valid()):
+                thread = Thread.objects.get(pk=thread_id)
+                post = f_post.save(commit=False)
+                post.thread = thread
+                if (request.user.id is not None):
+                    post.user = request.user
+                post.save()
+                thread.posts = thread.posts+1
+                thread.save()
+                #board=Board.objects.get()
+                thread.board.posts = thread.board.posts + 1
+                thread.board.save()
+                if (request.user.id is not None):
+                    profile = request.user.get_profile() 
+                    profile.posts=profile.posts+1
+                    profile.save()
+                return render_to_response('create_thread_success.html',{'thread':thread,},context_instance=RequestContext(request))
     return render_to_response('create_post.html',{'f_post':f_post,'thread_id':thread_id},context_instance=RequestContext(request))
 
 def edit_post(request,post_id):

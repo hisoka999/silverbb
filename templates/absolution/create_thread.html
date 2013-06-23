@@ -68,7 +68,7 @@
 						<label for="subject"><span style="color: #333333;">Subject:</span></label>
 					</dt>
 					<dd>
-						<input type="text" name="name" id="subject" size="45" maxlength="64" tabindex="2" value="{{f_thread.name.value}}" class="inputbox autowidth" />
+						<input type="text" name="name" id="subject" size="45" maxlength="64" tabindex="2" value="{{f_thread.name.value|default:""}}" class="inputbox autowidth" />
 						{{f_thread.name.errors}}
 					</dd>
 				</dl>
@@ -78,7 +78,7 @@
 						<label for="subject"><span style="color: #333333;">Guest Name:</span></label>
 					</dt>
 					<dd>
-						<input type="text" name="guest_name" id="guest_name" size="45" maxlength="64" tabindex="2" value="{{f_post.guest_name.value}}" class="inputbox autowidth" />
+						<input type="text" name="guest_name" id="guest_name" size="45" maxlength="64" tabindex="2" value="{{f_post.guest_name.value|default:""}}" class="inputbox autowidth" />
 						{{f_post.guest_name.errors}}
 					</dd>
 				</dl>				

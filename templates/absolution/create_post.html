@@ -32,6 +32,23 @@
 {% block content %}
 
 <form id="postform" method="post" action="{% url board.views.create_post thread_id %}" enctype="multipart/form-data">
+	{% if preview %}
+	<div class="post bg2" id="preview">
+		<div class="inner"><span class="corners-top"><span></span></span>
+	
+	
+	
+		<div class="postbody">
+			<h3>{% trans 'Preview' %}: {{preview_post.name}}</h3>
+	
+			<div class="content">{% autoescape off %}{{preview_post.get_cleaned_post}}{% endautoescape %}</div>
+	
+			
+		</div>
+	
+		<span class="corners-bottom"><span></span></span></div>
+	</div>
+	{% endif %}
 	{# Include the hidden fields #}
 	{% for hidden in f_post.hidden_fields %}
 	{{ hidden }}
@@ -108,7 +125,7 @@
 
 				<div id="message-box">
 					{{f_post.text.errors}}
-					<textarea name="text" id="message" rows="15" cols="76" tabindex="4"  class="inputbox">{{f_post.text.value}}</textarea>
+					<textarea name="text" id="message" rows="15" cols="76" tabindex="4"  class="inputbox">{{f_post.text.value|default:""}}</textarea>
 				</div>
 			</fieldset>
 
