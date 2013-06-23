@@ -1,0 +1,35 @@
+INSTALL.txt
+LICENSE.txt
+README.txt
+cms_data/
+extras/documentation
+static/cms_images
+static/cms_thumbs
+.svn/
+
+*.pydevproject
+.project
+.metadata
+bin/**
+tmp/**
+tmp/**/*
+*.pyc
+*.bak
+*.swp
+*~.nib
+local.properties
+.classpath
+.settings/
+.loadpath
+*~
+# External tool builders
+.externalToolBuilders/
+
+# Locally stored "Eclipse launch configurations"
+*.launch
+
+# CDT-specific
+.cproject
+
+# PDT-specific
+.buildpath
