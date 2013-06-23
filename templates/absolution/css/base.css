@@ -3772,7 +3772,7 @@ input.disabled {
 
 @font-face {
 	font-family: "Harabara";
-	src: url("./styles/absolution_14665/template/harabara.ttf");
+	src: url("{{STATIC_THEME}}/fonts/harabara.ttf");
 }
 
 #header h1 {
