@@ -2,6 +2,7 @@
 {% load i18n %}
 {% block content %}
 <!-- Board display //-->
+{%load filter %}
 						<div class="forumlist">
 							{% for board in boards %}
 							<!-- begin category //-->
@@ -15,7 +16,7 @@
 								</div>
 
 								<div class="trigger active">
-									<a href="https://www.phpbb.com/styles/demo/3.0/board/index.php?style=875#"></a>
+									<a href="{% url board.views.index %}"></a>
 								</div>
 								<div class="collapsethis">
 									<table class="cat" cellpadding="0" cellspacing="0" width="100%">
@@ -23,12 +24,26 @@
 										<tbody>
 											{% for child in board.get_children %}
 											<tr>
-												<td class="forumicon"><img src="{{STATIC_THEME}}images/forum_read.gif" width="38" height="38" alt="No unread posts" title="No unread posts"></td>
+												<td class="forumicon">{% if child.id|is_new_board:request.user.id %}
+													<img src="{{STATIC_THEME}}images/forum_unread.gif" width="38" height="38" alt="No unread posts" title="No unread posts" />
+													{% else %}
+													<img src="{{STATIC_THEME}}images/forum_read.gif" width="38" height="38" alt="No unread posts" title="No unread posts" />
+													{% endif %}</td>
 												<td class="forumdetails"><a href="{% url board.views.show_board child.id,child.get_name_for_url%}" class="forumtitle">{{child.name}}</a>
 												<br>
 												<span class="forum-descriptions">{{child.description}}</span></td>
 
-												<td class="forumlastpost"><span class="fade">No posts</span>
+												<td class="forumlastpost"><span class="fade">	{% with child.get_last_post as last_post %}
+												{% if last_post %}
+												{% if last_post.user.is_authenticated %}
+												 Last post by <a href="{% url users.views.show last_post.user.id,last_post.user.username %}">{{last_post.user.username}}</a><a href="{% url board.views.show_thread last_post.thread.id,last_post.thread.get_url_name %}#latest"><img src="{{STATIC_THEME}}images/icon_topic_latest.gif" width="11" height="9" alt="View the latest post" title="View the latest post" /></a>
+												{%else%}
+												 Last post by {{last_post.guest_name}}<a href="{% url board.views.show_thread last_post.thread.id,last_post.thread.get_url_name %}#latest"><img src="{{STATIC_THEME}}images/icon_topic_latest.gif" width="11" height="9" alt="View the latest post" title="View the latest post" /></a>
+												{% endif %}
+												{% else %}
+												 No post
+												{% endif%}
+												{% endwith %}</span>
 												<br>
 												&nbsp; </td>
 												<td class="forumtopics">

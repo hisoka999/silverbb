@@ -72,7 +72,17 @@
 						{{f_post.name.errors}}
 					</dd>
 				</dl>
-
+				{% if not user.is_authenticated %}
+				<dl style="clear: left;">
+					<dt>
+						<label for="subject"><span style="color: #333333;">Guest Name:</span></label>
+					</dt>
+					<dd>
+						<input type="text" name="guest_name" id="guest_name" size="45" maxlength="64" tabindex="2" value="{{f_post.guest_name.value}}" class="inputbox autowidth" />
+						{{f_post.guest_name.errors}}
+					</dd>
+				</dl>				
+				{% endif %}
 				<div id="smiley-box">
 
 					<strong>Smilies</strong>
@@ -98,7 +108,7 @@
 
 				<div id="message-box">
 					{{f_post.text.errors}}
-					<textarea name="text" id="message" rows="15" cols="76" tabindex="4"  class="inputbox"></textarea>
+					<textarea name="text" id="message" rows="15" cols="76" tabindex="4"  class="inputbox">{{f_post.text.value}}</textarea>
 				</div>
 			</fieldset>
 

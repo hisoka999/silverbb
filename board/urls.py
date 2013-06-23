@@ -16,4 +16,6 @@ urlpatterns = patterns('',
     (r'^post/edit/(?P<post_id>\d+)/$','board.views.edit_post'),
     (r'^post/edit/$','board.views.edit_post'),
     (r'^post/search/$','board.views.search'),
+    (r'^post/mod/(?P<post_id>\d+)/$','board.views.mod_post'),
+    (r'^post/report/(?P<post_id>\d+)/$','board.views.report'),
 )

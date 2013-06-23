@@ -22,6 +22,11 @@ class PostForm(ModelForm):
         model = Post
         exclude = ('user','thread','time_edited','guest_name')
 
+class PostGuestForm(ModelForm):
+    class Meta:
+        model = Post
+        exclude = ('user','thread','time_edited')
+
 class ThreadModForm(Form):
     CHOICES = (('C','close'),('M','move'),('d','delete') )
     options = ChoiceField(choices=CHOICES)

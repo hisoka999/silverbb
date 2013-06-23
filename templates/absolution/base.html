@@ -119,7 +119,16 @@
 						{%else%}
 						<li class="float-right">
 						{%endif%}
-							<a href="{% url users.views.base_profile %}"><img src="{{STATIC_THEME}}images/key.png" width="16" height="16" alt="">{% trans "Profile"%}</a>
+							<a href="{% url users.views.base_profile %}"><img src="{{STATIC_THEME}}images/userdrop.png" width="16" height="16" alt="">{% trans "Profile"%}</a>
+							<div style="clear: both;"></div>
+							<ul class="drop">
+		                        <li><a href="">View your posts</a></li>
+		                        <li><a href="{% url users.views.base_profile %}">User Control Panel</a></li>
+		                        {% if user.is_staff %}
+		                        <li><a href="{% url admin:index %}">Administration Control Panel</a></li>
+		                        {% endif %}
+		                    </ul>
+                                
 						</li>
 						<li class="float-right">
 							<a href="{% url users.views.index %}"><img src="{{STATIC_THEME}}images/nav-members.png" width="16" height="16" alt="">{% trans "Members" %}</a>
@@ -130,12 +139,7 @@
 						<li class="float-right">
 							<a href="{% url users.views.logout_view %}"><img src="{{STATIC_THEME}}images/logout.png" width="16" height="16" alt="">{%trans "Logout" %}</a>
 
-						</li>
-						{% if user.is_staff %}
-						<li class="float-right">
-							<a href="{% url admin:index %}"><img src="{{STATIC_THEME}}images/nav-home.png" width="16" height="16" alt="">{% trans "Admin" %}</a>
-						</li>
-						{% endif %}						
+						</li>					
 						{% else %}
 						<li class="float-right">
 							<a href=""><img src="{{STATIC_THEME}}images/key.png" width="16" height="16" alt="">Login</a>

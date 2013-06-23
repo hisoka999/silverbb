@@ -17,7 +17,7 @@ class Board(models.Model):
     rights      = models.ManyToManyField(auth.models.Group,through='BoardRights')
     
     def get_last_post(self):
-        return None
+        return Post.objects.filter(thread__board__id=self.id).latest('time_created')
     
     def is_new(self,user):
         try:
