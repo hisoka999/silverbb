@@ -1,10 +1,11 @@
 from django.db import models
 from django.contrib import auth
 from django.contrib.auth.models import User
-from silverbb.board.models import Board,Thread
-from silverbb.backend.models import Theme,get_clean_text
+from board.models import Board,Thread
+from backend.models import Theme,get_clean_text
 from django.core.files.storage import FileSystemStorage
 from django.conf import settings 
+import datetime
 
 
 fs = FileSystemStorage(location=settings.STATICFILES_DIRS[0],base_url='/static/')  
@@ -56,6 +57,10 @@ class UserProfile(models.Model):
     
     def get_rank(self):
         return Rank.objects.filter(posts__lte=self.posts).get(group=self.user.groups.all()[0])
+
+    def get_posts_per_day(self):
+            diff = datetime.datetime.now()-self.user.date_joined
+            return float(self.posts)/float(diff.days)
 
 class UserSession(models.Model):
     user = models.ForeignKey(User,null=True,blank=True)

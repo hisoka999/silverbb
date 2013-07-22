@@ -22,3 +22,6 @@ urlpatterns = patterns('',
     (r'^admin/', include(admin.site.urls)),
 )
 urlpatterns += staticfiles_urlpatterns()
+
+handler404 = 'backend.views.show404'
+handler500 = 'backend.views.show404'
