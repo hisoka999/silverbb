@@ -14,10 +14,10 @@
 		</thead>
 		<tbody>
 	
-	{% for user in users %}
+	{% for user in users.object_list %}
 	<tr class="bg1">
 		<td><a href="{% url users.views.show user.pk,user.username %}">{{user.username}}</a></td>
-		<td class="posts"><a href="./search.php?style=875&amp;author_id=2&amp;sr=posts" title="Search user’s posts">{{user.get_profile.posts}}</a></td>
+		<td class="posts"><a href="{% url board.views.search%}?type=user&user_id={{user.pk}}" title="Search user’s posts">{{user.get_profile.posts}}</a></td>
 		<td class="info">&nbsp;</td>
 		<td>{{user.date_joined|date:"d.M.Y" }}</td>
 		

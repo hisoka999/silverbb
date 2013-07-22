@@ -27,22 +27,23 @@
 				<thead>
 					<tr>
 						<th class="name"><a href="">Thread</a></th>
-						<th class="posts"><a href="{% url users.views.index %}?column=userprofile__posts" onclick="orderby('userprofile__posts');return false;">Posts</a></th>
-						<th class="info"><a href="{% url users.views.index %}?column=userprofile__website" onclick="orderby('userprofile__website');return false;">Website</a>, <a href="./memberlist.php?style=875&amp;mode=&amp;sk=b&amp;sd=a">Location</a></th>
-						<th class="joined"><a href="{% url users.views.index %}?column=date_joined" onclick="orderby('date_joined');return false;">Joined</a></th>
-
+						<th class="name">Time created</th>
+						<th class="posts">Posts</th>
+						<th class="info">Last Post</th>
 					</tr>
 				</thead>
 				<tbody>
 
 					{% for result in results %}
+					{% with result.get_last_post as last_post %}
 					<tr class="bg1">
 						<td><a href="{% url board.views.show_thread result.id,result.get_url_name %}">{{result.name}}</a></td>
-						<td class="posts"></td>
-						<td class="info">&nbsp;</td>
 						<td>{{result.get_last_post.time_created|date:"d.M.Y" }}</td>
+						<td>{{result.posts}}</td>
+						<td>{{last_post.time_created}} by {{last_post.user}}</td>
 
 					</tr>
+					{%endwith%}
 					{% endfor %}
 				</tbody>
 			</table>

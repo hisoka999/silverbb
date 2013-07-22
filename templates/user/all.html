@@ -31,7 +31,7 @@ var col = '';
 			<strong><a href="#" onclick="orderby('userprofile__threads')">{%trans "threads" %}</a></strong>
 		</div>
 	</div>
-	{% for user in users %}
+	{% for user in users.object_list %}
 	<div class="viewforum">
 		<div class="viewthread">
 			<a href="{% url users.views.show user.pk,user.username %}">{{user.username}}</a></td>

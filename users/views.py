@@ -13,6 +13,9 @@ from backend.models import Theme
 from django.db import transaction
 from django.contrib import messages
 from django.core import urlresolvers
+import datetime
+from board.models import Post
+from django.core.paginator import Paginator
 
 '''
 def handle_uploaded_file(f):
@@ -24,20 +27,33 @@ def handle_uploaded_file(f):
 def show(request,userid,username=""):
     user = User.objects.get(pk=userid)
     profile = user.get_profile()
-    return render_to_response('user/show.html',{'user':user,'profile':profile},context_instance=RequestContext(request))
+    posts = float(Post.objects.count())
+    posts_from_total = float(profile.posts)/posts*100.0
+    print profile.posts
+    print posts
+    print str(posts_from_total)
+    return render_to_response('user/show.html',{'user':user,'profile':profile,'posts_from_total':posts_from_total},context_instance=RequestContext(request))
 
 
 def index(request):
+    try:
+        page = int(request.GET.get('page'))
+    except:
+        page = 1
     if (request.is_ajax()):
         if (not request.GET.get('column')):
             column = '-userprofile__posts'
         else:
             column = request.GET.get('column')
         users = User.objects.all().order_by(column)
-        return render_to_response('user/all_ajax.html',{'users':users,},context_instance=RequestContext(request))
+        user_list = Paginator(users, 10)
+        user_page = user_list.page(page)
+        return render_to_response('user/all_ajax.html',{'users':user_page,},context_instance=RequestContext(request))
     else:
         users = User.objects.all().order_by('-userprofile__posts')
-        return render_to_response('user/all.html',{'users':users,},context_instance=RequestContext(request))
+        user_list = Paginator(users, 10)
+        user_page = user_list.page(page)
+        return render_to_response('user/all.html',{'users':user_page,},context_instance=RequestContext(request))
 
 
 @transaction.commit_on_success

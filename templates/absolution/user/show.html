@@ -98,9 +98,9 @@
 						Total posts:
 					</dt>
 					<dd>
-						{{profile.posts}} | <strong><a href="./search.php?style=875&amp;author_id=2&amp;sr=posts&amp;sid=d2f523fa6e4aa6e818b6980f53d65114">Search user’s posts</a></strong>
+						{{profile.posts}} | <strong><a href="{% url board.views.search%}?type=user&user_id={{user.pk}}">Search user’s posts</a></strong>
 						<br />
-						(52.94% of all posts / 0.01 posts per day)
+						({{posts_from_total|floatformat:2}}% of all posts / {{profile.get_posts_per_day|floatformat:2}} posts per day)
 					</dd>
 
 					<dt>

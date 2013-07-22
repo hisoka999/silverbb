@@ -84,7 +84,10 @@ def show_board(request,board_id,board_name=""):
         return HttpResponseForbidden
 
 def show_thread(request,thread_id,thread_name=""):
-    thread = Thread.objects.get(pk=thread_id)
+    try:
+        thread = Thread.objects.get(pk=thread_id)
+    except:
+        raise Http404
     rights = BoardRights.objects.get(board= thread.board_id,group=get_group(request.user))
     mod_form = ThreadModForm()
     try:
@@ -337,9 +340,19 @@ def move_thread(request,thread_id):
 
 def search(request):
     if(request.method == 'GET'):
-        search_string = request.GET['keywords']
-        search_string.replace(' ','%')
-        result = Thread.objects.filter(Q(name__contains=search_string)|Q(post__text__contains=search_string)).distinct()#.order_by('-post__time_created')
+        search_type = request.GET.get('type')
+        if (search_type is None):
+            search_type='keys'
+        if (search_type.lower() == 'keys'):
+            search_string = request.GET['keywords']
+            search_string.replace(' ','%')
+            result = Thread.objects.filter(Q(name__contains=search_string)|Q(post__text__contains=search_string)).distinct()#.order_by('-post__time_created')
+        elif(search_type.lower() == 'user'):
+            try:
+                user_id = int(request.GET.get('user_id'))
+            except:
+                raise Http404
+            result = Thread.objects.filter(Q(author=user_id)|Q(post__user=user_id)).distinct()
         return render_to_response('board/search_result.html',{'results':result},context_instance=RequestContext(request))
         
         
