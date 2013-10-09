@@ -15,6 +15,16 @@ class Entry(models.Model):
     user = models.ForeignKey(User)
     tags = models.ManyToManyField(Tag)
     
+    def __unicode__(self):
+        return self.title
+    
+    def get_comments(self,user):
+        if (user.is_staff):
+            return self.comment_set.order_by('-created_at')
+        else:
+            return self.comment_set.filter(activated=True).order_by('-created_at')
+    
+    
 class Comment(models.Model):
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)

@@ -1,10 +1,10 @@
 # Create your views here.
-from models import *
+from models import Entry,Tag
 from forms import CommentForm
-from django.shortcuts import redirect
+#from django.shortcuts import redirect
 from django.template import RequestContext
 from django.core.paginator import Paginator
-from silverbb.backend.functions import render_to_response
+from backend.functions import render_to_response
 from django.contrib import messages
 
 
@@ -29,7 +29,7 @@ def blog_post(request,entry_id):
             messages.add_message(request, messages.INFO, 'comment successfully added.')
     else:        
         comment_form = CommentForm()
-    return render_to_response('blog/show.html',{'entry':entry,'form':comment_form},context_instance=RequestContext(request))
+    return render_to_response('blog/show.html',{'entry':entry,'form':comment_form,'comments':entry.get_comments(request.user)},context_instance=RequestContext(request))
 
 def tag_search(request,tag_name,page=1):
     tag = Tag.objects.get(name=tag_name)
@@ -37,4 +37,4 @@ def tag_search(request,tag_name,page=1):
     if (page < 1):
         page = 1
     pages = Paginator(entries,10)
-    return render_to_response('blog/tag.html',{'entries':pages,'tag':tag},context_instance=RequestContext(request))
+    return render_to_response('blog/tag.html',{'entries':pages.page(page),'tag':tag},context_instance=RequestContext(request))

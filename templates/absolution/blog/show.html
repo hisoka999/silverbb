@@ -42,8 +42,8 @@
 		</div>
 		<div class="statspanel">
 			<h3>Comments:</h3>
-			{% for comment in entry.comment_set.all %}
-			<strong>{{comment.user_name}}</strong>
+			{% for comment in comments%}
+			<strong>{{comment.user_name}}</strong> <i>{{comment.created_at|timesince}}</i>
 			<pre>{{comment.content}}</pre>
 			<hr />
 			{%endfor%}
