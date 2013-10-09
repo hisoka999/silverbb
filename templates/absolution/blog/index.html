@@ -22,15 +22,21 @@
 </div>
 
 	{% for entry in entries.object_list %}
-	<div class="catglow">
-			<p>
-				<h3><a href="{% url blog.views.blog_post entry.id %}">{{entry.title}} by {{entry.user}}</a></h3>
-			</p>
-			<p>
-				{{entry.created_at}}
-			</p>
-			<pre>{% autoescape off %}{{entry.content}}{% endautoescape %}</pre>
+<div class="catglow">
+	<div class="cathead-m">
+		<div class="cathead-r">
+			<div class="cathead-l">
+				<b><a href="{% url blog.views.blog_post entry.id %}">{{entry.title}} by {{entry.user}}</a></b> {{entry.created_at|timesince}}
+			</div>
+		</div>
 	</div>
+	<div class="collapsethis">
+		<div class="statspanel">
+			<div class="content">{% autoescape off %}{{entry.content|linebreaks}}{% endautoescape %}</div>
+		</div>
+
+	</div>
+</div>
 	
 	{% endfor %}
 <div class="catglow">

@@ -37,7 +37,7 @@
 			<pre>{% autoescape off %}{{entry.content}}{% endautoescape %}</pre>
 			<hr />
 			<P>
-				Tags: {% for tag in entry.tags.all %}<a href="{%url blog.views.tag_search tag.name %}"> {{tag.name}}</a>,{% endfor %}
+				Tags: {% for tag in entry.tags.all %}<a href="{%url blog.views.tag_search tag.name %}"> {{tag.name}}</a>{%if not forloop.last %},{% endif %}{% endfor %}
 			</P>
 		</div>
 		<div class="statspanel">

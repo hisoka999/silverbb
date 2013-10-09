@@ -17,7 +17,10 @@ class EntryAdmin(admin.ModelAdmin):
     inlines = [
         TagInline,
     ]
-    exclude = ('tags',)
+    exclude = ('tags','user')
+    def save_model(self, request, obj, form, change):
+        obj.user = request.user
+        obj.save()
 
 class CommentAdmin(admin.ModelAdmin):
     list_display = ['entry','user_name','user_mail','activated']

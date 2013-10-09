@@ -25,7 +25,7 @@ def blog_post(request,entry_id):
         if comment_form.is_valid():
             post = comment_form.save(False)
             post.entry = entry
-            post.save
+            post.save()
             messages.add_message(request, messages.INFO, 'comment successfully added.')
     else:        
         comment_form = CommentForm()
