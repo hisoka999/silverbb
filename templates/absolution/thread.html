@@ -43,7 +43,7 @@
 			inline_styles : false,
 			convert_fonts_to_spans : false
 		});
-		new Ajax.Updater(object, '{% url board.views.edit_post %}' + id + "/", {
+		new Ajax.Updater(object, '{% url "board.views.edit_post" %}' + id + "/", {
 			method : 'get',
 			onComplete : function(transport) {
 				tinyMCE.execCommand("mceAddControl", true, "id_text");
@@ -61,7 +61,7 @@
 {% endblock %}
 {% block content %}
 <div class="forum">
-	<a href="{% url board.views.index %}">{{CURRENT_SITE.name}}</a>&raquo; {% autoescape off %}{{thread.board.get_path}}
+	<a href="{% url 'board.views.index' %}">{{CURRENT_SITE.name}}</a>&raquo; {% autoescape off %}{{thread.board.get_path}}
 	&raquo; {{thread.name}}
 	{% endautoescape %}
 	<br />
@@ -72,7 +72,7 @@
 	<div class="vtinner">
 		<div class="vtdatebar">
 			<div class="floatleft">
-				<h3 class="vtsubject mp user-offline"><a href="{% url board.views.show_thread thread.id,thread.get_url_name %}#p{{forloop.counter}}">{{thread.name}}</a></h3>
+				<h3 class="vtsubject mp user-offline"><a href="{% url 'board.views.show_thread' thread.id thread.get_url_name %}#p{{forloop.counter}}">{{thread.name}}</a></h3>
 			</div>
 			<div class="floatright">
 				<span class="vtdate"><a href=""><img src="icon_post_target.gif" width="11" height="9" alt="Post" title="Post" /></a>{{tmp.time_created}}</span>
@@ -83,7 +83,7 @@
 		<div class="vtprofilepanel">
 			<div style="text-align: center;">
 				{% if tmp.user.id != none %}
-				<span class="vtusername"><a href="{% url users.views.show tmp.user.id,tmp.user.username %}">{{tmp.user.username}}</a></span>
+				<span class="vtusername"><a href="{% url 'users.views.show' tmp.user.id tmp.user.username %}">{{tmp.user.username}}</a></span>
 
 				{% if tmp.user.get_profile.avatar %}
 				<span> <img src="{{ STATIC_URL }}{{tmp.user.get_profile.avatar}}" /> </span>
@@ -114,17 +114,27 @@
 			<div class="vtcontrolbuttons">
 				<ul class="profile-icons">
 					{% if user == tmp.user or user.is_staff %}
-					<li class="edit-icon"><a href="{% url board.views.edit_post tmp.id %}" title="Edit post"><span>Edit post</span></a>&nbsp;</li>
+					<li class="edit-icon">
+						<a href="{% url 'board.views.edit_post' tmp.id %}" title="Edit post"><span>Edit post</span></a>&nbsp;
+					</li>
 					{% endif %}
 					{% if user.is_staff %}
-					<li class="delete-icon"><a href="{% url board.views.mod_post tmp.id %}?options=d" title="Delete post"><span>Delete post</span></a></li>
+					<li class="delete-icon">
+						<a href="{% url 'board.views.mod_post' tmp.id %}?options=d" title="Delete post"><span>Delete post</span></a>
+					</li>
 					{% endif %}
-					<li class="report-icon"><a href="{% url board.views.report tmp.id %}" title="Report this post"><span>Report this post</span></a></li>
+					<li class="report-icon">
+						<a href="{% url 'board.views.report' tmp.id %}" title="Report this post"><span>Report this post</span></a>
+					</li>
 					{% if user.is_staff %}
-					<li class="info-icon"><a href="" title="Information"><span>Information</span></a></li>
+					<li class="info-icon">
+						<a href="" title="Information"><span>Information</span></a>
+					</li>
 					{% endif %}
 					{% if rights.can_post and not thread.closed %}
-					<li class="quote-icon"><a href="{% url board.views.create_post thread.id %}?quote={{tmp.id}}" title="Reply with quote"><span>Reply with quote</span></a></li>
+					<li class="quote-icon">
+						<a href="{% url 'board.views.create_post' thread.id %}?quote={{tmp.id}}" title="Reply with quote"><span>Reply with quote</span></a>
+					</li>
 					{%endif %}
 				</ul>
 			</div>
@@ -149,7 +159,7 @@
 <!-- our cutting-edge spacer -->
 {% endfor %}
 {% if user.is_staff %}
-<form method="post" action="{% url board.views.mod_thread thread.id %}">
+<form method="post" action="{% url 'board.views.mod_thread' thread.id %}">
 	{{moderation}}
 	<input type="submit" value="Ok" />
 </form>
@@ -162,16 +172,18 @@
 <div class="topic-actions">
 	<div class="buttons">
 		{% if rights.can_post and not thread.closed %}
-		<div class="reply-icon"><a href="{% url board.views.create_post thread.id %}" title="Post a reply"><span></span>Post a reply</a></div>
+		<div class="reply-icon">
+			<a href="{% url 'board.views.create_post' thread.id %}" title="Post a reply"><span></span>Post a reply</a>
+		</div>
 		{% endif %}
 	</div>
 
-		<div class="pagination">
-			<span class="step-links"> {% if t_posts.has_previous %} <a href="?page={{ t_posts.previous_page_number }}">{% trans "previous" %}</a> {% endif %} <span class="current"> {% blocktrans with t_posts.number as cur_page and t_posts.paginator.num_pages as all_pages  %}
-					Page {{ cur_page }} of {{ all_pages }}.
-					{% endblocktrans %} </span> {% if t_posts.has_next %} <a href="?page={{ t_posts.next_page_number }}">{% trans "next" %}</a> {% endif %} </span>
-		</div>
-	
+	<div class="pagination">
+		<span class="step-links"> {% if t_posts.has_previous %} <a href="?page={{ t_posts.previous_page_number }}">{% trans "previous" %}</a> {% endif %} <span class="current"> {% blocktrans with t_posts.number as cur_page and t_posts.paginator.num_pages as all_pages  %}
+				Page {{ cur_page }} of {{ all_pages }}.
+				{% endblocktrans %} </span> {% if t_posts.has_next %} <a href="?page={{ t_posts.next_page_number }}">{% trans "next" %}</a> {% endif %} </span>
+	</div>
+
 </div>
 
 {% endblock %}

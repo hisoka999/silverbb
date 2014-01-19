@@ -12,14 +12,14 @@
 		{% if page1.module_path %}
 		<a href="{{page1.module_path}}"><img src="{{STATIC_THEME}}images/nav-home.png" width="16" height="16" alt="">{{page1.title}}</a>
 		{% else %}
-		<a href="{% url cms.views.page page1.id,page1.get_url_name %}"><img src="{{STATIC_THEME}}images/nav-home.png" width="16" height="16" alt="">{{page1.title}}</a>
+		<a href="{% url 'cms.views.page' page1.id page1.get_url_name %}"><img src="{{STATIC_THEME}}images/nav-home.png" width="16" height="16" alt="">{{page1.title}}</a>
 		{%endif %}
 	</li>
 	{% endfor %}
 
 	{% if user.is_staff %}
 	<li class="float-right">
-		<a href="{% url admin:index %}"><img src="{{STATIC_THEME}}images/nav-home.png" width="16" height="16" alt="">{% trans "Admin" %}</a>
+		<a href="{% url 'admin:index' %}"><img src="{{STATIC_THEME}}images/nav-home.png" width="16" height="16" alt="">{% trans "Admin" %}</a>
 	</li>
 	{% endif %}
 </ul>

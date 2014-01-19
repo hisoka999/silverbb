@@ -10,7 +10,7 @@
 		} else {
 			col = column;
 		}
-		$.get('{% url users.views.index %}?column=' + col, function(data) {
+		$.get('{% url 'users.views.index' %}?column=' + col, function(data) {
 			$('#replace').html(data);
 		});
 
@@ -26,10 +26,10 @@
 			<table class="table1" cellspacing="1" id="memberlist">
 				<thead>
 					<tr>
-						<th class="name"><a href="{% url users.views.index %}?column=username"  onclick="orderby('userprofile__username');return false;">Username</a></th>
-						<th class="posts"><a href="{% url users.views.index %}?column=userprofile__posts" onclick="orderby('userprofile__posts');return false;">Posts</a></th>
-						<th class="info"><a href="{% url users.views.index %}?column=userprofile__website" onclick="orderby('userprofile__website');return false;">Website</a>, <a href="{% url users.views.index %}?column=location"  onclick="orderby('userprofile__location');return false;">Location</a></th>
-						<th class="joined"><a href="{% url users.views.index %}?column=date_joined" onclick="orderby('date_joined');return false;">Joined</a></th>
+						<th class="name"><a href="{% url 'users.views.index' %}?column=username"  onclick="orderby('userprofile__username');return false;">Username</a></th>
+						<th class="posts"><a href="{% url 'users.views.index' %}?column=userprofile__posts" onclick="orderby('userprofile__posts');return false;">Posts</a></th>
+						<th class="info"><a href="{% url 'users.views.index' %}?column=userprofile__website" onclick="orderby('userprofile__website');return false;">Website</a>, <a href="{% url 'users.views.index' %}?column=location"  onclick="orderby('userprofile__location');return false;">Location</a></th>
+						<th class="joined"><a href="{% url 'users.views.index' %}?column=date_joined" onclick="orderby('date_joined');return false;">Joined</a></th>
 
 					</tr>
 				</thead>
@@ -37,8 +37,8 @@
 
 					{% for user in users.object_list %}
 					<tr class="bg1">
-						<td><a href="{% url users.views.show user.pk,user.username %}">{{user.username}}</a></td>
-						<td class="posts"><a href="{% url board.views.search%}?type=user&user_id={{user.pk}}" title="Search user’s posts">{{user.get_profile.posts}}</a></td>
+						<td><a href="{% url 'users.views.show' user.pk user.username %}">{{user.username}}</a></td>
+						<td class="posts"><a href="{% url 'board.views.search' %}?type=user&user_id={{user.pk}}" title="Search user’s posts">{{user.get_profile.posts}}</a></td>
 						<td class="info">&nbsp;</td>
 						<td>{{user.date_joined|date:"d.M.Y" }}</td>
 

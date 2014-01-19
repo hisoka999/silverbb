@@ -1,8 +1,8 @@
 {% extends BASE_PATH %}
 {% load i18n %}
 {%block head %}
-<link rel="alternate" type="application/rss+xml" title="RSS" href="{% url cms-news-rss %}">
-<link rel="alternate" type="application/rss+xml" title="Atom" href="{% url cms-news-atom %}">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="{% url "cms-news-rss" %}">
+<link rel="alternate" type="application/rss+xml" title="Atom" href="{% url "cms-news-atom" %}">
 {%endblock%}
 {% block navigation %}
 		{% with menu_path=THEME_PATH|add:"cms/menu.html" %}

@@ -23,10 +23,10 @@
 		<div class="statspanel">
 				<p>
 					{% for item in cats.all %}
-					<strong><a href="{% url cms.views.downloads item.id %}">{{item.name}}</a></strong>
+					<strong><a href="{% url 'cms.views.downloads' item.id %}">{{item.name}}</a></strong>
 					<ul>
 						{% for sub in item.downloadcategory_set.all %}
-						<li><a href="{% url cms.views.downloads sub.id %}">{{sub.name}}</a>({{sub.download_set.count}})</li>
+						<li><a href="{% url 'cms.views.downloads' sub.id %}">{{sub.name}}</a>({{sub.download_set.count}})</li>
 						{% endfor %}
 					</ul>
 					{% endfor %}

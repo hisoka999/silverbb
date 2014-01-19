@@ -10,7 +10,7 @@
 		} else {
 			col = column;
 		}
-		$.get('{% url users.views.index %}?column=' + col, function(data) {
+		$.get('{% url 'users.views.index' %}?column=' + col, function(data) {
 			$('#replace').html(data);
 		});
 
@@ -37,7 +37,7 @@
 					{% for result in results %}
 					{% with result.get_last_post as last_post %}
 					<tr class="bg1">
-						<td><a href="{% url board.views.show_thread result.id,result.get_url_name %}">{{result.name}}</a></td>
+						<td><a href="{% url 'board.views.show_thread' result.id result.get_url_name %}">{{result.name}}</a></td>
 						<td>{{result.get_last_post.time_created|date:"d.M.Y" }}</td>
 						<td>{{result.posts}}</td>
 						<td>{{last_post.time_created}} by {{last_post.user}}</td>

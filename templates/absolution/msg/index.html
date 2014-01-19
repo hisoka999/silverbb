@@ -7,9 +7,9 @@
 {% endblock %}
 {% block content %}
 <div class="forum">
-	<a href="{% url board.views.index %}">Silver-Boards Beta Forum</a>&raquo; <a href="{% url msg.views.inbox %}">Inbox</a>
+	<a href="{% url 'board.views.index' %}">{{CURRENT_SITE.name}}</a>&raquo; <a href="{% url 'msg.views.inbox' %}">Inbox</a>
 </div>
-<form method ="post" action="{% url msg.views.delete %}" style="width:100%;">
+<form method ="post" action="{% url 'msg.views.delete' %}" style="width:100%;">
 	<div id="replace">
 		<div class="forumbg forumbg-table">
 			<div class="inner">
@@ -29,8 +29,8 @@
 
 						{% for msg in user_msg.object_list %}
 						<tr class="bg1">
-							<td>{% if not msg.readed%}<strong><a href="{% url msg.views.msg msg.id %}">{{msg.title}}</a></strong>{%else%} <a href="{% url msg.views.msg msg.id %}">{{msg.title}}</a> {% endif %}</td>
-							<td><a href="{% url users.views.show msg.sender.pk,msg.sender.username %}">{{msg.sender.username}}</a></td>
+							<td>{% if not msg.readed%}<strong><a href="{% url 'msg.views.msg' msg.id %}">{{msg.title}}</a></strong>{%else%} <a href="{% url 'msg.views.msg' msg.id %}">{{msg.title}}</a> {% endif %}</td>
+							<td><a href="{% url 'users.views.show' msg.sender.pk msg.sender.username %}">{{msg.sender.username}}</a></td>
 							<td>{{msg.time}}</td>
 							<td>
 							<input type="checkbox" name="delmsg[]" value="{{msg.id}}" />
@@ -42,17 +42,25 @@
 			</div>
 		</div>
 	</div>
-	<div class="viewforum">
-		<input type="submit" value="delete" />
-	</div>
+	<div class="panel bg2">
+		<div class="inner">
+			<span class="corners-top"><span></span></span>
+			<fieldset class="submit-buttons">
+				<input type="submit" accesskey="s" tabindex="6" name="post" value="{% trans 'Delete' %}" class="button1 default-submit-action" />
+				&nbsp;
+				<a href="{% url 'msg.views.create' %}" class="button1 default-submit-action">{% trans "send message"%}</a>
+			</fieldset>
 
+			<span class="corners-bottom"><span></span></span>
+		</div>
+	</div>
 	<div class="pagination">
-		<span class="step-links"> {% if messages.has_previous %} <a href="?page={{ messages.previous_page_number }}">{% trans "previous" %}</a> {% endif %} <span class="current"> {% blocktrans with messages.number as cur_page and messages.paginator.num_pages as all_pages %}
+		<span class="step-links"> {% if user_msg.has_previous %} <a href="?page={{ user_msg.previous_page_number }}">{% trans "previous" %}</a> {% endif %} <span class="current"> {% blocktrans with user_msg.number as cur_page and user_msg.paginator.num_pages as all_pages %}
 				Page {{ cur_page }} of {{ all_pages }}.
-				{% endblocktrans %} </span> {% if messages.has_next %} <a href="?page={{ messages.next_page_number }}">{% trans "next" %}</a> {% endif %} </span>
+				{% endblocktrans %} </span> {% if user_msg.has_next %} <a href="?page={{ user_msg.next_page_number }}">{% trans "next" %}</a> {% endif %} </span>
 	</div>
 	<div class="viewforum">
-		<a href="{% url msg.views.create %}" class="button">{% trans "send message"%}</a>
+		
 	</div>
 </form>
 {% endblock %}

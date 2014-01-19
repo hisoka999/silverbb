@@ -47,12 +47,12 @@
 		{%block head %}
 		
 		{%endblock %}
-		<link href="{% url backend.views.show_css 'base' %}" rel="stylesheet" type="text/css">
+		<link href="{% url 'backend.views.show_css' 'base' %}" rel="stylesheet" type="text/css">
 		<!--[if IE]>
 		<link rel="stylesheet" type="text/css" href="{{STATIC_THEME}}css/ie.css" />
 		<![endif]-->
 		<style type="text/css">
-		@import url("{% url backend.views.show_css 'base' %}");
+		@import url("{% url 'backend.views.show_css' 'base' %}");
 	</style>
 
 	</head>
@@ -82,7 +82,7 @@
 					<div class="float-right">
 						<div class="quicksearch">
 
-							<form action="{% url board.views.search %}" method="get" id="search">
+							<form action="{% url 'board.views.search' %}" method="get" id="search">
 								<fieldset>
 									<input name="keywords" id="keywords" type="text" maxlength="128" value="Search…" onclick="if(this.value==&#39;Search…&#39;)this.value=&#39;&#39;;" onblur="if(this.value==&#39;&#39;)this.value=&#39;Search…&#39;;">
 									<!--<input class="button2" value="Search" type="submit" />-->
@@ -102,15 +102,15 @@
 				<div id="nav">
 					{% block navigation %}
 					<ul>
-						{% url users.views.base_profile as profile_url %}
-						{% url msg.views.inbox as inbox_url %}
-						{% url board.views.index as index_url %}
+						{% url "users.views.base_profile" as profile_url %}
+						{% url "msg.views.inbox" as inbox_url %}
+						{% url "board.views.index" as index_url %}
 						{% if request.get_full_path == index_url %}
 						<li class="active">
 						{%else %}
 						<li class="float-right">
 						{%endif%}
-							<a href="{% url board.views.index %}"><img src="{{STATIC_THEME}}images/nav-home.png" width="16" height="16" alt="">Board index</a>
+							<a href="{% url 'board.views.index' %}"><img src="{{STATIC_THEME}}images/nav-home.png" width="16" height="16" alt="">Board index</a>
 						</li>
 						<li class="divider"></li>
 						{% if user.is_authenticated %}
@@ -119,25 +119,25 @@
 						{%else%}
 						<li class="float-right">
 						{%endif%}
-							<a href="{% url users.views.base_profile %}"><img src="{{STATIC_THEME}}images/userdrop.png" width="16" height="16" alt="">{% trans "Profile"%}</a>
+							<a href="{% url 'users.views.base_profile' %}"><img src="{{STATIC_THEME}}images/userdrop.png" width="16" height="16" alt="">{% trans "Profile"%}</a>
 							<div style="clear: both;"></div>
 							<ul class="drop">
 		                        <li><a href="">View your posts</a></li>
-		                        <li><a href="{% url users.views.base_profile %}">User Control Panel</a></li>
+		                        <li><a href="{% url 'users.views.base_profile' %}">User Control Panel</a></li>
 		                        {% if user.is_staff %}
-		                        <li><a href="{% url admin:index %}">Administration Control Panel</a></li>
+		                        <li><a href="{% url "admin:index" %}">Administration Control Panel</a></li>
 		                        {% endif %}
 		                    </ul>
                                 
 						</li>
 						<li class="float-right">
-							<a href="{% url users.views.index %}"><img src="{{STATIC_THEME}}images/nav-members.png" width="16" height="16" alt="">{% trans "Members" %}</a>
+							<a href="{% url 'users.views.index' %}"><img src="{{STATIC_THEME}}images/nav-members.png" width="16" height="16" alt="">{% trans "Members" %}</a>
 						</li>
 						<li class="float-right">
-							<a href="{% url msg.views.inbox %}"><img src="{{STATIC_THEME}}images/nav-pm.png" width="16" height="16" alt="">{% trans "Inbox" %}</a>
+							<a href="{% url 'msg.views.inbox' %}"><img src="{{STATIC_THEME}}images/nav-pm.png" width="16" height="16" alt="">{% trans "Inbox" %}</a>
 						</li>
 						<li class="float-right">
-							<a href="{% url users.views.logout_view %}"><img src="{{STATIC_THEME}}images/logout.png" width="16" height="16" alt="">{%trans "Logout" %}</a>
+							<a href="{% url 'users.views.logout_view' %}"><img src="{{STATIC_THEME}}images/logout.png" width="16" height="16" alt="">{%trans "Logout" %}</a>
 
 						</li>					
 						{% else %}
@@ -147,7 +147,7 @@
 						<li class="divider float-right"></li>
 
 						<li class="float-right">
-							<a href="{% url users.views.register %}"><img src="{{STATIC_THEME}}images/add.png" width="16" height="16" alt="">Register</a>
+							<a href="{% url 'users.views.register' %}"><img src="{{STATIC_THEME}}images/add.png" width="16" height="16" alt="">Register</a>
 						</li>
 						{% endif %}
 

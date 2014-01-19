@@ -6,7 +6,7 @@
 
 <h2>Viewing profile - {{user.username}}</h2>
 
-<form method="post" action="{% url users.views.team %}" id="viewprofile">
+<form method="post" action="{% url 'users.views.team' %}" id="viewprofile">
 	<div class="panel bg1">
 		<div class="inner">
 			<span class="corners-top"><span></span></span>
@@ -98,7 +98,7 @@
 						Total posts:
 					</dt>
 					<dd>
-						{{profile.posts}} | <strong><a href="{% url board.views.search%}?type=user&user_id={{user.pk}}">Search user’s posts</a></strong>
+						{{profile.posts}} | <strong><a href="{% url 'board.views.search' %}?type=user&user_id={{user.pk}}">Search user’s posts</a></strong>
 						<br />
 						({{posts_from_total|floatformat:2}}% of all posts / {{profile.get_posts_per_day|floatformat:2}} posts per day)
 					</dd>

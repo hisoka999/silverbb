@@ -1,4 +1,4 @@
-from silverbb.backend.functions import render_to_response
+from backend.functions import render_to_response
 #from silverbb import settings
 from django.conf import settings
 from django.shortcuts import redirect

@@ -10,13 +10,13 @@
 								<div class="cathead-m">
 									<div class="cathead-r">
 										<div class="cathead-l">
-											<a href="{% url board.views.show_board board.id,board.get_name_for_url %}">{{board.name}}</a>
+											<a href="{% url 'board.views.show_board' board.id board.get_name_for_url %}">{{board.name}}</a>
 										</div>
 									</div>
 								</div>
 
 								<div class="trigger active">
-									<a href="{% url board.views.index %}"></a>
+									<a href="{% url 'board.views.index' %}"></a>
 								</div>
 								<div class="collapsethis">
 									<table class="cat" cellpadding="0" cellspacing="0" width="100%">
@@ -29,16 +29,16 @@
 													{% else %}
 													<img src="{{STATIC_THEME}}images/forum_read.gif" width="38" height="38" alt="No unread posts" title="No unread posts" />
 													{% endif %}</td>
-												<td class="forumdetails"><a href="{% url board.views.show_board child.id,child.get_name_for_url%}" class="forumtitle">{{child.name}}</a>
+												<td class="forumdetails"><a href="{% url 'board.views.show_board' child.id child.get_name_for_url%}" class="forumtitle">{{child.name}}</a>
 												<br>
 												<span class="forum-descriptions">{{child.description}}</span></td>
 
 												<td class="forumlastpost"><span class="fade">	{% with child.get_last_post as last_post %}
 												{% if last_post %}
 												{% if last_post.user.is_authenticated %}
-												 Last post by <a href="{% url users.views.show last_post.user.id,last_post.user.username %}">{{last_post.user.username}}</a><a href="{% url board.views.show_thread last_post.thread.id,last_post.thread.get_url_name %}#latest"><img src="{{STATIC_THEME}}images/icon_topic_latest.gif" width="11" height="9" alt="View the latest post" title="View the latest post" /></a>
+												 Last post by <a href="{% url 'users.views.show' last_post.user.id last_post.user.username %}">{{last_post.user.username}}</a><a href="{% url 'board.views.show_thread' last_post.thread.id last_post.thread.get_url_name %}#latest"><img src="{{STATIC_THEME}}images/icon_topic_latest.gif" width="11" height="9" alt="View the latest post" title="View the latest post" /></a>
 												{%else%}
-												 Last post by {{last_post.guest_name}}<a href="{% url board.views.show_thread last_post.thread.id,last_post.thread.get_url_name %}#latest"><img src="{{STATIC_THEME}}images/icon_topic_latest.gif" width="11" height="9" alt="View the latest post" title="View the latest post" /></a>
+												 Last post by {{last_post.guest_name}}<a href="{% url 'board.views.show_thread' last_post.thread.id last_post.thread.get_url_name %}#latest"><img src="{{STATIC_THEME}}images/icon_topic_latest.gif" width="11" height="9" alt="View the latest post" title="View the latest post" /></a>
 												{% endif %}
 												{% else %}
 												 No post
@@ -104,12 +104,12 @@
 
 								<div class="statspanel" style="background-image: url({{STATIC_THEME}}images/lock.png);">
 							 		{% if user.is_authenticated %}
-									 {{user.username}}<a href="{% url users.views.logout_view %}">[{% trans "Logout" %}]</a><br />
+									 {{user.username}}<a href="{% url 'users.views.logout_view' %}">[{% trans "Logout" %}]</a><br />
 							         <strong>{% trans "private messages" %}</strong><br />
 							         {% trans "New" %}: {{msg_new}}<br />
 							         {% trans "Total" %}: {{msg_all}}<br />			
 									{% else %}	
-									<form method="post" action="{% url users.views.login_view %}">
+									<form method="post" action="{% url 'users.views.login_view' %}">
 										<fieldset class="quick-login">
 											<label for="username">Username:</label>&nbsp;
 											<input type="text" name="username" id="username" size="10" class="inputbox" title="Username">
@@ -134,7 +134,7 @@
 									Registered users: 
 											{% for u in users%}
 											{% if not forloop.first%},{%endif%} 
-											<a {% if user.is_staff%}style="color:#AA0000" {%else%} {% endif%}href="{% url users.views.show u.user.id,u.user.username%}">{{u.user.username}}</a>
+											<a {% if user.is_staff%}style="color:#AA0000" {%else%} {% endif%}href="{% url 'users.views.show' u.user.id u.user.username%}">{{u.user.username}}</a>
 											{% empty %}
 											No registered users
 											{% endfor %}
@@ -149,7 +149,7 @@
 								</div>
 
 								<div class="statspanel" style="background-image: url({{STATIC_THEME}}images/statistics.png);">
-									Total posts <strong>{{all_posts}}</strong> • Total topics <strong>{{all_threads}}</strong> • Total members <strong>{{all_users}}</strong> • Our newest member <strong><a href="{% url users.views.show last_user.id,last_user.username%}">{{last_user.username}}</a></strong>
+									Total posts <strong>{{all_posts}}</strong> • Total topics <strong>{{all_threads}}</strong> • Total members <strong>{{all_users}}</strong> • Our newest member <strong><a href="{% url 'users.views.show' last_user.id last_user.username%}">{{last_user.username}}</a></strong>
 								</div>
 
 							</div>
