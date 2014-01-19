@@ -7,8 +7,8 @@
 
 </style>
 <script src="{{STATIC_URL}}js/board.js" type="text/javascript" ></script>
-<link rel="alternate" type="application/rss+xml" title="RSS" href="{% url blog-rss %}">
-<link rel="alternate" type="application/rss+xml" title="Atom" href="{% url blog-atom %}">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="{% url 'blog-rss' %}">
+<link rel="alternate" type="application/rss+xml" title="Atom" href="{% url 'blog-atom' %}">
 {% endblock %}
 {% block navigation %}
 		{% with menu_path=THEME_PATH|add:"cms/menu.html" %}
@@ -17,9 +17,9 @@
 {% endblock %}
 {% block content %}
 <div class="forum">
-	<a href="{% url board.views.index %}">{{CURRENT_SITE.name}}</a>&raquo;
+	<a href="{% url 'board.views.index' %}">{{CURRENT_SITE.name}}</a>&raquo;
 	
-	<a href ="{% url blog.views.index %}">Blog</a> &raquo;
+	<a href ="{% url 'blog.views.index' %}">{% trans "Blog" %}</a> &raquo;
 	Search for Tag: {{tag.name}}
 </div>
 
@@ -29,7 +29,7 @@
 	<div class="cathead-m">
 		<div class="cathead-r">
 			<div class="cathead-l">
-				<b><a href="{% url blog.views.blog_post entry.id %}">{{entry.title}} by {{entry.user}}</a></b> {{entry.created_at|timesince}}
+				<b><a href="{% url 'blog.views.blog_post' entry.id %}">{{entry.title}} by {{entry.user}}</a></b> {{entry.created_at|timesince}}
 			</div>
 		</div>
 	</div>
@@ -46,9 +46,9 @@
 <div class="catglow">
 	<div class="topic-actions">
 		<div class="pagination">
-			<span class="step-links"> {% if entries.has_previous %} <a href="{% url blog.views.index entries.previous_page_number %}">{% trans "previous" %}</a> {% endif %} <span class="current"> {% blocktrans with entries.number as cur_page and entries.paginator.num_pages as all_pages  %}
+			<span class="step-links"> {% if entries.has_previous %} <a href="{% url 'blog.views.index' entries.previous_page_number %}">{% trans "previous" %}</a> {% endif %} <span class="current"> {% blocktrans with entries.number as cur_page and entries.paginator.num_pages as all_pages  %}
 					Page {{ cur_page }} of {{ all_pages }}.
-					{% endblocktrans %} </span> {% if entries.has_next %} <a href="{% url blog.views.index entries.next_page_number %}">{% trans "next" %}</a> {% endif %} </span>
+					{% endblocktrans %} </span> {% if entries.has_next %} <a href="{% url 'blog.views.index' entries.next_page_number %}">{% trans "next" %}</a> {% endif %} </span>
 		</div>
 	</div>
 </div>
