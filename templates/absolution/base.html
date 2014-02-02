@@ -142,7 +142,7 @@
 						</li>					
 						{% else %}
 						<li class="float-right">
-							<a href=""><img src="{{STATIC_THEME}}images/key.png" width="16" height="16" alt="">Login</a>
+							<a href="{% url 'users.views.login_view' %}"><img src="{{STATIC_THEME}}images/key.png" width="16" height="16" alt="">Login</a>
 						</li>
 						<li class="divider float-right"></li>
 

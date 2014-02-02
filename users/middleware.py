@@ -26,7 +26,7 @@ class UserMiddleware:
         except:
             if request.session.session_key is None or len(request.session.session_key) >40:
                 s = SessionStore()
-                s['last_login'] = datetime.now()
+                s['last_login'] = datetime.isoformat(datetime.now())
                 s.save()
                 request.COOKIES['last_login'] =  s['last_login'] 
             else:

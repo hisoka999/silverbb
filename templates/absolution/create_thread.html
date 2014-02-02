@@ -31,7 +31,7 @@
 {% endblock%}
 {% block content %}
 
-<form id="postform" method="post" action="{% url board.views.create_thread board_id %}" enctype="multipart/form-data">
+<form id="postform" method="post" action="{% url 'board.views.create_thread' board_id %}" enctype="multipart/form-data">
 	{# Include the hidden fields #}
 	{% for hidden in f_post.hidden_fields %}
 	{{ hidden }}

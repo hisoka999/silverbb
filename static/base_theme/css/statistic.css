@@ -10,5 +10,11 @@
 }
 .statistic{
   background-color: #EFEFEF;
-  border-top: 1px solid #000000;
+  /*border-top: 1px solid #000000;*/
+}
+.statistic_header{
+	font-size: larger;
+	background-image:linear-gradient(#CDCDCD 50%, #EFEFEF 100%);
+	text-shadow: #333333 2px 2px 3px;
+	
 }

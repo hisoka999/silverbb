@@ -7,7 +7,7 @@ from froms import MessageForm
 from django.utils.datetime_safe import datetime
 from django.http import HttpResponseNotAllowed, HttpResponseForbidden
 from django.core import urlresolvers
-from silverbb.backend.functions import render_to_response
+from backend.functions import render_to_response
 from django.contrib import messages
 
 # show the inbox

@@ -26,7 +26,7 @@
 		<strong>{%trans "Your changes were saved."%}</strong>
 	</p>
 	{% endif %}
-	<form method="post" action="{% url users.views.base_profile %}" enctype="multipart/form-data">
+	<form method="post" action="{% url 'users.views.base_profile' %}" enctype="multipart/form-data">
 		<fieldset>
 			<legend>
 				{% trans "change password" %}

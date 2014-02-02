@@ -31,7 +31,7 @@
 {% endblock%}
 {% block content %}
 
-<form id="postform" method="post" action="{% url board.views.edit_post post_id %}" enctype="multipart/form-data">
+<form id="postform" method="post" action="{% url 'board.views.edit_post' post_id %}" enctype="multipart/form-data">
 	{% if preview %}
 	<div class="post bg2" id="preview">
 		<div class="inner"><span class="corners-top"><span></span></span>

@@ -28,18 +28,20 @@
         width: 100%;
         
         border: 1px solid #000000;
-        background-color: #CDCDCD;
+        background-image:linear-gradient(#CDCDCD 100%, #EFEFEF 0%);
+        
         font-size: 110%;
         text-align: left;
-        
+        margin-top: 10px;
+	-webkit-box-shadow: 0 8px 6px -6px black;
+	   -moz-box-shadow: 0 8px 6px -6px black;
+	        box-shadow: 0 8px 6px -6px black;        
       }
      .forum{
         width:95%;
         margin: 0px auto;
         margin-bottom: 1em;
-	-webkit-box-shadow: 0 8px 6px -6px black;
-	   -moz-box-shadow: 0 8px 6px -6px black;
-	        box-shadow: 0 8px 6px -6px black;
+
         
       }
       .boardtitle

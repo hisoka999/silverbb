@@ -3,7 +3,7 @@ Created on 21.05.2012
 
 @author: stefan
 '''
-from django.conf.urls.defaults import patterns
+from django.conf.urls import patterns
 urlpatterns = patterns('',
     (r'^$','board.views.index'),
     (r'^board/(?P<board_id>\d+)/$','board.views.show_board'),

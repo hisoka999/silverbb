@@ -52,12 +52,13 @@ USE_I18N = True
 # If you set this to False, Django will not format dates, numbers and
 # calendars according to the current locale
 USE_L10N = True
-
+import os
+PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/"
-MEDIA_ROOT =  '/home/stefan/workspace/silverbb/media'
+MEDIA_ROOT =  PROJECT_ROOT+'/media'
 STATICFILES_DIRS = (
-    "/home/stefan/workspace/silverbb/static",
+    PROJECT_ROOT+"/static",
 )
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash if there is a path component (optional in other cases).
@@ -89,9 +90,9 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.locale.LocaleMiddleware',
-    'silverbb.users.middleware.UserMiddleware'
+    'users.middleware.UserMiddleware'
 )
-ROOT_URLCONF = 'silverbb.urls'
+ROOT_URLCONF = 'urls'
 
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
@@ -107,11 +108,11 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 "django.core.context_processors.static",
 "django.contrib.messages.context_processors.messages",
 'django.core.context_processors.request',
-"silverbb.users.context_processors.user_auth",
-"silverbb.backend.context_processors.version",
-"silverbb.msg.context_processors.msg_stats",
-"silverbb.backend.context_processors.theme_path",
-"silverbb.cms.context_processors.menu"
+"users.context_processors.user_auth",
+"backend.context_processors.version",
+"msg.context_processors.msg_stats",
+"backend.context_processors.theme_path",
+"cms.context_processors.menu"
 )
 INSTALLED_APPS = (
     'django.contrib.auth',
@@ -124,13 +125,13 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     'django.contrib.admindocs',
-    'silverbb.board',
-    'silverbb.users',
-    'silverbb.backend',
-    'silverbb.faq',
-    'silverbb.msg',
-    'silverbb.cms',
-    'silverbb.blog'
+    'board',
+    'users',
+    'backend',
+    'faq',
+    'msg',
+    'cms',
+    'blog'
 )
 
 MESSAGE_STORAGE = 'django.contrib.messages.storage.cookie.CookieStorage'

@@ -13,7 +13,7 @@
 	{% for user in users %}
 	<div class="viewforum">
 		<div class="viewthread">
-			<a href="{% url users.views.show user.pk,user.username %}">{{user.username}}</a></td>
+			<a href="{% url 'users.views.show' user.pk user.username %}">{{user.username}}</a></td>
 		</div>
 		<div class="viewthread">
 			{{user.get_profile.posts}}

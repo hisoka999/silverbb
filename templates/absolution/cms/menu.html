@@ -9,7 +9,7 @@
 		{% else %}
 	<li class="float-right">
 		{% endif %}
-		{% if page1.module_path %}
+		{% if page1.module_path != None %}
 		<a href="{{page1.module_path}}"><img src="{{STATIC_THEME}}images/nav-home.png" width="16" height="16" alt="">{{page1.title}}</a>
 		{% else %}
 		<a href="{% url 'cms.views.page' page1.id page1.get_url_name %}"><img src="{{STATIC_THEME}}images/nav-home.png" width="16" height="16" alt="">{{page1.title}}</a>

@@ -1,5 +1,5 @@
 from models import Category,Topic
-from silverbb.backend.functions import render_to_response
+from backend.functions import render_to_response
 from django.template.context import RequestContext
 def index(request):
     cats = Category.objects.all().order_by('-name')

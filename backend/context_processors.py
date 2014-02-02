@@ -3,7 +3,7 @@ Created on 21.05.2011
 
 @author: stefan
 '''
-from silverbb import version as ver
+import version as ver
 from django.conf import settings
 from functions import get_path
 from django.contrib.sites.models import get_current_site

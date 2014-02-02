@@ -30,7 +30,7 @@ tinyMCE.init({
 {% block content %}
 <div class="forum">	
 	<h3>{% trans "create thread"%}</h3>
-	<form method="post" action="{% url board.views.create_thread board_id %}">
+	<form method="post" action="{% url 'board.views.create_thread' board_id %}">
 		{{f_thread}}
 		{{f_post}}
 		<input type="submit" value="{%trans 'create' %}" />

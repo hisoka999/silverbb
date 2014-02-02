@@ -12,7 +12,7 @@ var col = '';
 		}else{
 			col = column;
 		}
-	  new Ajax.Updater('user_content', '{% url users.views.index %}?column='+col, {
+	  new Ajax.Updater('user_content', '{% url 'users.views.index' %}?column='+col, {
   method: 'get'});
  }
 </script>
@@ -22,19 +22,19 @@ var col = '';
 
 	<div class="viewforum">
 		<div class="viewthread">
-			<strong><a href="{% url users.views.index %}?column=username" onclick="orderby('username');return false;">{%trans "username" %}</a></strong>
+			<strong><a href="{% url 'users.views.index' %}?column=username" onclick="orderby('username');return false;">{%trans "username" %}</a></strong>
 		</div>
 		<div class="viewthread">
-			<strong><a href="{% url users.views.index %}?column=userprofile__posts" onclick="orderby('userprofile__posts');return false;">{%trans "posts" %}</a></strong>
+			<strong><a href="{% url 'users.views.index' %}?column=userprofile__posts" onclick="orderby('userprofile__posts');return false;">{%trans "posts" %}</a></strong>
 		</div>
 		<div class="viewthread">
-			<strong><a href="{% url users.views.index %}?column=userprofile__threads" onclick="orderby('userprofile__threads');return false;">{%trans "threads" %}</a></strong>
+			<strong><a href="{% url 'users.views.index' %}?column=userprofile__threads" onclick="orderby('userprofile__threads');return false;">{%trans "threads" %}</a></strong>
 		</div>
 	</div>
 	{% for user in users %}
 	<div class="viewforum">
 		<div class="viewthread">
-			<a href="{% url users.views.show user.pk,user.username %}">{{user.username}}</a></td>
+			<a href="{% url 'users.views.show' user.pk user.username %}">{{user.username}}</a></td>
 		</div>
 		<div class="viewthread">
 			{{user.get_profile.posts}}

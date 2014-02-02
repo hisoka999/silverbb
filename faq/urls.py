@@ -3,7 +3,7 @@ Created on 11.02.2012
 
 @author: stefan
 '''
-from django.conf.urls.defaults import patterns
+from django.conf.urls import patterns
 urlpatterns = patterns('',
     # Example:
     (r'^$','faq.views.index'),

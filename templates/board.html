@@ -9,14 +9,14 @@
 {% endblock %}
 {% block content %}
     <div class="forum">
-    		<a href="{% url board.views.index %}">Silver-Boards Beta Forum</a>&raquo; {% autoescape off %}{{board.get_path}}
+    		<a href="{% url 'board.views.index' %}">Silver-Boards Beta Forum</a>&raquo; {% autoescape off %}{{board.get_path}}
     		{% endautoescape %}
     </div>
     {% if board.get_children.count > 0 %}
     <div class="forum">
 		<div>
 		{% for child in board.get_children %}
-			<p><a href="{% url board.views.show_board child.id,child.name%}">{{child.name}}</a></p>
+			<p><a href="{% url 'board.views.show_board' child.id child.get_name_for_url %}">{{child.name}}</a></p>
 		{% endfor %}
 		</div>     
     </div>
@@ -32,14 +32,19 @@
     <div class="viewforum">
       <div class="viewthread">
       	{% if thread.moved_from == board %}<i>moved</i>{% endif %}
-      	<a href="{% url board.views.show_thread thread.id,thread.get_url_name %}">{{thread.name}}</a></div>
-      <div class="viewthread"><a href="{% url users.views.show thread.author.id,thread.author.username %}">{{thread.author.username }}</a></div>
+      	<a href="{% url 'board.views.show_thread' thread.id thread.get_url_name %}">{{thread.name}}</a></div>
+      <div class="viewthread"><a href="{% url 'users.views.show' thread.author.id thread.author.username %}">{{thread.author.username }}</a></div>
       <div class="viewthread">{% trans "Answers" %} : {{thread.posts}}</div>
-      <div class="viewthread">        <b><a href="{% url board.views.show_thread thread.id,thread.get_url_name %}#last">{%trans "last post"%}</a></b> von 
-        <b><a href="{% url users.views.show thread.get_last_post.user.id,thread.get_last_post.user.username %}">{{thread.get_last_post.user}}</a></b> am 
+      {% with thread.get_last_post as last_post %}
+      <div class="viewthread">        <b><a href="{% url 'board.views.show_thread' thread.id thread.get_url_name %}#last">{%trans "last post"%}</a></b> von
+      	{% if last_post.user.is_authenticated %} 
+        <b><a href="{% url 'users.views.show' last_post.user.id last_post.user.username %}">{{thread.get_last_post.user}}</a></b>
+        {% else %} <b>{{last_post.guest_name}}</b> {% endif %}
+         am 
         <i>{{thread.get_last_post.time_created}}</i>
         
-        </div>  
+        </div>
+        {% endwith %}  
     </div> 
 		{% endfor %}
 	<select name="board" onchange="boardChange();" onclick="boardChange();" id="selector">
@@ -66,7 +71,7 @@
 	</div>
     <div class="viewforum">
     {% if rights.can_thread %}
-      <a href="{% url board.views.create_thread board.id %}" class="button">{% trans "create thread"%}</a>
+      <a href="{% url 'board.views.create_thread' board.id %}" class="button">{% trans "create thread"%}</a>
     {% endif %}
     </div>
     </div>

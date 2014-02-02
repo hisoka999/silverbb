@@ -3,7 +3,7 @@ Created on 10.03.2012
 
 @author: stefan
 '''
-from django.conf.urls.defaults import patterns
+from django.conf.urls import patterns
 urlpatterns = patterns('',
     # Example:
     (r'^$','msg.views.inbox'),

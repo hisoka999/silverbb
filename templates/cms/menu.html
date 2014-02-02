@@ -1,7 +1,7 @@
 {% load i18n %}
 {% for page1 in menu %}
 	{% if page1.module == resolved_url.url_name %}
-		<a href="{{page.link}}" class="headerbtn btn_active">{{page1.title}}</a>
+		<a href="{{page.link}}" class="headerbtn">{{page1.title}}</a>
 	{% elif page1.module_path != None %}
 		<a href="{{page1.module_path}}" class="headerbtn">{{page1.title}}</a>
 	{% else %}

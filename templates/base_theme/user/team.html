@@ -20,7 +20,7 @@
 		</tr>
 		{% for user in group.user_set.all %}
 		<tr class="group">
-			<td><a href="{% url users.views.show user.pk,user.username %}">{{user.username}}</a></td>
+			<td><a href="{% url 'users.views.show' user.pk user.username %}">{{user.username}}</a></td>
 			<td>{{user.get_profile.posts}}</td>
 			<td>{{user.get_profile.threads}}</td>
 		</tr>

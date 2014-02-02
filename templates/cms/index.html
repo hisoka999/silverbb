@@ -1,9 +1,8 @@
-{% extends BASE_PATH %}
-{% load i18n %}
-{% block navigation %}
-		{% with menu_path=THEME_PATH|add:"cms/menu.html" %}
-		{% include menu_path %}
-		{% endwith %}
+{% extends BASE_PATH %} {% load i18n %} 
+{% block navigation %} 
+	{% with menu_path=THEME_PATH|add:"cms/menu.html" %} 
+		{% include menu_path %} 
+	{% endwith %} 
 {% endblock %}
 {% block content %}
 <!-- Board display //-->
@@ -16,7 +15,7 @@
 					<i>{{item.time}} - </i><b>{{item.title}}</b>
 				</p>
 				<p class="board">
-					<pre>{% autoescape off %}{{item.content}}</pre>{% endautoescape %}
+				{% autoescape off %}{{item.content|linebreaks}}{% endautoescape %}
 				</p>
 			</div>
 		</div>

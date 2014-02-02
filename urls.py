@@ -1,4 +1,4 @@
-from django.conf.urls.defaults import *
+from django.conf.urls import *
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 # Uncomment the next two lines to enable the admin:
@@ -15,6 +15,7 @@ urlpatterns = patterns('',
     (r'^blog/', include('blog.urls')),
     (r'^i18n/', include('django.conf.urls.i18n')),
     (r'^css/(?P<css_file1>\w+).css$','backend.views.show_css'),
+    (r'^captcha/$','backend.views.captcha'),
     # Uncomment the admin/doc line below to enable admin documentation:
     (r'^admin/doc/', include('django.contrib.admindocs.urls')),
 

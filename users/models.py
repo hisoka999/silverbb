@@ -68,3 +68,4 @@ class UserSession(models.Model):
     board = models.ForeignKey(Board,blank=True,null=True)
     thread = models.ForeignKey(Thread,blank=True,null=True)
     time = models.DateTimeField(auto_now=True)
+    captcha = models.CharField(max_length= 20,blank=True,null=True)

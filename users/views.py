@@ -102,33 +102,37 @@ def login_view(request):
     #username = request.POST['username']
     #password = request.POST['password']
     #user = authenticate(username=username, password=password)
-    request.session.set_test_cookie()
-    form = forms.AuthenticationForm(request,data=request.POST)
-    if form.is_valid():
-        user = form.get_user()
-        UserSession.objects.get(session_key = request.session.session_key).delete()
-        login(request, user)
-        referer = request.META.get('HTTP_REFERER')
-        ## create empty profile if missing
-        try:
-            profile = UserProfile.objects.get(user=request.user)
-        except:
-            if (user.is_staff):
-                user.groups.add(Group.objects.get(name='Administrator'))
-                profile = UserProfile() 
-                profile.user = request.user              
-                profile.posts = 0
-                profile.threads = 0
-                profile.activate = 'T'
-                profile.banned = False
-                profile.theme  = Theme.objects.filter(default=True)[0]
-                profile.save()
-                user.save()
-        messages.add_message(request, messages.INFO, 'Login successfull!')
-        #return redirect(urlresolvers.reverse('board.views.index'))
-        return redirect(referer)
-        #return render_to_response('user/login_successful.html',{'referer':referer},context_instance=RequestContext(request))
-    return render_to_response('user/login_error.html',{'form':form},context_instance=RequestContext(request))
+    if (request.method=='POST'):
+        request.session.set_test_cookie()
+        form = forms.AuthenticationForm(request,data=request.POST)
+        if form.is_valid():
+            user = form.get_user()
+            UserSession.objects.get(session_key = request.session.session_key).delete()
+            login(request, user)
+            referer = request.META.get('HTTP_REFERER')
+            ## create empty profile if missing
+            try:
+                profile = UserProfile.objects.get(user=request.user)
+            except:
+                if (user.is_staff):
+                    user.groups.add(Group.objects.get(name='Administrator'))
+                    profile = UserProfile() 
+                    profile.user = request.user              
+                    profile.posts = 0
+                    profile.threads = 0
+                    profile.activate = 'T'
+                    profile.banned = False
+                    profile.theme  = Theme.objects.filter(default=True)[0]
+                    profile.save()
+                    user.save()
+            messages.add_message(request, messages.INFO, 'Login successfull!')
+            #return redirect(urlresolvers.reverse('board.views.index'))
+            return redirect(referer)
+            #return render_to_response('user/login_successful.html',{'referer':referer},context_instance=RequestContext(request))
+        return render_to_response('user/login_error.html',{'form':form},context_instance=RequestContext(request))
+    else:
+        form = forms.AuthenticationForm(request)
+        return render_to_response('user/login.html', {'form':form}, context_instance= RequestContext(request))
 
 def logout_view(request):
     user_id = request.user.id

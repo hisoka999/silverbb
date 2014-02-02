@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from silverbb.backend.models import get_clean_text
+from backend.models import get_clean_text
 
 class Message(models.Model):
     title   = models.CharField(max_length=200)

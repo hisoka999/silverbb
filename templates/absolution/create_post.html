@@ -31,7 +31,7 @@
 {% endblock%}
 {% block content %}
 
-<form id="postform" method="post" action="{% url board.views.create_post thread_id %}" enctype="multipart/form-data">
+<form id="postform" method="post" action="{% url 'board.views.create_post' thread_id %}" enctype="multipart/form-data">
 	{% if preview %}
 	<div class="post bg2" id="preview">
 		<div class="inner"><span class="corners-top"><span></span></span>
@@ -132,7 +132,30 @@
 			<span class="corners-bottom"><span></span></span>
 		</div>
 	</div>
-
+{% if not user.is_authenticated %}
+	<div class="panel">
+		<div class="inner"><span class="corners-top"><span></span></span>
+	
+		<h3>Confirmation for posting</h3>
+		<p>To prevent automated posting the board requires you to enter a confirmation code. The code is displayed in the image you should see below. If you are visually impaired or cannot otherwise read this code please contact the <a href="mailto:hisoka999@gmail.com">Board Administrator</a>.</p>
+	
+		<fieldset class="fields2">
+	
+	
+		<dl>
+			<dt><label for="confirm_code">Confirmation code:</label></dt>
+			<dd><img src="{% url 'backend.views.captcha' %}" alt="Confirmation code" /></dd>
+			<dd><input type="text" name="confirm_code" id="confirm_code" size="8" maxlength="8" tabindex="8" class="inputbox narrow" title="Confirmation code" />
+			<input type="submit" name="refresh_vc" id="refresh_vc" class="button2" value="Refresh confirmation code" />
+			<input type="hidden" name="confirm_id" id="confirm_id" value="1a3fed46c900cbc8a2d14dc23966ec98" /></dd>
+			<dd>Enter the code exactly as it appears. All letters are case insensitive.</dd>
+		</dl>
+	
+	
+		</fieldset>
+		<span class="corners-bottom"><span></span></span></div>
+	</div>
+{% endif %}
 	<div class="panel bg2">
 		<div class="inner">
 			<span class="corners-top"><span></span></span>
