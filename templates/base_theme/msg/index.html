@@ -7,9 +7,9 @@
 {% endblock %}
 {% block content %}
 <div class="forum">
-	<a href="{% url board.views.index %}">Silver-Boards Beta Forum</a>&raquo; <a href="{% url msg.views.inbox %}">Inbox</a>
+	<a href="{% url 'board.views.index' %}">Silver-Boards Beta Forum</a>&raquo; <a href="{% url 'msg.views.inbox' %}">Inbox</a>
 </div>
-<form method ="post" action="{% url msg.views.delete %}" style="width:100%;">
+<form method ="post" action="{% url 'msg.views.delete' %}" style="width:100%;">
 	<div class="forum">
 
 		<div class="viewforum">
@@ -30,7 +30,7 @@
 		{% for msg in user_msg.object_list %}
 		<div class="viewforum">
 			<div class="viewthread">
-				{% if not msg.readed%}<strong><a href="{% url msg.views.msg msg.id %}">{{msg.title}}</a></strong>{%else%} <a href="{% url messages.views.msg msg.id %}">{{msg.title}}</a>
+				{% if not msg.readed%}<strong><a href="{% url 'msg.views.msg' msg.id %}">{{msg.title}}</a></strong>{%else%} <a href="{% url 'msg.views.msg' msg.id %}">{{msg.title}}</a>
 				{% endif %}
 			</div>
 			<div class="viewthread">
@@ -54,7 +54,7 @@
 					{% endblocktrans %} </span> {% if messages.has_next %} <a href="?page={{ messages.next_page_number }}">{% trans "next" %}</a> {% endif %} </span>
 		</div>
 		<div class="viewforum">
-			<a href="{% url msg.views.create %}" class="button">{% trans "send message"%}</a>
+			<a href="{% url 'msg.views.create' %}" class="button">{% trans "send message"%}</a>
 		</div>
 
 	</div>

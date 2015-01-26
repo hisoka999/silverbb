@@ -37,10 +37,9 @@
 		{% for dl in category.download_set.all %}
 		<div class="statspanel" style="background-image: url({{STATIC_THEME}}images/types/{{dl.get_type}}.png);">
 			<b>Name: </b>{{dl.name}} <br />
-			{{dl.name|urlencode}} <br />
 			<b>Size: </b>{{dl.size|filesizeformat}} <br />
 			<b>Mime_type: </b> {{dl.mime_type}} <br />
-			<b>Dl: </b><a href="/{{dl.data.name}}">{{dl.data.name}}</a>
+			<b>Download: </b><a href="/{{dl.data.name}}">{{dl.data.name}}</a>
 		</div>
 		{% endfor %}
 	</div>

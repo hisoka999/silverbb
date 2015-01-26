@@ -40,14 +40,17 @@
 				Tags: {% for tag in entry.tags.all %}<a href="{%url 'blog.views.tag_search' tag.name %}"> {{tag.name}}</a>{%if not forloop.last %},{% endif %}{% endfor %}
 			</P>
 		</div>
+		{%if comments.count > 0 %}
 		<div class="statspanel">
 			<h3>Comments:</h3>
 			{% for comment in comments%}
 			<strong>{{comment.user_name}}</strong> <i>{{comment.created_at|timesince}}</i>
 			<pre>{{comment.content}}</pre>
+			<br />
 			<hr />
 			{%endfor%}
 		</div>
+		{% endif%}
 		<div class="statspanel">
 			<form method="post" action="{% url 'blog.views.blog_post' entry.id %}" >
 				{% for field in form %}
