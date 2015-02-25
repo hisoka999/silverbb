@@ -14,10 +14,11 @@ class BoardAdmin(admin.ModelAdmin):
     inlines = [
         BoardRightsInline,
     ]
+    list_display = ('name','parent')
 
 class ThreadAdmin(admin.ModelAdmin):
     model = Thread
-    list_display = ('name','closed','author')
+    list_display = ('name','closed','author','board')
 class PostAdmin(admin.ModelAdmin):
     model = Post
     list_display = ('name','thread','user')    

@@ -197,7 +197,7 @@ def edit_post(request,post_id):
                 p.time_edited = datetime.now()
                 p.save()
                 messages.add_message(request, messages.INFO, 'This reply was successfully edited.')
-                return redirect(urlresolvers.reverse('board.views.show_thread',args=[p.thread.id]))
+                return redirect(urlresolvers.reverse('board.views.show_thread',args=[p.thread.id,p.thread.get_url_name()]))
     try:
         post = Post.objects.get(pk=post_id)
         if (post.user == request.user or request.user.is_staff):
@@ -210,7 +210,7 @@ def edit_post(request,post_id):
             return render_to_response(html_file,{'f_post':f_post,'post_id':post_id},context_instance=RequestContext(request))
         else:
             messages.add_message(request, messages.ERROR, 'You are not allowed to edit this post.')
-            return redirect(urlresolvers.reverse('board.views.show_thread',args=[p.thread.id]))
+            return redirect(urlresolvers.reverse('board.views.show_thread',args=[p.thread.id,p.thread.get_url_name()]))
     except Exception as e:
         #return a 404 page
         #traceback.print_stack(e)

@@ -23,11 +23,21 @@ tinyMCE.init({
 </script>
 {% endblock%}
 {% block content %}
-<div>
-	<h3>{% trans "create post"%}</h3>
-	<form method="post" action="{% url board.views.create_post thread_id %}">
-		{{f_post}}
-		<input type="submit" value="{% trans 'create' %}" />
+<div class="form_settings">
+	<h3>{% trans "Create Post"%}</h3>
+	<form method="post" action="{% url 'board.views.create_post' thread_id %}">
+		
+			{% for field in f_post %}
+			<p>
+				{{ field.errors }}
+				<span>
+					{{ field.label_tag }}
+				</span>
+				{{ field }}
+			</p>
+			{% endfor %}
+		
+		<input class="submit" type="submit" value="{% trans 'create' %}" />
 	</form>
 </div>
 {% endblock %}

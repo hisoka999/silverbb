@@ -1,0 +1,55 @@
+{% extends BASE_PATH %}
+{% block head %}
+{% if gallery.image_set.count > 0 %}
+	<script src="{{ STATIC_URL }}galleria/galleria-1.2.9.min.js"></script>
+	<script type="text/javascript" src="{{ STATIC_URL }}galleria/themes/classic/galleria.classic.min.js"></script>
+	
+	<script type="text/javascript">
+	    //Galleria.loadTheme('{{ STATIC_URL }}galleria/themes/classic/galleria.classic.min.js');
+	    //Galleria.run('#galleria');
+	    $('#galleria').galleria({
+	width: 700,
+	height: 467 
+	});
+	</script>
+{% endif %}
+{%endblock %}
+{% load i18n %}
+{% block navigation %}
+		{% with menu_path=THEME_PATH|add:"cms/menu.html" %}
+		{% include menu_path %}
+		{% endwith %}
+{% endblock %}
+{% block content %}
+<!-- Board display //-->
+<h1>
+				{{gallery.name}}
+</h1>
+
+		{% if gallery.gallery_set.count > 0 %}
+		<div class="statspanel">
+				<p>
+					{% for item in gallery.gallery_set.all %}
+					<strong><a href="{% url 'cms.views.gallery' item.id item.get_url_name %}">{{item.name}}</a></strong>
+					<ul>
+						{% for sub in item.gallery_set.all %}
+						<li><a href="{% url 'cms.views.gallery' sub.id sub.get_url_name %}">{{sub.name}}</a>({{sub.image_set.count}})</li>
+						{% endfor %}
+					</ul>
+					{% endfor %}
+				</p>
+			</div>
+		{% endif %}
+		{% if gallery.image_set.count > 0 %}
+		<div class="statspanel">
+				<div id="galleria">
+					{% for image in gallery.image_set.all %}
+					 
+					 <a href="{{ STATIC_URL }}/{{image.image}}"><img src="{{ STATIC_URL }}/{{image.thumb}}" data-big="{{ STATIC_URL }}/{{image.image}}" data-title="{{image.title}}"/></a>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+		{% endif %}
+<!-- board display end //-->
+{% endblock %}

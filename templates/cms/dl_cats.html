@@ -1,0 +1,28 @@
+{% extends BASE_PATH %}
+{% block head %}
+
+
+{%endblock %}
+{% load i18n %}
+{% block navigation %}
+		{% with menu_path=THEME_PATH|add:"cms/menu.html" %}
+		{% include menu_path %}
+		{% endwith %}
+{% endblock %}
+{% block content %}
+<!-- Board display //-->
+<h1>
+				Downloads
+</h1>
+
+	{% for item in cats.all %}
+	<h3><a href="{% url 'cms.views.downloads' item.id %}">{{item.name}}</a></h3>
+	<ul>
+		{% for sub in item.downloadcategory_set.all %}
+		<li><a href="{% url 'cms.views.downloads' sub.id %}">{{sub.name}}</a>({{sub.download_set.count}})</li>
+		{% endfor %}
+	</ul>
+	{% endfor %}
+
+<!-- board display end //-->
+{% endblock %}
