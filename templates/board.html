@@ -21,32 +21,38 @@
 		</div>     
     </div>
     {% endif %}
-    <div class="forum">
-    <div class="viewforum">
-      <div class="viewthread"><strong>{%trans "Topic" %}</strong></div>
-      <div class="viewthread"><strong>{% trans "Author" %}</strong></div>
-      <div class="viewthread"><strong>{% trans "Posts"%}</strong></div>
-      <div class="viewthread"><strong>{% trans "Last post"%}</strong></div>  
-    </div>
+		<table style ="width:100%; border-spacing:0;">
+			<tbody>
+				<tr >
+      <th><strong>{%trans "Topic" %}</strong></th>
+      <th><strong>{% trans "Author" %}</strong></th>
+      <th><strong>{% trans "Posts"%}</strong></th>
+      <th><strong>{% trans "Last post"%}</strong></th>  
+    </tr>
     {% for thread in threads.object_list %}
-    <div class="viewforum">
-      <div class="viewthread">
+ 	<tr>
+ 		<td>
       	{% if thread.moved_from == board %}<i>moved</i>{% endif %}
-      	<a href="{% url 'board.views.show_thread' thread.id thread.get_url_name %}">{{thread.name}}</a></div>
-      <div class="viewthread"><a href="{% url 'users.views.show' thread.author.id thread.author.username %}">{{thread.author.username }}</a></div>
-      <div class="viewthread">{% trans "Answers" %} : {{thread.posts}}</div>
+      	<a href="{% url 'board.views.show_thread' thread.id thread.get_url_name %}">{{thread.name}}</a>
+      	</td>
+      <td>
+      	<a href="{% url 'users.views.show' thread.author.id thread.author.username %}">{{thread.author.username }}</a>
+      </td>
+      <td>{% trans "Answers" %} : {{thread.posts}}</td>
       {% with thread.get_last_post as last_post %}
-      <div class="viewthread">        <b><a href="{% url 'board.views.show_thread' thread.id thread.get_url_name %}#last">{%trans "last post"%}</a></b> von
+      <td>        <b><a href="{% url 'board.views.show_thread' thread.id thread.get_url_name %}#last">{%trans "last post"%}</a></b> von
       	{% if last_post.user.is_authenticated %} 
         <b><a href="{% url 'users.views.show' last_post.user.id last_post.user.username %}">{{thread.get_last_post.user}}</a></b>
         {% else %} <b>{{last_post.guest_name}}</b> {% endif %}
          am 
         <i>{{thread.get_last_post.time_created}}</i>
         
-        </div>
+        </td>
         {% endwith %}  
-    </div> 
+    	</tr> 
 		{% endfor %}
+		</tbody>
+		</table>
 	<select name="board" onchange="boardChange();" onclick="boardChange();" id="selector">
 	{% for board in boards %}
 		{{board.list}}

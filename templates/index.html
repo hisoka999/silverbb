@@ -6,54 +6,56 @@
 
 	{% for board in boards %}
 	<!-- begin category //-->
-	<div class="category_cat">
+	<h3>
 		<a href="{% url 'board.views.show_board' board.id board.get_name_for_url%}">{{board.name}}</a>
+	</h3>
 		{% for child in board.get_children %}
-		<div class="board_cat">
-			<div class="board_info">
-				<p class="boardtitle">
-					<a href="{% url 'board.views.show_board' child.id child.get_name_for_url%}">{{child.name}}</a>
-				</p>
-				<p class="board"></p>
-				<p class="board">
+		<table style ="width:100%; border-spacing:0;">
+			<tbody>
+				<tr >
+					<th colspan ="3"><a href="{% url 'board.views.show_board' child.id child.get_name_for_url%}">{{child.name}}</a></th>
+				</tr>
+				<tr>
+					<td>
 					{% trans "Moderators" %}:
 					{% for mod in child.moderators.all %}
 					<a href="{% url 'users.views.show' mod.id mod.username %}">{{mod.username}}</a>{% if not forloop.last %},{% endif %}
 					{% endfor %}
-				</p>
-			</div>
-			<p class="board">
+					</td>
+				
+			<td>
 				{% blocktrans with child.threads as c_threads and child.posts as c_posts%}Threads: {{c_threads}} and Posts:{{c_posts}}{% endblocktrans %}
-			</p>
-			<p class="board">
+			</td>
+			<td>
 				{% trans "last post"%}
-			</p>
-		</div>
-		<div class="spacer"></div>
+			</td>
+			</tr>
+			</tbody>
+		</table>
 		{% endfor %}
-	</div>
 	<!-- end category //-->
 	{% endfor %}
-
 </div>
+
 <!-- board display end //-->
 
-<div class="statistic_body">
-	<div class="statistic_header">
-		{% blocktrans with users.count as user_count %}There are {{user_count}} users and {{guest_count}} guests online.{% endblocktrans %}
-	</div>
-	<div class="statistic">
+
+{% endblock %}
+
+{%block "sidebar" %}
+<br />
+<h4>{% blocktrans with users.count as user_count %}There are {{user_count}} users and {{guest_count}} guests online.{% endblocktrans %}
+	</h4>
+	<p>
 		{% for u in users%} <a href="{% url 'users.views.show' u.user.id u.user.username%}">{{u.user.username}}</a>,
 		{% endfor %}
-	</div>
-</div>
-<div class="statistic_body">
-	<div class="statistic_header">
-		{%trans "statistics" %}
-	</div>
-	<div class="statistic">
+	</p>
+
+<h4>		{%trans "statistics" %}</h4>
+
+	<div class="board_cat">
 		{% blocktrans %}This community does have {{all_user}} user, {{all_threads}} threads {{all_posts}}
 		and posts. The last user that registrated himself was {% endblocktrans %}<a href="{% url 'users.views.show' last_user.id last_user.username%}">{{last_user.username}}</a>
 	</div>
-</div>
-{% endblock %}
+
+{%endblock%}

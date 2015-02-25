@@ -3,24 +3,25 @@
 {% block head %}
 <style type="text/css">
 	@import url("{{STATIC_THEME}}css/forum.css");
-	.lbl {
+/*	.lbl {
 		width: 200px;
 		display: inline-block;
 	}
-	input {
+	input[type="text"],[type="url"],[type="password"] {
 		border: 1px solid black;
 	}
 	legend {
 		font-weight: bold;
 	}
 	fieldset {
-		border: 1px solid black;
+	
 		margin: 5px;
 	}
+	*/
 </style>
 {% endblock %}
 {% block content %}
-<div class="forum">
+<div class="form_settings">
 	{% if commit %}
 	<p>
 		<strong>{%trans "Your changes were saved."%}</strong>
@@ -32,13 +33,13 @@
 				{% trans "change password" %}
 			</legend>
 			{% for field in f_pw %}
-			<div class="fieldWrapper">
+			<p>
 				{{ field.errors }}
-				<div class="lbl">
-					{{ field.label_tag }}:
-				</div>
+				<span>
+					{{ field.label_tag }}
+				</span>
 				{{ field }}
-			</div>
+			</p>
 			{% endfor %}
 		</fieldset>
 		<fieldset>
@@ -46,27 +47,30 @@
 				{% trans "change profile" %}
 			</legend>
 			{% for field in profile %}
-			<div class="fieldWrapper">
+			<p>
 				{{ field.errors }}
-				<div class="lbl">
-					{{ field.label_tag }}:
-				</div>
+				<span>
+					{{ field.label_tag }}
+				</span>
 				{{ field }}
-			</div>
+			</p>
 			{% endfor %}
 		</fieldset>
 		<fieldset>
 			{% for field in f_user %}
-			<div class="fieldWrapper">
+			<p>
 				{{ field.errors }}
-				<div class="lbl">
-					{{ field.label_tag }}:
-				</div>
+				<span>
+					{{ field.label_tag }}
+				</span>
 				{{ field }}
-			</div>
+			</p>
 			{% endfor %}
 		</fieldset>
-		<input type="submit" value="{%trans 'change' %}" class="button"/>
+		<p style="padding-top: 15px">
+		<span>&nbsp;</span>
+		<input class="submit" type="submit" value="{%trans 'change' %}"/>
+		</p>
 	</form>
 </div>
 {% endblock %}

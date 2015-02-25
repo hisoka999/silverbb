@@ -18,32 +18,33 @@ var col = '';
 </script>
 {% endblock %}
 {% block content %}
-<div class="forum" id="user_content">
-
-	<div class="viewforum">
-		<div class="viewthread">
-			<strong><a href="#" onclick="orderby('username')">{%trans "username" %}</a></strong>
-		</div>
-		<div class="viewthread">
+	<table style ="width:100%; border-spacing:0;">
+		<tbody>
+			<tr>
+			<th>
+				<strong><a href="#" onclick="orderby('username')">{%trans "username" %}</a></strong>
+			</th>
+			<th>
 			<strong><a href="#" onclick="orderby('userprofile__posts')">{%trans "posts" %}</a></strong>
-		</div>
-		<div class="viewthread">
+		</th>
+		<th>
 			<strong><a href="#" onclick="orderby('userprofile__threads')">{%trans "threads" %}</a></strong>
-		</div>
-	</div>
+		</th>
+	</tr>
 	{% for user in users.object_list %}
-	<div class="viewforum">
-		<div class="viewthread">
-			<a href="{% url 'users.views.show' user.pk user.username %}">{{user.username}}</a></td>
-		</div>
-		<div class="viewthread">
+	<tr>
+		<td>
+			<a href="{% url 'users.views.show' user.pk user.username %}">{{user.username}}</a>
+		</td>
+		<td>
 			{{user.get_profile.posts}}
-		</div>
-		<div class="viewthread">
+		</td>
+		<td>
 			{{user.get_profile.threads}}
-		</div>
-	</div>
+		</td>
+	</tr>
 	{% endfor %}
-</div>
+</tbody>
+</table>
 
 {% endblock %}

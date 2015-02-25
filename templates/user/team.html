@@ -1,14 +1,14 @@
 {% extends BASE_PATH %}
 {% block head %}
    <style type="text/css">
-    @import url("{{STATIC_THEME}}css/forum.css");
-    @import url("{{STATIC_THEME}}css/team.css");
+@import url("{{STATIC_THEME}}css/global.css");
 
     </style>
 {% endblock%}
 {% block content %}
 <div class="forum">
-	<table >
+	<table style ="width:100%; border-spacing:0;">
+		<tbody>
 		{% for group in groups%}
 		<tr  class="group">
 			<th colspan="3">{{group.name}}</th>
@@ -26,7 +26,7 @@
 		</tr>
 		{% endfor %}
 		{% endfor %}
-		
+		</tbody>
 	</table>
 </div>
 {% endblock %}

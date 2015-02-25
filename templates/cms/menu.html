@@ -1,13 +1,25 @@
 {% load i18n %}
-{% for page1 in menu %}
+<ul>
+	{% for page1 in menu %}
 	{% if page1.module == resolved_url.url_name %}
-		<a href="{{page.link}}" class="headerbtn">{{page1.title}}</a>
-	{% elif page1.module_path != None %}
-		<a href="{{page1.module_path}}" class="headerbtn">{{page1.title}}</a>
-	{% else %}
-		<a href="{% url 'cms.views.page' page1.id page1.get_url_name %}" class="headerbtn">{{page1.title}}</a>	
-	{%endif %}
-{% endfor %}
-{% if user.is_staff %}
-	<a href="{% url 'admin:index' %}" class="headerbtn">{% trans "Administration" %}</a>
-{% endif %}
+	<li class="selected">
+
+		{% elif page1.topic.id == page.topic_set.all.0.id and page1.topic.id != None %}
+	<li class="selected">
+		{% else %}
+	<li>
+		{% endif %}
+		{% if page1.module_path != None %}
+		<a href="{{page1.module_path}}">{{page1.title}}</a>
+		{% else %}
+		<a href="{% url 'cms.views.page' page1.id page1.get_url_name %}">{{page1.title}}</a>
+		{%endif %}
+	</li>
+	{% endfor %}
+
+	{% if user.is_staff %}
+	<li>
+		<a href="{% url 'admin:index' %}">{% trans "Admin" %}</a>
+	</li>
+	{% endif %}
+</ul>

@@ -32,7 +32,8 @@ class RegisterForm(ModelForm):
         
         email = cleaned_data.get("email")
         email2 = cleaned_data.get("email2")
-        if (email != email2):
+        
+        if (email and  email2 and email != email2):
             msg = "Both e-mail adresses must be equal."
             self._errors["email2"] = self.error_class([msg])
             del cleaned_data["email"]
