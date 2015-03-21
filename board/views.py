@@ -25,7 +25,7 @@ def index(request):
     except:
         group = auth.models.Group.objects.get(name='Gast')
     boards = Board.objects.filter(parent=None,boardrights__group=group,boardrights__can_view=True)
-    print len(boards)
+    
     #load statistic data (users online)
     users = UserSession.objects.filter(user__gt=0)
     guest_count = UserSession.objects.filter(Q(user=0)|Q(user__isnull=True)).count()

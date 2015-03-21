@@ -11,9 +11,16 @@
 		{% endif %}
 		{% if page1.module_path != None %}
 		<a href="{{page1.module_path}}">{{page1.title}}</a>
+		{% elif page1.external_link != None %}
+		<a href="{{page1.external_link}}">{{page1.title}}</a>
 		{% else %}
 		<a href="{% url 'cms.views.page' page1.id page1.get_url_name %}">{{page1.title}}</a>
 		{%endif %}
+		<ul>
+		{%for sub in page1.menuitem_set.all %}
+			<li><a href="{% url 'cms.views.page' sub.id sub.get_url_name %}">{{sub.title}}</a></li>
+		{%endfor %}
+		</ul>
 	</li>
 	{% endfor %}
 

@@ -36,7 +36,7 @@ class UserProfile(models.Model):
     :model:`board.Thread`.
 
     """
-    user       = models.ForeignKey(User, unique=True,help_text="The current user associated with this profile")
+    user       = models.OneToOneField(User,related_name="profile")#models.ForeignKey(User, unique=True,help_text="The current user associated with this profile")
     posts      = models.IntegerField(default=0)
     threads    = models.IntegerField(default=0)
     banned     = models.BooleanField(default=False)

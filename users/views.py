@@ -26,7 +26,7 @@ def handle_uploaded_file(f):
 '''
 def show(request,userid,username=""):
     user = User.objects.get(pk=userid)
-    profile = user.get_profile()
+    profile = user.profile
     posts = float(Post.objects.count())
     posts_from_total = float(profile.posts)/posts*100.0
     return render_to_response('user/show.html',{'user':user,'profile':profile,'posts_from_total':posts_from_total},context_instance=RequestContext(request))
@@ -38,16 +38,18 @@ def index(request):
     except:
         page = 1
     if (request.is_ajax()):
+        column = ""
         if (not request.GET.get('column')):
-            column = '-userprofile__posts'
+            column = '-profile__posts'
         else:
             column = request.GET.get('column')
+        print column;
         users = User.objects.all().order_by(column)
         user_list = Paginator(users, 10)
         user_page = user_list.page(page)
         return render_to_response('user/all_ajax.html',{'users':user_page,},context_instance=RequestContext(request))
     else:
-        users = User.objects.all().order_by('-userprofile__posts')
+        users = User.objects.all().order_by('-profile__posts')
         user_list = Paginator(users, 10)
         user_page = user_list.page(page)
         return render_to_response('user/all.html',{'users':user_page,},context_instance=RequestContext(request))
@@ -154,11 +156,11 @@ def team(request,team_name=None):
 
 def base_profile(request):
     f_password = forms.PasswordChangeForm(request.POST)
-    f_profile = ProfileForm(instance = request.user.get_profile())
+    f_profile = ProfileForm(instance = request.user.profile)
     f_user = UserEditForm(instance = request.user)
     commit = False
     if request.method == 'POST':
-        f_profile = ProfileForm(request.POST,request.FILES,instance = request.user.get_profile())
+        f_profile = ProfileForm(request.POST,request.FILES,instance = request.user.profile)
         f_user = UserEditForm(request.POST,request.FILES,instance = request.user)
         if f_password.is_valid():
             f_password.save(commit=True)

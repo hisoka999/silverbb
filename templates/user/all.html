@@ -12,12 +12,13 @@ var col = '';
 		}else{
 			col = column;
 		}
-	  new Ajax.Updater('user_content', '{% url 'users.views.index' %}?column='+col, {
+	  new Ajax.Updater('content', '{% url 'users.views.index' %}?column='+col, {
   method: 'get'});
  }
 </script>
 {% endblock %}
 {% block content %}
+
 	<table style ="width:100%; border-spacing:0;">
 		<tbody>
 			<tr>
@@ -25,10 +26,10 @@ var col = '';
 				<strong><a href="#" onclick="orderby('username')">{%trans "username" %}</a></strong>
 			</th>
 			<th>
-			<strong><a href="#" onclick="orderby('userprofile__posts')">{%trans "posts" %}</a></strong>
+			<strong><a href="#" onclick="orderby('profile__posts')">{%trans "posts" %}</a></strong>
 		</th>
 		<th>
-			<strong><a href="#" onclick="orderby('userprofile__threads')">{%trans "threads" %}</a></strong>
+			<strong><a href="#" onclick="orderby('profile__threads')">{%trans "threads" %}</a></strong>
 		</th>
 	</tr>
 	{% for user in users.object_list %}
@@ -37,10 +38,10 @@ var col = '';
 			<a href="{% url 'users.views.show' user.pk user.username %}">{{user.username}}</a>
 		</td>
 		<td>
-			{{user.get_profile.posts}}
+			{{user.profile.posts}}
 		</td>
 		<td>
-			{{user.get_profile.threads}}
+			{{user.profile.threads}}
 		</td>
 	</tr>
 	{% endfor %}

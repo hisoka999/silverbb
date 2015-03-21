@@ -7,7 +7,7 @@
 {% endblock %}
 {% block content %}
     <div class="forum">
-    		<a href="{% url board.views.index %}">Silver-Boards Beta Forum</a>&raquo; <a href="{% url faq.views.index %}">FAQ</a>
+    		<a href="{% url 'board.views.index' %}">Silver-Boards Beta Forum</a>&raquo; <a href="{% url 'faq.views.index' %}">FAQ</a>
     </div>
 	
     <div class="forum">
@@ -17,7 +17,7 @@
     </div>
     {% for topic in cat.topic_set.all %}
     <div class="viewforum">
-      <div class="viewthread"><a href="{% url faq.views.topic topic.id %}">{{topic.question}}</a></div>
+      <div class="viewthread"><a href="{% url 'faq.views.topic' topic.id %}">{{topic.question}}</a></div>
     </div> 
 	{% endfor %}
 	{% endfor %}

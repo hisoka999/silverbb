@@ -5,7 +5,7 @@ def get_path(user=None):
     if user == None or user.is_authenticated() == False:
         return Theme.objects.filter(default=True)[0].folder
     else:
-        return user.get_profile().theme.folder
+        return user.profile.theme.folder
 
 
 def render_to_response(page,context=None,context_instance=None,mimetype=None):

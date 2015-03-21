@@ -25,3 +25,80 @@
     background-color: #FFBABA;
     background-image: url('error.png');
 }
+
+
+
+nav ul {
+    padding: 0px;
+    margin: 0px;
+}
+nav ul:after {
+    clear: both;
+    content: " ";
+    display: block;
+    font-size: 0;
+    height: 0;
+    visibility: hidden;
+}
+    nav ul,nav ul li{
+    background-color: #FAFAFA;
+}
+    nav ul li {
+    list-style: none;
+   /* float:left;*/
+}
+nav ul li a {
+    text-decoration: none;
+    display: block;
+    color: #333;
+    padding: 14px 34px 14px 34px;
+}
+nav ul li:hover > ul {
+    visibility: visible;
+}
+nav ul li ul{
+    display: inline;
+    visibility: hidden;
+    position: absolute;
+    padding:0px;
+}
+nav ul li ul li{
+    float: none;
+}
+nav ul li ul li a:hover{
+    color: #333;
+}
+
+
+nav ul {
+    padding: 0px;
+    margin: 0px;
+ 
+}
+nav ul li {
+list-style: none;
+    /*float:left;*/
+}
+nav ul li a {
+    text-decoration: none;
+    display: block;
+    color: #333;
+    padding: 14px 34px 14px 34px;
+ 
+    -webkit-transition: background 0.3s ease-out 0s;
+    -moz-transition: background 0.3s ease-out 0s;
+    -o-transition: background 0.3s ease-out 0s;
+    transition: background 0.3s ease-out 0s;
+}
+nav ul li:hover > a {
+    color: #FAFAFA;
+}
+nav#menu ul li ul li a {
+    color: #FAFAFA;
+    float: none;
+}
+nav ul#menu li ul li a:hover{
+    color: #333;
+    background-color: #FAFAFA !important;
+}
+

@@ -30,6 +30,7 @@
 			</div>
 		</div>
 			<div id="menubar">
+			<nav>
 				<ul id="menu">
 				{% block navigation %}
 					
@@ -47,8 +48,9 @@
 						{% if user.is_staff %}
 						<li><a href="{% url 'admin:index' %}">{% trans "Administration" %}</a></li> 
 						{% endif %} 
-			{% endblock %}
-			</ul>
+				{% endblock %}
+				</ul>
+			</nav>
 			</div>
 			
 			<!-- Header Ende //-->
@@ -59,13 +61,28 @@
 						href="{% url 'users.views.logout_view' %}">[{% trans "Logout"%}]</a><br /> <strong>{% trans "private messages" %}</strong><br />
 					{% trans "New" %}: {{msg_new}}<br /> {% trans "Total" %}:
 					{{msg_all}}<br /> {% else %}
+					<div class="form_settings">
 					<form method="post" action="{% url 'users.views.login_view' %}">
 						{% csrf_token %}
 						<h1>{% trans "Login" %}</h1>
-						{{auth_form}}
-						<input type="submit" value="{% trans 'login' %}" />
+						
+						{% for field in auth_form %}
+						
+							{{ field.errors }}
+							<span>
+								{{ field.label_tag }}
+							</span>
+							{{ field }}
+						
+						{% endfor %}
+						<span>
+						<input  class="submit" type="submit" value="{% trans 'login' %}" />
+						</span>
 					</form>
+					</div>
 					{% endif %}
+					<br />
+					
 					<form action="{% url 'django.views.i18n.set_language' %}"
 						method="post">
 						{% csrf_token %}
@@ -73,9 +90,29 @@
 							<option value="{{ lang.0 }}">{{ lang.1 }}</option> {% endfor %}
 						</select>
 						<input type="submit" value="Go" />
-					</form>
+					</form>					
+					<br />
+					<div class="form_settings">	
+					<h1>Search</h1>
+							<form action="{% url 'board.views.search' %}" method="get" id="search">
+								<p>
+									<span></span>
+									<input name="keywords" id="keywords" type="text" maxlength="128" value="Search…" onclick="if(this.value==&#39;Search…&#39;)this.value=&#39;&#39;;" onblur="if(this.value==&#39;&#39;)this.value=&#39;Search…&#39;;" />
+								</p>
+								<p>
+									
+									<input  class="submit" value="Search" type="submit" />
+								</p>
+									<br />
+									<input type="hidden" name="style" value="875">
+									
+							</form>					
 					{% endblock %}
-					{%block "sidebar" %} {% endblock%}
+					</div>
+					{%block "sidebar" %} 
+					
+					
+					{% endblock%}
 				</div>
 				<div id="content">
 					{% if messages %}

@@ -95,7 +95,7 @@ ol li
 
 #header
 { background: transparent;
-  height: 170px;}
+  height: 130px;}
 
 #logo
 { width: 860px;
@@ -144,7 +144,7 @@ ul#menu li
 ul#menu li a
 { font: normal 100% 'trebuchet ms', sans-serif;
   display: block; 
-  float: left; 
+  /*float: left;*/ 
   height: 20px;
   padding: 6px 20px 5px 20px;
   text-align: center;
@@ -244,10 +244,12 @@ ul#menu li a:hover
   color: #47433F;}
   
 .form_settings .submit
-{ font: 100% arial; 
+{ 
+
+	font: 100% arial; 
   border: 0; 
   width: 99px; 
-  margin: 0 0 0 212px; 
+  margin: 0 0 0 0px; 
   height: 33px;
   padding: 2px 0 3px 0;
   cursor: pointer; 

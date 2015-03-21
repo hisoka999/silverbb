@@ -28,12 +28,31 @@ tinyMCE.init({
 {% endblock%}
 
 {% block content %}
-<div class="forum">	
+<div class="form_settings">	
 	<h3>{% trans "create thread"%}</h3>
 	<form method="post" action="{% url 'board.views.create_thread' board_id %}">
-		{{f_thread}}
-		{{f_post}}
-		<input type="submit" value="{%trans 'create' %}" />
+			{% for field in f_thread %}
+			<p>
+				{{ field.errors }}
+				<span>
+					{{ field.label_tag }}
+				</span>
+				{{ field }}
+			</p>
+
+			{% endfor %}
+			{% for field in f_post %}
+			<p>
+				{{ field.errors }}
+				<span>
+					{{ field.label_tag }}
+				</span>
+				{{ field }}
+			</p>
+
+			{% endfor %}
+
+		<input class="submit" type="submit" value="{%trans 'create' %}" />
 	</form>
 </div>
 {% endblock %}
