@@ -55,7 +55,7 @@ def index(request):
         return render_to_response('user/all.html',{'users':user_page,},context_instance=RequestContext(request))
 
 
-@transaction.commit_on_success
+@transaction.atomic
 def register(request):
     if (request.method=='POST'):
         form = RegisterForm(data=request.POST)

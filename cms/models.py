@@ -103,6 +103,11 @@ class Page(models.Model):
 class Topic(models.Model):
     title = models.CharField(max_length=100)
     pages = models.ManyToManyField(Page)
+    
+    
+    def __unicode__(self):
+        return self.title
+    
 
 class MenuItem(models.Model):
     title = models.CharField(max_length=100)
