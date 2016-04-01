@@ -28,7 +28,7 @@
 				<b><a href="{% url 'blog.views.blog_post' entry.id %}">{{entry.title}} by {{entry.user}}</a></b> {{entry.created_at|timesince}}
 				</p>
 				<p class="board">
-					<pre>{% autoescape off %}{{entry.content}}</pre>{% endautoescape %}
+					{% autoescape off %}{{entry.content|linebreaks}}{% endautoescape %}
 				</p>				
 			</div>
 		</div>

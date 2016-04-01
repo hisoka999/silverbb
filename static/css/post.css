@@ -1,0 +1,19 @@
+      .content
+      {
+        position: relative;
+		/*margin-left: 180px;*/
+        padding: 5px;
+        display:block;
+        overflow: auto;
+
+        
+      }
+      .userdata{
+		float: left;
+		position: relative;
+		width: 120px;
+		padding: 2px 10px 5px;
+		font-size: 11px;
+		display: block;
+		text-align: center;
+      }

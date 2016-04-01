@@ -42,9 +42,9 @@
 	<div class="post">
 		<div class="userdata">
 			{% if tmp.user.id != None %}
-			{% if tmp.user.get_profile.avatar %}
+			{% if tmp.user.profile.avatar %}
 			<p>
-    				<img src="{{ STATIC_URL }}{{tmp.user.get_profile.avatar}}" />
+    				<img src="{{ STATIC_URL }}{{tmp.user.profile.avatar}}" />
     		</p>
     		{% endif %}
     		<p>
@@ -55,13 +55,12 @@
     		{% if tmp.user.get_profile.get_rank.name %}
     		<p><b>{{tmp.user.get_profile.get_rank.name}}</b></p>
     		{% for r in tmp.user.get_profile.get_rank.make_list %}
-    		<img src="{{ STATIC_THEME }}images/{{tmp.user.get_profile.get_rank.image}}" />
+    		<img src="{{ STATIC_THEME }}images/{{tmp.user.profile.get_rank.image}}" />
     		{% empty %}
-    		<img src="{{ STATIC_THEME }}images/{{tmp.user.get_profile.get_rank.image}}" />
+    		<img src="{{ STATIC_THEME }}images/{{tmp.user.profile.get_rank.image}}" />
     		{% endfor %}
     		{% endif %}
-    		<p>Posts:{{tmp.user.get_profile.posts}}</p>
-		    <p>Alter:38</p>
+    		<p>Posts:{{tmp.user.profile.posts}}</p>
 		    {% else %}
 		    <p>
 		    <strong>

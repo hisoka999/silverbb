@@ -5,7 +5,7 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.models import Group
 
 fs = FileSystemStorage(location=settings.STATICFILES_DIRS[0],base_url='/static/')
-fs_data = FileSystemStorage(location='/home/stefan/workspace/silverbb/cms_data/',base_url='/cms/data/')    
+fs_data = FileSystemStorage(location=settings.PROJECT_ROOT+'/cms_data/',base_url='/cms/data/')    
 
 class Gallery(models.Model):
     name = models.CharField(max_length=100)
@@ -79,7 +79,7 @@ class Image(models.Model):
         # Save image to a SimpleUploadedFile which can be saved into
         # ImageField
         suf = SimpleUploadedFile(os.path.split(self.image.name)[-1],
-                temp_handle.read(), content_type=DJANGO_TYPE)
+                temp_handle.read(), content_type=DJANGO_TYPE) 
         # Save SimpleUploadedFile into image field
         self.thumb.save('%s_thumbnail.%s'%(os.path.splitext(suf.name)[0],FILE_EXTENSION), suf, save=False)
  

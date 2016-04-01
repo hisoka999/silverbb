@@ -7,6 +7,7 @@ from users.models import UserSession
 
 def show_css(request,css_file1):
     #print 'css/'+css_file+'.css'
+    print request.user
     return render_to_response('css/'+css_file1+'.css',{},context_instance=RequestContext(request),mimetype="text/css")
 
 

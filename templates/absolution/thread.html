@@ -54,10 +54,7 @@
 </script>
 <script type="text/javascript" src="{{ STATIC_URL }}js/lightbox.js?path={{ STATIC_URL }}"></script>
 <link rel="stylesheet" href="{{STATIC_THEME}}css/lightbox.css" type="text/css" media="screen" />
-<style type="text/css">
-	@import url("{{STATIC_THEME}}css/post.css");
-	@import url("{{STATIC_THEME}}css/forum.css");
-</style>
+
 {% endblock %}
 {% block content %}
 <div class="forum">
@@ -75,7 +72,7 @@
 				<h3 class="vtsubject mp user-offline"><a href="{% url 'board.views.show_thread' thread.id thread.get_url_name %}#p{{forloop.counter}}">{{thread.name}}</a></h3>
 			</div>
 			<div class="floatright">
-				<span class="vtdate"><a href=""><img src="icon_post_target.gif" width="11" height="9" alt="Post" title="Post" /></a>{{tmp.time_created}}</span>
+				<span class="vtdate"><a href=""><img src="{{STATIC_THEME}}images/icon_post_target.gif" width="11" height="9" alt="Post" title="Post" /></a>{{tmp.time_created}}</span>
 			</div>
 			<div style="clear: both;"></div>
 		</div>
@@ -85,15 +82,15 @@
 				{% if tmp.user.id != none %}
 				<span class="vtusername"><a href="{% url 'users.views.show' tmp.user.id tmp.user.username %}">{{tmp.user.username}}</a></span>
 
-				{% if tmp.user.get_profile.avatar %}
-				<span> <img src="{{ STATIC_URL }}{{tmp.user.get_profile.avatar}}" /> </span>
+				{% if tmp.user.profile.avatar %}
+				<span> <img src="{{ STATIC_URL }}{{tmp.user.profile.avatar}}" /> </span>
 				{% endif %}
-				{% if tmp.user.get_profile.get_rank.name %}
-				<span class="ranktitle">{{tmp.user.get_profile.get_rank.name}}</span>
-				{% for r in tmp.user.get_profile.get_rank.make_list %}
-				<img src="{{ STATIC_THEME }}images/{{tmp.user.get_profile.get_rank.image}}" />
+				{% if tmp.user.profile.get_rank.name %}
+				<span class="ranktitle">{{tmp.user.profile.get_rank.name}}</span>
+				{% for r in tmp.user.profile.get_rank.make_list %}
+				<img src="{{ STATIC_THEME }}images/{{tmp.user.profile.get_rank.image}}" />
 				{% empty %}
-				<img src="{{ STATIC_THEME }}images/{{tmp.user.get_profile.get_rank.image}}" />
+				<img src="{{ STATIC_THEME }}images/{{tmp.user.profile.get_rank.image}}" />
 				{% endfor %}
 				{% endif %}
 				{%else%}
@@ -103,7 +100,7 @@
 			<br />
 			<div class="vtprofileinfo">
 
-				<strong>Posts:</strong> {{tmp.user.get_profile.posts}}
+				<strong>Posts:</strong> {{tmp.user.rofile.posts}}
 				<br />
 
 			</div>

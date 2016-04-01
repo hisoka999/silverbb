@@ -5,6 +5,7 @@ cms_data/
 extras/documentation
 static/cms_images
 static/cms_thumbs
+static/avatars
 .svn/
 
 *.pydevproject

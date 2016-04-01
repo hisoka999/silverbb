@@ -44,7 +44,7 @@
 	        inline_styles : false,
 	        convert_fonts_to_spans : false
 		});
-		new Ajax.Updater(object, '{% url board.views.edit_post %}'+id+"/",{
+		new Ajax.Updater(object, '{% url 'board.views.edit_post' %}'+id+"/",{
   			method : 'get',
   			onComplete: function(transport) {
   				tinyMCE.execCommand("mceAddControl", true, "id_text");
@@ -63,7 +63,7 @@
 {% endblock %}
 {% block content %}
     <div class="forum">
-    		<a href="{% url board.views.index %}">Silver-Boards Beta Forum</a>&raquo; {% autoescape off %}{{thread.board.get_path}}
+    		<a href="{% url 'board.views.index' %}">Silver-Boards Beta Forum</a>&raquo; {% autoescape off %}{{thread.board.get_path}}
     		&raquo; {{thread.name}}
     		{% endautoescape %}
 		<br />
@@ -73,26 +73,34 @@
 	{% for tmp in t_posts %}
 	<div class="post">
 		<div class="userdata">
-			{% if tmp.user.get_profile.avatar %}
+			{% if tmp.user.id != None %}
+			{% if tmp.user.profile.avatar %}
 			<p>
-    				<img src="{{ STATIC_URL }}{{tmp.user.get_profile.avatar}}" />
+    				<img src="{{ STATIC_URL }}{{tmp.user.profile.avatar}}" />
     		</p>
     		{% endif %}
     		<p>
     			<strong>
-    				<a href="{% url users.views.show tmp.user.id,tmp.user.username %}">{{tmp.user.username}}</a>
+    				<a href="{% url 'users.views.show' tmp.user.id tmp.user.username %}">{{tmp.user.username}}</a>
     			</strong>
     		</p>
     		{% if tmp.user.get_profile.get_rank.name %}
     		<p><b>{{tmp.user.get_profile.get_rank.name}}</b></p>
-    		{% for r in tmp.user.get_profile.get_rank.make_list %}
-    		<img src="{{ STATIC_THEME }}images/{{tmp.user.get_profile.get_rank.image}}" />
+    		{% for r in tmp.user.profile.get_rank.make_list %}
+    		<img src="{{ STATIC_THEME }}images/{{tmp.user.profile.get_rank.image}}" />
     		{% empty %}
-    		<img src="{{ STATIC_THEME }}images/{{tmp.user.get_profile.get_rank.image}}" />
+    		<img src="{{ STATIC_THEME }}images/{{tmp.user.profile.get_rank.image}}" />
     		{% endfor %}
     		{% endif %}
-    		<p>Posts:{{tmp.user.get_profile.posts}}</p>
-		    <p>Alter:38</p>
+    		
+    		<p>Posts:{{tmp.user.profile.posts}}</p>
+    		{%else%}
+    				    <p>
+		    <strong>
+		    	{{tmp.guest_name}}
+		    </strong>
+		    </p>
+		    {% endif %}
   		</div>
 		<div class="content">
 			{% if forloop.last %}
@@ -105,14 +113,14 @@
 			{% endblocktrans %}
 			<div class="button_area">
 			{% if user == tmp.user and not thread.closed %}
-				<a href="{% url board.views.edit_post tmp.id %}" onclick="edit_post(this.up().up(),'{{tmp.id}}');return false;">{%trans 'edit' %}</a>
+				<a href="{% url 'board.views.edit_post' tmp.id %}" onclick="edit_post(this.up().up(),'{{tmp.id}}');return false;">{%trans 'edit' %}</a>
 			{% endif %}
 			</div>
 			<hr />
 			<pre class="cnt_block">{% autoescape off %}{{tmp.get_cleaned_post}}{% endautoescape %}<br /></pre>
-			{% if tmp.user.get_profile.signature %}
+			{% if tmp.user.profile.signature %}
 				<br />
-				<pre>{% autoescape off %}{{tmp.user.get_profile.get_cleaned_signature}}{% endautoescape %}</pre>
+				<pre>{% autoescape off %}{{tmp.user.profile.get_cleaned_signature}}{% endautoescape %}</pre>
 				
 			{% endif %}
 		</div>
@@ -120,7 +128,7 @@
 	</div>
 	{% endfor %}
 	{% if user.is_staff %}
-	<form method="post" action="{% url board.views.mod_thread thread.id %}">
+	<form method="post" action="{% url 'board.views.mod_thread' thread.id %}">
 		{{moderation}}
 		<input type="submit" value="Ok" />
 	</form>
@@ -131,7 +139,7 @@
 	{% endfor %}
 	</select>
 	{% if rights.can_post and not thread.closed %}
-	<a href="{% url board.views.create_post thread.id %}" class="button">{%trans 'create post'%}</a>
+	<a href="{% url 'board.views.create_post' thread.id %}" class="button">{%trans 'create post'%}</a>
 	{% endif %}
 </div>
 {% endblock %}

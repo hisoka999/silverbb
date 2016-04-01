@@ -23,15 +23,15 @@
 					Rank:
 				</dt>
 				<dd>
-					{{user.get_profile.get_rank.name}}
+					{{user.profile.get_rank.name}}
 				</dd>
 				<dt>
 					&nbsp;
 				</dt>
 				<dd>
-					{% for r in user.get_profile.get_rank.make_list %} <img src="{{ STATIC_THEME }}images/{{user.get_profile.get_rank.image}}" />
+					{% for r in user.profile.get_rank.make_list %} <img src="{{ STATIC_THEME }}images/{{user.profile.get_rank.image}}" />
 					{% empty %}
-					<img src="{{ STATIC_THEME }}images/{{user.get_profile.get_rank.image}}" />
+					<img src="{{ STATIC_THEME }}images/{{user.profile.get_rank.image}}" />
 					{% endfor %}
 				</dd>
 				<dt>
@@ -60,7 +60,7 @@
 
 				<dl class="details">
 					<dt>
-						{% if user.get_profile.avatar %} <img src="{{ STATIC_URL }}{{user.get_profile.avatar}}" />
+						{% if user.profile.avatar %} <img src="{{ STATIC_URL }}{{user.profile.avatar}}" />
 						{% endif %}
 					</dt>
 					<dt>
