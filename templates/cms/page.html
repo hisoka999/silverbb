@@ -35,6 +35,7 @@
 				<p class="board">
 					{% autoescape off %}{{page.content}}{% endautoescape %}
 				</p>
+				{% if page.gallery != None %}
 				<p class="boardtitle">
 					<h2>{% trans "Gallary" %}</h2>
 				</p>
@@ -44,5 +45,6 @@
 					 <a href="{{ STATIC_URL }}/{{image.image}}" rel="lightbox"><img src="{{ STATIC_URL }}/{{image.thumb}}" class="post-img"/></a>
 					{% endfor %}
 				</p>
+				{% endif %}
 <!-- board display end //-->
 {% endblock %}

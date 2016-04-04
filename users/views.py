@@ -28,7 +28,9 @@ def show(request,userid,username=""):
     user = User.objects.get(pk=userid)
     profile = user.profile
     posts = float(Post.objects.count())
-    posts_from_total = float(profile.posts)/posts*100.0
+    posts_from_total = 0
+    if(posts > 0):
+        posts_from_total = float(profile.posts)/posts*100.0
     return render_to_response('user/show.html',{'user':user,'profile':profile,'posts_from_total':posts_from_total},context_instance=RequestContext(request))
 
 

@@ -36,12 +36,13 @@
 		<div class="board_cat">
 			<div class="board_info">
 				<p class="boardtitle">
-					<i><b>{{page.title}}</b>
+					<i><b>{{page.title}}</b></i>
 				</p>
-				<p class="board"><pre>{% autoescape off %}{{page.content}}</pre>{% endautoescape %}
+				<p class="board">
+					<pre>{% autoescape off %}{{page.content}}{% endautoescape %}</pre>
 				</p>
 				<p class="boardtitle">
-					<i><b>{% trans "Gallary" %}</b>
+					<i><b>{% trans "Gallary" %}</b></i>
 				</p>
 				<p>
 					{% for image in page.gallery.image_set.all %}
