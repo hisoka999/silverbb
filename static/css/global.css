@@ -290,3 +290,10 @@ table tr td
 { background: #E5E5DB;
   color: #47433F;
   border-top: 1px solid #FFF;}
+.statspanel {
+	border: 1px solid #d7e5f2;
+	padding: 15px 15px 15px 55px;
+	background: no-repeat 10px 50% #FFFFFF;
+	margin: 2px 0;
+}
+
