@@ -8,6 +8,7 @@ from datetime import date
 from django.utils.datetime_safe import datetime
 from datetime import timedelta
 from django.contrib.sessions.backends.db import SessionStore
+from django.conf import settings
 
 class UserMiddleware:
     
@@ -25,7 +26,8 @@ class UserMiddleware:
             sess.save()
         except:
             if request.session.session_key is None or len(request.session.session_key) >40:
-                s = SessionStore()
+                session_key = request.COOKIES.get(settings.SESSION_COOKIE_NAME, None)
+                s = SessionStore(session_key)
                 s['last_login'] = datetime.isoformat(datetime.now())
                 s.save()
                 request.COOKIES['last_login'] =  s['last_login'] 
