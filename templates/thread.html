@@ -52,9 +52,9 @@
     				<a href="{% url 'users.views.show' tmp.user.id tmp.user.username %}">{{tmp.user.username}}</a>
     			</strong>
     		</p>
-    		{% if tmp.user.get_profile.get_rank.name %}
-    		<p><b>{{tmp.user.get_profile.get_rank.name}}</b></p>
-    		{% for r in tmp.user.get_profile.get_rank.make_list %}
+    		{% if tmp.user.profile.get_rank.name %}
+    		<p><b>{{tmp.user.profile.get_rank.name}}</b></p>
+    		{% for r in tmp.user.profile.get_rank.make_list %}
     		<img src="{{ STATIC_THEME }}images/{{tmp.user.profile.get_rank.image}}" />
     		{% empty %}
     		<img src="{{ STATIC_THEME }}images/{{tmp.user.profile.get_rank.image}}" />

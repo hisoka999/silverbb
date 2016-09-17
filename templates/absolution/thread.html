@@ -85,6 +85,7 @@
 				{% if tmp.user.profile.avatar %}
 				<span> <img src="{{ STATIC_URL }}{{tmp.user.profile.avatar}}" /> </span>
 				{% endif %}
+				
 				{% if tmp.user.profile.get_rank.name %}
 				<span class="ranktitle">{{tmp.user.profile.get_rank.name}}</span>
 				{% for r in tmp.user.profile.get_rank.make_list %}
