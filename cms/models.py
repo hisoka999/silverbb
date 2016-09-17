@@ -154,7 +154,7 @@ class Download(models.Model):
 
 
     def get_type(self):
-        return self.mime_type.replace('/','-x-')
+        return self.mime_type.replace('/','-')
     def save_data(self):
         if not self.data:
             return
