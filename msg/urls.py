@@ -3,11 +3,12 @@ Created on 10.03.2012
 
 @author: stefan
 '''
-from django.conf.urls import patterns
-urlpatterns = patterns('',
+from django.conf.urls import url
+from views import inbox,msg,create,delete
+urlpatterns = [
     # Example:
-    (r'^$','msg.views.inbox'),
-    (r'^show/(?P<msg_id>\d+)/$','msg.views.msg'),
-    (r'^create/$','msg.views.create'),
-    (r'^delete/$','msg.views.delete'),
-)
+    url(r'^$',inbox),
+    url(r'^show/(?P<msg_id>\d+)/$',msg),
+    url(r'^create/$',create),
+    url(r'^delete/$',delete),
+]

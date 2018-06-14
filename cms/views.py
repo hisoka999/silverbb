@@ -7,7 +7,7 @@ from models import NewsItem,Page,MenuItem,Gallery,DownloadCategory, Download
 from django.core.paginator import Paginator
 from django.http import Http404
 from django.http import HttpResponse
-from django.core.servers.basehttp import FileWrapper
+from wsgiref.util import FileWrapper
 import os
 
 def index(request,page=1):

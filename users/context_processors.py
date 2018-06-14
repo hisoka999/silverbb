@@ -6,4 +6,5 @@ Created on 21.05.2011
 from django.contrib.auth import forms
 def user_auth(request):
     form = forms.AuthenticationForm
+    
     return {'auth_form':form}

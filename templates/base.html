@@ -83,7 +83,7 @@
 					{% endif %}
 					<br />
 					
-					<form action="{% url 'django.views.i18n.set_language' %}"
+					<form action="{% url 'set_language' %}"
 						method="post">
 						{% csrf_token %}
 						<select name="language"> {% for lang in LANGUAGES %}
@@ -129,7 +129,7 @@
 		</div>
 		<div id="footer">
 			<a href="http://www.silver-boards.de">Silver Boards Version
-				{{version}} </a> &copy; 2011-2015 by Stefan L&uuml;dtke
+				{{version}} </a> &copy; 2011-2018 by Stefan L&uuml;dtke
 	
 		</div>
 

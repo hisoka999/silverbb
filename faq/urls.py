@@ -3,9 +3,10 @@ Created on 11.02.2012
 
 @author: stefan
 '''
-from django.conf.urls import patterns
-urlpatterns = patterns('',
+from django.conf.urls import url
+from views import *
+urlpatterns = [
     # Example:
-    (r'^$','faq.views.index'),
-    (r'^(?P<topic_id>\d+)/$','faq.views.topic'),
-)
+    url(r'^$',index,name='faq.views.index'),
+    url(r'^(?P<topic_id>\d+)/$',topic,name='faq.views.topic'),
+]
