@@ -1,11 +1,12 @@
 {% extends BASE_PATH %}
+{% url board.views.show_thread thread.id,thread.get_url_name as view_thread %}
+
 {% load i18n %}
 {% block head %}
-<meta http-equiv="REFRESH" content="3; url={% url board.views.show_thread thread.id,thread.get_url_name %}" />
+<meta http-equiv="REFRESH" content="3; url={{view_thread}}" />
 {% endblock %}
 {% block content %}
 <b>{% trans "This thread was successfully created"%}</b> <br />
-{% url board.views.show_thread thread.id,thread.get_url_name as view_thread %}
 {% blocktrans  %}
 If you are not redirected automaticcly, please click <a href="{{view_thread}}">here</a>.
 {% endblocktrans %}

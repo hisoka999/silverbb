@@ -261,7 +261,7 @@ def create_thread(request,board_id):
             board.posts = board.posts + 1
             board.threads = board.threads+1
             board.save()
-            profile = request.user.get_profile() 
+            profile = request.user.profile 
             profile.posts=profile.posts+1
             profile.save()
             return render_to_response('create_thread_success.html',{'thread':thread,},context_instance=RequestContext(request))

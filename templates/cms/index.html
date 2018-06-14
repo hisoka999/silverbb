@@ -1,28 +1,101 @@
-{% extends BASE_PATH %} {% load i18n %} 
+{% extends BASE_PATH %} 
+{% load i18n %} 
 {% block navigation %} 
-	{% with menu_path=THEME_PATH|add:"cms/menu.html" %} 
-		{% include menu_path %} 
-	{% endwith %} 
-{% endblock %}
+{% with menu_path=THEME_PATH|add:"cms/menu.html" %} {% include menu_path %} 
+{%endwith %} 
+{% endblock %} 
 {% block content %}
 <!-- Board display //-->
-<div class="forum">
-	{% for item in news %}
-	<div class="category_cat">
-		<div class="board_cat">
-			<div class="board_info">
-				<p class="boardtitle">
-					<i>{{item.time}} - </i><b>{{item.title}}</b>
-				</p>
-				<p class="board">
-				{% autoescape off %}{{item.content|linebreaks}}{% endautoescape %}
-				</p>
-			</div>
+
+<div class="row">
+	<div class="col-md-8 blog-main">
+		<h3 class="pb-3 mb-4 font-italic border-bottom">From the Firehose
+		</h3>
+		{%for item in news %}
+		<div class="blog-post">
+			<h2 class="blog-post-title">{{item.title}}</h2>
+			<p class="blog-post-meta">{{item.time}}</p>
+
+
+			<p>{%autoescape off %}{{item.content|linebreaks}}{%endautoescape %}</p>
 		</div>
-		<div class="spacer"></div>
+		<!-- /.blog-post -->
+		{%endfor %}
 	</div>
-	{% endfor %}
+	<!-- /.blog-main -->
+	<aside class="col-md-4 blog-sidebar">
+		<div class="p-3 mb-3 bg-white rounded">	
+			{% block auth%} 
+				{%if not user.is_authenticated %}	
+				
+			
+				<form method="post" action="{% url 'users.views.login_view' %}">
+					{% csrf_token %}
+					<h4>{% trans "Login" %}</h4>
+					
+					  <div class="form-group">
+					    <label for="username1">Username</label>
+					    <input type="text" class="form-control" id="username1" aria-describedby="usernameHelp" placeholder="Enter username" name="username">
+					    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+					  </div>
+					  <div class="form-group">
+					    <label for="exampleInputPassword1">Password</label>
+					    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" name="password">
+					  </div>
+					  <button type="submit" class="btn btn-primary">Login</button>
+
+				</form>
+			
+			{% endif %}
+
+			<form action="{% url 'set_language' %}" method="post">
+				<div class="input-group">
+					{% csrf_token %} 
+					<select class="custom-select" name="language"> 
+					{% for lang in LANGUAGES %}
+						<option value="{{ lang.0 }}">{{ lang.1 }}</option> 
+					{%endfor %}
+					</select> 
+						<div class="input-group-append">
+							<input class="btn btn-outline-secondary" type="submit" value="Go" />
+						</div>
+					</div>
+			</form>
+
+			{%block "sidebar" %} {%endblock%}
+			{%endblock%}
+		</div>
+
+
+		<div class="p-3">
+			<h4 class="font-italic">Archives</h4>
+			<ol class="list-unstyled mb-0">
+				<li><a href="#">March 2014</a></li>
+				<li><a href="#">February 2014</a></li>
+				<li><a href="#">January 2014</a></li>
+				<li><a href="#">December 2013</a></li>
+				<li><a href="#">November 2013</a></li>
+				<li><a href="#">October 2013</a></li>
+				<li><a href="#">September 2013</a></li>
+				<li><a href="#">August 2013</a></li>
+				<li><a href="#">July 2013</a></li>
+				<li><a href="#">June 2013</a></li>
+				<li><a href="#">May 2013</a></li>
+				<li><a href="#">April 2013</a></li>
+			</ol>
+		</div>
+
+
+	</aside>
+	<nav class="blog-pagination">
+		<a class="btn btn-outline-primary" href="#">Older</a> <a
+			class="btn btn-outline-secondary disabled" href="#">Newer</a>
+	</nav>
 
 </div>
+<!-- /.row -->
+
+
+
 <!-- board display end //-->
 {% endblock %}

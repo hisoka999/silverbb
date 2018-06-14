@@ -1,120 +1,79 @@
 {% load i18n %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../../../favicon.ico">
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html>
-<head>
-<title>Silver-Boards Beta Forum- Forenliste</title>
-<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
-<style type="text/css">
-@import url("{{STATIC_THEME}}css/global.css");
+    <title>{{CURRENT_SITE.name}}</title>
 
-@import url("{{STATIC_THEME}}css/header.css");
+    <!-- Bootstrap core CSS -->
+    <link href="{{STATIC_THEME}}css/bootstrap.min.css" rel="stylesheet">
 
-</style>
-<script type="text/javascript" src="{{ STATIC_URL }}js/prototype.js"></script>
-{% block head%}{% endblock %}
+    <!-- Custom styles for this template -->
+    <link href="{{STATIC_THEME}}css/offcanvas.css" rel="stylesheet">
+    {% block head%}{% endblock %}
+  </head>
 
+  <body class="bg-light">
+    <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
+      <a class="navbar-brand mr-auto mr-lg-0" href="#">{{CURRENT_SITE.name}}</a>
+      <button class="navbar-toggler p-0 border-0" type="button" data-toggle="offcanvas">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+	  <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
+		<ul class="navbar-nav mr-auto">
+	{% block navigation %}
+		
+			<li class="nav-item active">
+			 <a class="nav-link" href="/">{% trans "Home" %}</a></li>
+		 {% if user.is_authenticated %}
+			<li class="nav-item"><a class="nav-link" href="{% url 'users.views.base_profile' %}">{% trans "Profile"%}</a></li>
+			<li class="nav-item"><a class="nav-link" href="{% url 'msg.views.inbox' %}">{% trans "Inbox" %}</a></li> 
+			{% else %}
+			<li class="nav-item"><a class="nav-link" href="{% url 'users.views.register' %}">{% trans "Register" %}</a></li> 
+			{% endif %}
+			<li class="nav-item"><a class="nav-link" href="{% url 'users.views.index' %}">{% trans "Users" %}</a></li>
+			<li class="nav-item"><a class="nav-link" href="{% url 'users.views.team' %}">{% trans "Team" %}</a></li>
+			<li class="nav-item"><a class="nav-link" href="{% url 'faq.views.index' %}">{% trans "FAQ"%}</a></li> 
+			{% if user.is_staff %}
+			<li class="nav-item"><a class="nav-link" href="{% url 'admin:index' %}">{% trans "Administration" %}</a></li> 
+			{% endif %} 
+	{% endblock %}
+        </ul>
+        <form action="{% url 'board.views.search' %}" method="get"
+					id="search" class="form-inline my-2 my-lg-0">
+          <input name="keywords" class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+      </div>
+    </nav>
+    
+        <div class="nav-scroller bg-white box-shadow">
+      <nav class="nav nav-underline">
+			<li class="nav-item active">
+			 <a class="nav-link" href="{% url 'board.views.index' %}">{% trans "Forum" %}</a></li>
+		 {% if user.is_authenticated %}
+			<li class="nav-item"><a class="nav-link" href="{% url 'users.views.base_profile' %}">{% trans "Profile"%}</a></li>
+			<li class="nav-item"><a class="nav-link" href="{% url 'msg.views.inbox' %}">{% trans "Inbox" %}
+			<span class="badge badge-pill bg-light align-text-bottom">{{msg_new}}</span>
+			</a></li> 
+			{% else %}
+			<li class="nav-item"><a class="nav-link" href="{% url 'users.views.register' %}">{% trans "Register" %}</a></li> 
+			{% endif %}
+			<li class="nav-item"><a class="nav-link" href="{% url 'users.views.index' %}">{% trans "Users" %}</a></li>
+			<li class="nav-item"><a class="nav-link" href="{% url 'users.views.team' %}">{% trans "Team" %}</a></li>
+			<li class="nav-item"><a class="nav-link" href="{% url 'faq.views.index' %}">{% trans "FAQ"%}</a></li> 
+      </nav>
+    </div>
+    
+    
+	<main role="main" class="container">
 
-</head>
-<body class="body">
-	<div id="main">
-		<!-- Header //-->
-		<div id="header">
-			
-			<div id="logo">
-				<!-- class="logo_colour", allows you to change the colour of the text -->
-				<h1>
-					<a href="{% url 'cms.views.index' %}"><span class="logo_colour">{{CURRENT_SITE.name}}</span></a>
-				</h1>
-				<!-- <h2>Simple. Contemporary. Website Template.</h2> -->
-			</div>
-		</div>
-			<div id="menubar">
-			<nav>
-				<ul id="menu">
-				{% block navigation %}
-					
-					<li class="selected">
-						 <a href="/">{% trans "Home" %}</a></li>
-					 {% if user.is_authenticated %}
-						<li><a href="{% url 'users.views.base_profile' %}">{% trans "Profile"%}</a></li>
-						<li><a href="{% url 'msg.views.inbox' %}">{% trans "Inbox" %}</a></li> 
-						{% else %}
-						<li><a href="{% url 'users.views.register' %}">{% trans "Register" %}</a></li> 
-						{% endif %}
-						<li><a href="{% url 'users.views.index' %}">{% trans "Users" %}</a></li>
-						<li><a href="{% url 'users.views.team' %}">{% trans "Team" %}</a></li>
-						<li><a href="{% url 'faq.views.index' %}">{% trans "FAQ"%}</a></li> 
-						{% if user.is_staff %}
-						<li><a href="{% url 'admin:index' %}">{% trans "Administration" %}</a></li> 
-						{% endif %} 
-				{% endblock %}
-				</ul>
-			</nav>
-			</div>
-			
-			<!-- Header Ende //-->
-
-			<div id="site_content">
-				<div class="sidebar">
-					{% block auth%} {% if user.is_authenticated %} {{user.username}}<a
-						href="{% url 'users.views.logout_view' %}">[{% trans "Logout"%}]</a><br /> <strong>{% trans "private messages" %}</strong><br />
-					{% trans "New" %}: {{msg_new}}<br /> {% trans "Total" %}:
-					{{msg_all}}<br /> {% else %}
-					<div class="form_settings">
-					<form method="post" action="{% url 'users.views.login_view' %}">
-						{% csrf_token %}
-						<h1>{% trans "Login" %}</h1>
-						
-						{% for field in auth_form %}
-						
-							{{ field.errors }}
-							<span>
-								{{ field.label_tag }}
-							</span>
-							{{ field }}
-						
-						{% endfor %}
-						<span>
-						<input  class="submit" type="submit" value="{% trans 'login' %}" />
-						</span>
-					</form>
-					</div>
-					{% endif %}
-					<br />
-					
-					<form action="{% url 'set_language' %}"
-						method="post">
-						{% csrf_token %}
-						<select name="language"> {% for lang in LANGUAGES %}
-							<option value="{{ lang.0 }}">{{ lang.1 }}</option> {% endfor %}
-						</select>
-						<input type="submit" value="Go" />
-					</form>					
-					<br />
-					<div class="form_settings">	
-					<h1>Search</h1>
-							<form action="{% url 'board.views.search' %}" method="get" id="search">
-								<p>
-									<span></span>
-									<input name="keywords" id="keywords" type="text" maxlength="128" value="Search…" onclick="if(this.value==&#39;Search…&#39;)this.value=&#39;&#39;;" onblur="if(this.value==&#39;&#39;)this.value=&#39;Search…&#39;;" />
-								</p>
-								<p>
-									
-									<input  class="submit" value="Search" type="submit" />
-								</p>
-									<br />
-									<input type="hidden" name="style" value="875">
-									
-							</form>					
-					{% endblock %}
-					</div>
-					{%block "sidebar" %} 
-					
-					
-					{% endblock%}
-				</div>
-				<div id="content">
+				<div iclass="container">
 					{% if messages %}
 					  {% for message in messages %}
 					<div {% if message.tags %} class="msg_{{ message.tags }}"{% endif %}>
@@ -126,13 +85,16 @@
 					{% block content%} {% endblock %}
 				</div>
 
-		</div>
-		<div id="footer">
-			<a href="http://www.silver-boards.de">Silver Boards Version
-				{{version}} </a> &copy; 2011-2018 by Stefan L&uuml;dtke
-	
-		</div>
+    </main>
 
-	</div>
-</body>
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+    <script src="{{STATIC_THEME}}js/vendor/popper.min.js"></script>
+    <script src="{{STATIC_THEME}}js/bootstrap.min.js"></script>
+    <script src="{{STATIC_THEME}}js/vendor/holder.min.js"></script>
+    <script src="{{STATIC_THEME}}js/offcanvas.js"></script>
+  </body>
 </html>

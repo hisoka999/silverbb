@@ -8,12 +8,12 @@
     <script src="{{STATIC_URL}}js/board.js" type="text/javascript" ></script>
 {% endblock %}
 {% block content %}
-    <div class="forum">
+    <div class="d-flex align-items-center p-3 my-3 text-white-50 bg-purple rounded box-shadow">
     		<a href="{% url 'board.views.index' %}">Silver-Boards Beta Forum</a>&raquo; {% autoescape off %}{{board.get_path}}
     		{% endautoescape %}
     </div>
     {% if board.get_children.count > 0 %}
-    <div class="forum">
+    <div class="my-3 p-3 bg-white rounded box-shadow">
 		<div>
 		{% for child in board.get_children %}
 			<p><a href="{% url 'board.views.show_board' child.id child.get_name_for_url %}">{{child.name}}</a></p>

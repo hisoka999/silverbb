@@ -1,32 +1,38 @@
 {% load i18n %}
-<ul>
+
 	{% for page1 in menu %}
 	{% if page1.module == resolved_url.url_name %}
-	<li class="selected">
+	<li class="nav-item active">
 
 		{% elif page1.topic.id == page.topic_set.all.0.id and page1.topic.id != None %}
-	<li class="selected">
+	<li class="nav-item active">
+		{% elif page1.menuitem_set.count != 0 %}
+		<li class="nav-item dropdown">
 		{% else %}
-	<li>
+	<li class="nav-item">
 		{% endif %}
 		{% if page1.module_path != None %}
-		<a href="{{page1.module_path}}">{{page1.title}}</a>
+		<a class="nav-link" href="{{page1.module_path}}">{{page1.title}}</a>
+				{% elif page1.menuitem_set.count != 0 %}
+		<a class="nav-link dropdown-toggle" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{page1.title}}</a>
 		{% elif page1.external_link != None %}
-		<a href="{{page1.external_link}}">{{page1.title}}</a>
+		<a class="nav-link" href="{{page1.external_link}}">{{page1.title}}</a>
 		{% else %}
-		<a href="{% url 'cms.views.page' page1.id page1.get_url_name %}">{{page1.title}}</a>
+		<a class="nav-link" href="{% url 'cms.views.page' page1.id page1.get_url_name %}">{{page1.title}}</a>
 		{%endif %}
-		<ul>
+		{%if page1.menuitem_set.count > 0 %}
+		<div class="dropdown-menu" aria-labelledby="dropdown01">
 		{%for sub in page1.menuitem_set.all %}
-			<li><a href="{% url 'cms.views.page' sub.id sub.get_url_name %}">{{sub.title}}</a></li>
+			<a class="dropdown-item" href="{% url 'cms.views.page' sub.id sub.get_url_name %}">{{sub.title}}</a>
 		{%endfor %}
-		</ul>
+		</div>
+		{%endif %}
+		
 	</li>
 	{% endfor %}
 
 	{% if user.is_staff %}
-	<li>
-		<a href="{% url 'admin:index' %}">{% trans "Admin" %}</a>
+	<li class="nav-item">
+		<a class="nav-link" href="{% url 'admin:index' %}">{% trans "Admin" %}</a>
 	</li>
 	{% endif %}
-</ul>
