@@ -8,13 +8,21 @@
     <meta name="author" content="">
     <link rel="icon" href="../../../../favicon.ico">
 
-    <title>{{CURRENT_SITE.name}}</title>
+    <title>{% block title %}{{CURRENT_SITE.name}}{%endblock%}</title>
 
     <!-- Bootstrap core CSS -->
     <link href="{{STATIC_THEME}}css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="{{STATIC_THEME}}css/offcanvas.css" rel="stylesheet">
+        <!-- Placed at the end of the document so the pages load faster -->
+    <script
+  src="https://code.jquery.com/jquery-1.12.4.min.js"
+  integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
+  crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="{{STATIC_THEME}}js/vendor/jquery-slim.min.js"><\/script>')</script>
+        <script src="{{STATIC_THEME}}js/bootstrap.min.js"></script>
+    
     {% block head%}{% endblock %}
   </head>
 
@@ -26,23 +34,10 @@
       </button>
 	  <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
 		<ul class="navbar-nav mr-auto">
-	{% block navigation %}
-		
-			<li class="nav-item active">
-			 <a class="nav-link" href="/">{% trans "Home" %}</a></li>
-		 {% if user.is_authenticated %}
-			<li class="nav-item"><a class="nav-link" href="{% url 'users.views.base_profile' %}">{% trans "Profile"%}</a></li>
-			<li class="nav-item"><a class="nav-link" href="{% url 'msg.views.inbox' %}">{% trans "Inbox" %}</a></li> 
-			{% else %}
-			<li class="nav-item"><a class="nav-link" href="{% url 'users.views.register' %}">{% trans "Register" %}</a></li> 
-			{% endif %}
-			<li class="nav-item"><a class="nav-link" href="{% url 'users.views.index' %}">{% trans "Users" %}</a></li>
-			<li class="nav-item"><a class="nav-link" href="{% url 'users.views.team' %}">{% trans "Team" %}</a></li>
-			<li class="nav-item"><a class="nav-link" href="{% url 'faq.views.index' %}">{% trans "FAQ"%}</a></li> 
-			{% if user.is_staff %}
-			<li class="nav-item"><a class="nav-link" href="{% url 'admin:index' %}">{% trans "Administration" %}</a></li> 
-			{% endif %} 
-	{% endblock %}
+	{% block navigation %} 
+{% with menu_path=THEME_PATH|add:"cms/menu.html" %} {% include menu_path %} 
+{%endwith %} 
+{% endblock%}
         </ul>
         <form action="{% url 'board.views.search' %}" method="get"
 					id="search" class="form-inline my-2 my-lg-0">
@@ -54,19 +49,21 @@
     
         <div class="nav-scroller bg-white box-shadow">
       <nav class="nav nav-underline">
-			<li class="nav-item active">
-			 <a class="nav-link" href="{% url 'board.views.index' %}">{% trans "Forum" %}</a></li>
+			
+			 <a class="nav-link" href="{% url 'board.views.index' %}">{% trans "Forum" %}</a><
 		 {% if user.is_authenticated %}
-			<li class="nav-item"><a class="nav-link" href="{% url 'users.views.base_profile' %}">{% trans "Profile"%}</a></li>
-			<li class="nav-item"><a class="nav-link" href="{% url 'msg.views.inbox' %}">{% trans "Inbox" %}
+			
+			<a class="nav-link" href="{% url 'users.views.base_profile' %}">{% trans "Profile"%}</a>
+				<a class="nav-link" href="{% url 'users.views.logout_view' %}">{%trans 'Logout' %}</a>
+			<a class="nav-link" href="{% url 'msg.views.inbox' %}">{% trans "Inbox" %}
 			<span class="badge badge-pill bg-light align-text-bottom">{{msg_new}}</span>
-			</a></li> 
+			</a>
 			{% else %}
-			<li class="nav-item"><a class="nav-link" href="{% url 'users.views.register' %}">{% trans "Register" %}</a></li> 
+			<a class="nav-link" href="{% url 'users.views.register' %}">{% trans "Register" %}</a> 
 			{% endif %}
-			<li class="nav-item"><a class="nav-link" href="{% url 'users.views.index' %}">{% trans "Users" %}</a></li>
-			<li class="nav-item"><a class="nav-link" href="{% url 'users.views.team' %}">{% trans "Team" %}</a></li>
-			<li class="nav-item"><a class="nav-link" href="{% url 'faq.views.index' %}">{% trans "FAQ"%}</a></li> 
+			<a class="nav-link" href="{% url 'users.views.index' %}">{% trans "Users" %}</a>
+			<a class="nav-link" href="{% url 'users.views.team' %}">{% trans "Team" %}</a>
+			<a class="nav-link" href="{% url 'faq.views.index' %}">{% trans "FAQ"%}</a> 
       </nav>
     </div>
     
@@ -89,12 +86,10 @@
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+
     <script src="{{STATIC_THEME}}js/vendor/popper.min.js"></script>
-    <script src="{{STATIC_THEME}}js/bootstrap.min.js"></script>
     <script src="{{STATIC_THEME}}js/vendor/holder.min.js"></script>
     <script src="{{STATIC_THEME}}js/offcanvas.js"></script>
+    {% block js_scripts%} {% endblock%}
   </body>
 </html>

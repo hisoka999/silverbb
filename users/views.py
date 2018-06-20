@@ -16,6 +16,9 @@ from django.core import urlresolvers
 import datetime
 from board.models import Post
 from django.core.paginator import Paginator
+from django.http import HttpResponse,JsonResponse
+from django.core.serializers import serialize
+from django.contrib.auth.decorators import login_required
 
 '''
 def handle_uploaded_file(f):
@@ -40,16 +43,8 @@ def index(request):
     except:
         page = 1
     if (request.is_ajax()):
-        column = ""
-        if (not request.GET.get('column')):
-            column = '-profile__posts'
-        else:
-            column = request.GET.get('column')
-        print column;
-        users = User.objects.all().order_by(column)
-        user_list = Paginator(users, 10)
-        user_page = user_list.page(page)
-        return render_to_response('user/all_ajax.html',{'users':user_page,},context_instance=RequestContext(request))
+        users = User.objects.values('pk','username','profile__posts','profile__threads','last_login').all()
+        return JsonResponse(list(users),safe=False)
     else:
         users = User.objects.all().order_by('-profile__posts')
         user_list = Paginator(users, 10)
@@ -156,6 +151,14 @@ def team(request,team_name=None):
         groups=Group.objects.filter(user__is_staff=True,name=team_name)
     return render_to_response('user/team.html',{'groups':groups},context_instance=RequestContext(request))
 
+def team_json(request,team_name):
+    groups=Group.objects.filter(user__is_staff=True,name=team_name)
+    users = User.objects.values('pk','username','profile__posts','profile__threads','last_login').filter(is_staff=True,groups__name=team_name)
+    return JsonResponse(list(users),safe=False)
+    #return HttpResponse(serialize('json', users))
+
+
+@login_required(login_url='/user/login/')
 def base_profile(request):
     f_password = forms.PasswordChangeForm(request.POST)
     f_profile = ProfileForm(instance = request.user.profile)

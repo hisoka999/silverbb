@@ -36,11 +36,16 @@ class Board(models.Model):
         return Board.objects.filter(parent=self.pk)
     
     def get_path(self):
-        print self.parent
         if self.parent is None:
             return '<a href="'+reverse('board.views.show_board',args=[self.id,self.get_name_for_url()])+'">'+self.name+'</a>'
         else:
             return self.parent.get_path()+"&raquo;"+'<a href="'+reverse('board.views.show_board',args=[self.id,self.get_name_for_url()])+'">'+self.name+'</a>'
+    
+    def get_breadcrumb(self):
+        if self.parent is None:
+            return [self]
+        else:
+            return self.parent.get_breadcrumb()+[self]
     
     def __unicode__(self):
         return self.name

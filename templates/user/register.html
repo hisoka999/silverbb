@@ -1,43 +1,43 @@
 {% extends BASE_PATH %}
 {% load i18n %}
-
+{%load cssfilter %}
 {% block head %}
-<style type="text/css">
-	@import url("{{STATIC_THEME}}css/forum.css");
 
-</style>
 {% endblock %}
 {% block content %}
-<div class="forum">
-	<div class="viewforum">
+<div class="my-3 p-3 bg-white rounded box-shadow">
+
 		<form method="post" action="{% url 'users.views.register' %}">
-			<fieldset>
+			<fieldset class="form-group">
 				<legend>{% trans "General User Data"%}</legend>
 				{% for field in form %}
-				<div class="fieldWrapper">
-					{{ field.errors }}
-					<div class="lbl">
-						{{ field.label_tag }}
-					</div>
-					{{ field }}
+				<div class="row">
+				{{ field.errors }}
+				<label for ="{{field.id_for_label}}" class="col-sm-2 col-form-label">{{field.label}}</label>
+				<div class="col-sm-10">
+					{{ field|addclass:"form-control" }}
+				</div>
 				</div>
 				{% endfor %}
 			</fieldset>
 			
-			<fieldset>
+			<fieldset class="form-group">
 				<legend>{% trans "Profile"%}</legend>
 				{% for field in f_profile %}
-				<div class="fieldWrapper">
+				<div class="row">
 					{{ field.errors }}
-					<div class="lbl">
-						{{ field.label_tag }}
+					<label for ="{{field.id_for_label}}" class="col-sm-2 col-form-label">{{field.label}}</label>
+					<div class="col-sm-10">
+						{{ field|addclass:"form-control" }}
 					</div>
-					{{ field }}
 				</div>
 				{% endfor %}
 			</fieldset>
-			<input type="submit" value="register" />
+			<div class="form-group row">
+		    	<div class="col-sm-10">
+		      		<button type="submit" class="btn btn-primary">{%trans 'register' %}</button>
+		    	</div>
+		  	</div>
 		</form>
 	</div>
-</div>
 {% endblock %}

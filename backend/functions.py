@@ -6,7 +6,7 @@ from django.contrib.sites.shortcuts import get_current_site
 from models import Smilie
 from django.template import RequestContext
 from django.template.loader import get_template
-
+from templatetags.cssfilter import *
 
 def get_path(user=None):
     if user == None or user.is_authenticated() == False:
@@ -15,19 +15,7 @@ def get_path(user=None):
         return user.profile.theme.folder
 
 
-def render_to_response(page,context=None,context_instance=None,mimetype=None):
-    #print context_instance.request.user
-    #print get_path(context_instance.get('user'))
-    
-#     context['BASE_PATH'] = get_path(context_instance.request.user)+'base.html'
-#     
-#     smilies = Smilie.objects.all()
-#     context['STATIC_THEME']=settings.STATIC_URL+get_path(context_instance.request.user)
-#     context['CURRENT_SITE']=get_current_site(context_instance.request)
-#     context['THEME_PATH']=get_path(context_instance.request.user)
-#     context['smilies']=smilies
-#     
-    
+def render_to_response(page,context=None,context_instance=None,mimetype=None): 
     
     template_name=get_path(context_instance.request.user)+page
     if mimetype == None:

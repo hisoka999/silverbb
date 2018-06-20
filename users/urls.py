@@ -11,6 +11,7 @@ urlpatterns = [
     url(r'^register/$',register,name='users.views.register'),
     url(r'^team/$',team,name='users.views.team'),
     url(r'^team/(?P<team_name>\w+)/$',team,name='users.views.team'),
+    url(r'^team_json/(?P<team_name>\w+)/$',team_json,name="team_json"),
     url(r'^profile/$',base_profile,name='users.views.base_profile'),
     url(r'^activate/(?P<uuid>\S+)/$',activate,name='users.views.activate'),
 ]

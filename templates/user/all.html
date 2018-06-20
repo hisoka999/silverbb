@@ -1,51 +1,39 @@
 {% extends BASE_PATH %}
 {%load i18n %}
 {% block head %}
-<style type="text/css">
-	@import url("{{STATIC_THEME}}css/forum.css");
-</style>
-<script type="text/javascript">
-var col = '';
-	function orderby(column){
-		if (col == column){
-			col = '-'+column;
-		}else{
-			col = column;
-		}
-	  new Ajax.Updater('content', '{% url 'users.views.index' %}?column='+col, {
-  method: 'get'});
- }
-</script>
-{% endblock %}
+<link href="{{STATIC_THEME}}css/bootstrap-table.css" rel="stylesheet">
+
+{% endblock%}
+{% block js_scripts%} 
+<script src="{{STATIC_THEME}}js/bootstrap-table.js"></script>
+{% endblock%}
 {% block content %}
 
-	<table style ="width:100%; border-spacing:0;">
-		<tbody>
-			<tr>
-			<th>
-				<strong><a href="#" onclick="orderby('username')">{%trans "username" %}</a></strong>
-			</th>
-			<th>
-			<strong><a href="#" onclick="orderby('profile__posts')">{%trans "posts" %}</a></strong>
-		</th>
-		<th>
-			<strong><a href="#" onclick="orderby('profile__threads')">{%trans "threads" %}</a></strong>
-		</th>
-	</tr>
-	{% for user in users.object_list %}
-	<tr>
-		<td>
-			<a href="{% url 'users.views.show' user.pk user.username %}">{{user.username}}</a>
-		</td>
-		<td>
-			{{user.profile.posts}}
-		</td>
-		<td>
-			{{user.profile.threads}}
-		</td>
-	</tr>
-	{% endfor %}
-</tbody>
-</table>
+<div class="my-3 p-3 bg-white rounded box-shadow">
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="panel panel-default">
+				<div class="panel-heading"><strong>Users</strong></div>
+				<div class="panel-body">
+					<table data-toggle="table"
+						data-url="{% url 'users.views.index' %}"
+						data-show-refresh="true" data-show-toggle="true"
+						data-show-columns="true" data-search="true"
+						data-select-item-name="toolbar" data-pagination="true"
+						data-sort-name="username" data-sort-order="asc">
+						<thead>
+							<tr>
+								<th data-field="username" data-sortable="true">User Name</th>
+								<th data-field="last_login" data-sortable="true">Last Login</th>
+								<th data-field="profile__posts" data-sortable="true">Posts</th>
+								<th data-field="profile__threads" data-sortable="true">Threads</th>
+							</tr>
+						</thead>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 
 {% endblock %}

@@ -1,5 +1,6 @@
 {% extends BASE_PATH %}
 {% block head %}
+<script type="text/javascript" src="{{ STATIC_URL }}js/prototype.js"></script>
 <script type="text/javascript" src="{{ STATIC_URL }}js/scriptaculous.js?load=effects,builder"></script>
 <script type="text/javascript">
 	LightboxOptions = Object.extend({
@@ -31,6 +32,7 @@
 {% endblock %}
 {% block content %}
 <!-- Board display //-->
+<div class="my-3 p-3 bg-white rounded box-shadow">
 <h1>{{page.title}}</h1>
 				<p class="board">
 					{% autoescape off %}{{page.content}}{% endautoescape %}
@@ -47,4 +49,5 @@
 				</p>
 				{% endif %}
 <!-- board display end //-->
+</div>
 {% endblock %}

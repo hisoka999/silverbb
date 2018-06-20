@@ -1,24 +1,8 @@
 {% extends BASE_PATH %}
 {%load i18n %}
+{%load cssfilter %}
 {% block head %}
-<style type="text/css">
-	@import url("{{STATIC_THEME}}css/forum.css");
-/*	.lbl {
-		width: 200px;
-		display: inline-block;
-	}
-	input[type="text"],[type="url"],[type="password"] {
-		border: 1px solid black;
-	}
-	legend {
-		font-weight: bold;
-	}
-	fieldset {
-	
-		margin: 5px;
-	}
-	*/
-</style>
+
 {% endblock %}
 {% block content %}
 <div class="my-3 p-3 bg-white rounded box-shadow">
@@ -38,7 +22,7 @@
 				{{ field.errors }}
 			<label for ="{{field.id_for_label}}" class="col-sm-2 col-form-label">{{field.label}}</label>
 			<div class="col-sm-10">
-				{{ field }}
+				{{ field|addclass:"form-control" }}
 			</div>
 			{% endfor %}
 			</div>
@@ -53,7 +37,7 @@
 				{{ field.errors }}
 			<label for ="{{field.id_for_label}}" class="col-sm-2 col-form-label">{{field.label}}</label>
 			<div class="col-sm-10">
-				{{ field }}
+				{{ field|addclass:"form-control" }}
 			</div>
 			{% endfor %}
 			</div>
@@ -65,7 +49,7 @@
 				{{ field.errors }}
 			<label for ="{{field.id_for_label}}" class="col-sm-2 col-form-label">{{field.label}}</label>
 			<div class="col-sm-10">
-				{{ field }}
+				{{ field|addclass:"form-control" }}
 			</div>
 			{% endfor %}
 			</div>
@@ -75,7 +59,6 @@
       		<button type="submit" class="btn btn-primary">{%trans 'change' %}</button>
     	</div>
   	</div>
-		</p>
 	</form>
 </div>
 {% endblock %}

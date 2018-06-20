@@ -1,14 +1,9 @@
 {% extends BASE_PATH %}
-{% load i18n %}
-{% block auth %}
-{% endblock %}
+
 {% block content %}
+
     <form class="form-signin" method="post" action="{% url 'users.views.login_view' %}">
       <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-      {{ form.non_field_errors }}
-      
-      {{form.username.errors}}
-      {{form.password.errors}}
       <label for="inputUsername" class="sr-only">Username</label>
       <input type="text" id="inputUsername" class="form-control" placeholder="Username" required autofocus name="username">
       <label for="inputPassword" class="sr-only">Password</label>
