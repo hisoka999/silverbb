@@ -1,12 +1,9 @@
 {% extends BASE_PATH %}
 {% block head %}
-<style type="text/css">
-@import url("{{STATIC_THEME}}css/global.css");
 
-</style>
 {% endblock %}
 {% block content %}
-<div class="forum">
+<div class="my-3 p-3 bg-white rounded box-shadow">
 	<div id="profile_left">
 		{% if user.profile.avatar %}
 		<img src="{{ STATIC_URL }}{{user.profile.avatar}}" />

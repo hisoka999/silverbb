@@ -93,7 +93,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            "/home/stefan/workspace/silverbb/templates",
+            PROJECT_ROOT+"/templates",
         ],
         #'APP_DIRS': True,
         'OPTIONS': {
@@ -109,7 +109,7 @@ TEMPLATES = [
                 'django.template.context_processors.static',
                 'django.template.context_processors.tz',
                 
-                #'django.contrib.messages.context_processors.messages',
+                'django.contrib.messages.context_processors.messages',
                 'users.context_processors.user_auth',
                 'backend.context_processors.version',
                 'msg.context_processors.msg_stats',

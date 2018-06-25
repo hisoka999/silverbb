@@ -172,10 +172,11 @@ def create_post(request,thread_id):
                 thread.board.posts = thread.board.posts + 1
                 thread.board.save()
                 if (request.user.id is not None):
-                    profile = request.user.get_profile() 
+                    profile = request.user.profile
                     profile.posts=profile.posts+1
                     profile.save()
-                return render_to_response('create_thread_success.html',{'thread':thread,},context_instance=RequestContext(request))
+                messages.add_message(request, messages.INFO, 'This post was successfully created.')
+                return redirect(urlresolvers.reverse('board.views.show_thread',args=[post.thread.id,post.thread.get_url_name()]))
     return render_to_response('create_post.html',{'f_post':f_post,'thread_id':thread_id},context_instance=RequestContext(request))
 
 def edit_post(request,post_id):

@@ -15,6 +15,7 @@
 
     <!-- Custom styles for this template -->
     <link href="{{STATIC_THEME}}css/offcanvas.css" rel="stylesheet">
+    <link href="{{STATIC_THEME}}css/sticky-footer.css" rel="stylesheet">
         <!-- Placed at the end of the document so the pages load faster -->
     <script
   src="https://code.jquery.com/jquery-1.12.4.min.js"
@@ -47,7 +48,7 @@
       </div>
     </nav>
     
-        <div class="nav-scroller bg-white box-shadow">
+    <div class="nav-scroller bg-white box-shadow">
       <nav class="nav nav-underline">
 			
 			 <a class="nav-link" href="{% url 'board.views.index' %}">{% trans "Forum" %}</a><
@@ -70,11 +71,11 @@
     
 	<main role="main" class="container">
 
-				<div iclass="container">
+				<div class="container">
 					{% if messages %}
 					  {% for message in messages %}
-					<div {% if message.tags %} class="msg_{{ message.tags }}"{% endif %}>
-					    <li>{{ message }}</li>
+					<div {% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %} role="alert">
+					    {{ message }}
 					</div>
 					{% endfor %}
 					{% endif %}
@@ -83,7 +84,11 @@
 				</div>
 
     </main>
-
+    <footer class="footer">
+      <div class="container">
+        <span class="text-muted">&copy; 2012 - 2018 <a href="https://silver-boards.com">silver-boards.com</a></span>
+      </div>
+    </footer>
     <!-- Bootstrap core JavaScript
     ================================================== -->
 

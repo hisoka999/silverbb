@@ -46,4 +46,6 @@ class ThreadModForm(Form):
 class MoveThreadForm(ModelForm):
     class Meta:
         model = Thread
-        exclude = ('author','posts','moved_from','closed','name',)  
+        exclude = ('author','posts','moved_from','closed','name','guest','views')  
+        
+        

@@ -6,6 +6,14 @@ from django.template import RequestContext
 from django.core.paginator import Paginator
 from backend.functions import render_to_response
 from django.contrib import messages
+from django.db import connection
+from collections import namedtuple
+
+def namedtuplefetchall(cursor):
+    "Return all rows from a cursor as a namedtuple"
+    desc = cursor.description
+    nt_result = namedtuple('Result', [col[0] for col in desc])
+    return [nt_result(*row) for row in cursor.fetchall()]
 
 
 def index(request,page=1):
@@ -14,7 +22,13 @@ def index(request,page=1):
     entries = Entry.objects.order_by('-created_at')
     pages = Paginator(entries,10)
     
-    return render_to_response('blog/index.html',{'entries':pages.page(page)},context_instance=RequestContext(request))
+    Entry.objects.values('created_at')
+    
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT DISTINCT YEAR(created_at) 'year',MONTHNAME(created_at) 'month' FROM `blog_entry` ORDER BY 1 DESC,2 DESC")
+        dates = namedtuplefetchall(cursor)
+    
+    return render_to_response('blog/index.html',{'entries':pages.page(page),'dates':dates},context_instance=RequestContext(request))
 
 
 

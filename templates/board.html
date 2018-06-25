@@ -1,6 +1,7 @@
 {% extends BASE_PATH %}
 {% load i18n %}
 {% block head %}
+    <script src="{{STATIC_URL}}js/board.js" type="text/javascript" ></script>
 
 {% endblock %}
 {% block content %}
@@ -29,66 +30,73 @@
     {% endif %}
     
     <div class="my-3 p-3 bg-white rounded box-shadow">
-    
-		<table style ="width:100%; border-spacing:0;">
-			<tbody>
-				<tr >
-      <th><strong>{%trans "Topic" %}</strong></th>
-      <th><strong>{% trans "Author" %}</strong></th>
-      <th><strong>{% trans "Posts"%}</strong></th>
-      <th><strong>{% trans "Last post"%}</strong></th>  
-    </tr>
+        <h6 class="border-bottom border-gray pb-2 mb-0">{{board.name}}</h6>
     {% for thread in threads.object_list %}
- 	<tr>
- 		<td>
-      	{% if thread.moved_from == board %}<i>moved</i>{% endif %}
-      	<a href="{% url 'board.views.show_thread' thread.id thread.get_url_name %}">{{thread.name}}</a>
-      	</td>
-      <td>
-      	<a href="{% url 'users.views.show' thread.author.id thread.author.username %}">{{thread.author.username }}</a>
-      </td>
-      <td>{% trans "Answers" %} : {{thread.posts}}</td>
+        
+        <div class="media text-muted pt-3">
+          <img data-src="holder.js/32x32?theme=thumb&bg=007bff&fg=007bff&size=1" alt="" class="mr-2 rounded">
+          <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+            <div class="d-flex justify-content-between align-items-center w-100">
+              <strong class="text-gray-dark">
+              {% if thread.moved_from == board %}<span class="badge badge-secondary">moved</span>{% endif %}
+              <a href="{% url 'board.views.show_thread' thread.id thread.get_url_name %}">{{thread.name}}</a></strong>
+              <a href="{% url 'board.views.show_thread' thread.id thread.get_url_name %}#last">{%trans "last post"%}</a>
+            </div>
+            <span class="d-block">{% trans "Answers" %} : {{thread.posts}}</span>
+					
+					
       {% with thread.get_last_post as last_post %}
-      <td>        <b><a href="{% url 'board.views.show_thread' thread.id thread.get_url_name %}#last">{%trans "last post"%}</a></b> von
+      <span  class="d-block">	        <b><a href="{% url 'board.views.show_thread' thread.id thread.get_url_name %}#last">{%trans "last post"%}</a></b> von
       	{% if last_post.user.is_authenticated %} 
         <b><a href="{% url 'users.views.show' last_post.user.id last_post.user.username %}">{{thread.get_last_post.user}}</a></b>
         {% else %} <b>{{last_post.guest_name}}</b> {% endif %}
          am 
         <i>{{thread.get_last_post.time_created}}</i>
         
-        </td>
+        </span>
         {% endwith %}  
-    	</tr> 
-		{% endfor %}
-		</tbody>
-		</table>
-	<select name="board" onchange="boardChange();" onclick="boardChange();" id="selector">
+          </div>
+        </div>
+        {%endfor %}
+      </div>
+		
+	
+	<select name="board" onchange="boardChange();" onclick="boardChange();" id="selector" class="form-control form-control-lg">
 	{% for board in boards %}
 		{{board.list}}
 	{% endfor %}
 	</select>
-	<div class="pagination">
-    <span class="step-links">
-        {% if threads.has_previous %}
-            <a href="?page={{ threads.previous_page_number }}">{% trans "previous" %}</a>
-        {% endif %}
-
-        <span class="current">
-        	{% blocktrans with threads.number as cur_page and threads.paginator.num_pages as all_pages  %}
-            Page {{ cur_page }} of {{ all_pages }}.
-            {% endblocktrans %}
-        </span>
-
-        {% if threads.has_next %}
-            <a href="?page={{ threads.next_page_number }}">{% trans "next" %}</a>
-        {% endif %}
-    </span>
-	</div>
+		<nav aria-label="Page navigation example">
+		  <ul class="pagination">
+		  	{% if threads.has_previous %} 
+		    <li class="page-item">
+		      <a class="page-link" href="{% url 'board.views.show_board' board.id %}?page={{entries.previous_page_number}}" aria-label="Previous">
+		        <span aria-hidden="true">&laquo;</span>
+		        <span class="sr-only">Previous</span>
+		      </a>
+		    </li>
+		    {%endif %}
+		    {%for page in threads.paginator.page_range %}
+		    {%if threads.number == page %}
+		    <li class="page-item active"><a class="page-link" href="{% url 'board.views.show_board' board.id %}?page={{page}}">{{page}}</a></li>
+		    {%else %}
+		    <li class="page-item"><a class="page-link" href="{% url 'board.views.show_board' board.id %}?page={{page}}">{{page}}</a></li>
+		    {%endif%}
+		    {%endfor %}
+		    {% if threads.has_next %} 
+		    <li class="page-item">
+		      <a class="page-link" href="{% url 'board.views.show_board' board.id %}?page={{entries.next_page_number}}" aria-label="Next">
+		        <span aria-hidden="true">&raquo;</span>
+		        <span class="sr-only">Next</span>
+		      </a>
+		    </li>
+		    {%endif%}
+		  </ul>
+		</nav>
     <div class="viewforum">
     {% if rights.can_thread %}
       <a href="{% url 'board.views.create_thread' board.id %}" class="btn btn-primary">{% trans "create thread"%}</a>
     {% endif %}
     </div>
-    </div>
-	</div>
+ 
 {% endblock %}
