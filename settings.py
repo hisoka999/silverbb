@@ -152,5 +152,9 @@ SESSION_SAVE_EVERY_REQUEST = True
 FIXTURE_DIRS = (
     'fixtures',
 )
+LOCALE_PATHS = [
+    'locale'
+]
+
 # User Profile
 AUTH_PROFILE_MODULE = "users.UserProfile"

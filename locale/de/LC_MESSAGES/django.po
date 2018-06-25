@@ -5,103 +5,338 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-24 11:48-0500\n"
-"PO-Revision-Date: 2012-04-24 18:33+0100\n"
+"POT-Creation-Date: 2018-06-25 21:58+0200\n"
+"PO-Revision-Date: 2018-06-25 22:26+0200\n"
 "Last-Translator: Stefan Luedtke <gandalf@silver-boards.de>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language-Team: \n"
+"X-Generator: Poedit 2.0.4\n"
 
-#: settings.py:39
+#: settings.py:41
 msgid "German"
 msgstr "Deutsch"
 
-#: settings.py:40
+#: settings.py:42
 msgid "English"
 msgstr "Englisch"
 
-#: templates/base.html:42
+#: templates/base.html:54
+msgid "Forum"
+msgstr "Forum"
+
+#: templates/base.html:57 templates/user/register.html:25
+msgid "Profile"
+msgstr "Profil"
+
+#: templates/base.html:58
 msgid "Logout"
 msgstr "Abmelden"
 
-#: templates/base.html:43
-msgid "Private Nachrichten"
+#: templates/base.html:59
+msgid "Inbox"
+msgstr "Posteingang"
+
+#: templates/base.html:63
+msgid "Register"
+msgstr "Registrieren"
+
+#: templates/base.html:65
+msgid "Users"
+msgstr "Benutzer"
+
+#: templates/base.html:66
+msgid "Team"
+msgstr "Team"
+
+#: templates/base.html:67
+msgid "FAQ"
+msgstr "FAQ"
+
+#: templates/blog/index.html:73 templates/blog/show.html:107
+#: templates/cms/index.html:34
+msgid "Login"
 msgstr ""
 
-#: templates/base.html:44
-msgid "Neu"
-msgstr ""
+#: templates/blog/show.html:60
+msgid "Add Comment"
+msgstr "Kommentar erstellen"
 
-#: templates/board.html:24
-msgid "Topic"
-msgstr ""
+#: templates/blog/tag.html:22
+msgid "Blog"
+msgstr "Blog"
 
-#: templates/board.html:25
-msgid "Author"
-msgstr ""
-
-#: templates/board.html:26
-msgid "Posts"
-msgstr ""
-
-#: templates/board.html:27
-msgid "Last post"
-msgstr ""
-
-#: templates/board.html:33
-msgid "Answers"
-msgstr ""
-
-#: templates/board.html:43
+#: templates/blog/tag.html:49 templates/msg/index.html:56
 msgid "previous"
-msgstr ""
+msgstr "zurück"
 
-#: templates/board.html:47
+#: templates/blog/tag.html:49 templates/msg/index.html:57
 #, python-format
 msgid ""
 "\n"
-"            Page %(threads.number)s of %(threads.paginator.num_pages)s.\n"
-"            "
+"\t\t\t\t\tPage %(cur_page)s of %(all_pages)s.\n"
+"\t\t\t\t\t"
 msgstr ""
 
-#: templates/board.html:53
+#: templates/blog/tag.html:51 templates/msg/index.html:60
 msgid "next"
-msgstr ""
+msgstr "weiter"
 
-#: templates/board.html:59
-msgid "create thread"
-msgstr ""
-
-#: templates/index.html:15
-msgid "Moderators"
-msgstr ""
-
-#: templates/index.html:20
-#, python-format
-msgid "Themen: %(child.threads)s und Beitr&auml;ge:%(child.posts)s"
-msgstr ""
-
-#: templates/index.html:21
+#: templates/board.html:43 templates/board.html:49
+#: templates/board/search_result.html:21 templates/thread.html:85
 msgid "last post"
-msgstr ""
+msgstr "Letzer Beitrag"
 
-#: templates/index.html:32
+#: templates/board.html:45
+msgid "Answers"
+msgstr "Antworten"
+
+#: templates/board.html:98 templates/create_thread.html:32
+msgid "create thread"
+msgstr "Thema erstellen"
+
+#: templates/board/close_thread_success.html:17
+msgid "The thread was successfully closed."
+msgstr "Das Thema wurde erfolgreich geschlossen."
+
+#: templates/board/close_thread_success.html:19
 #, python-format
 msgid ""
-"Derzeit sind %(users.count)s angemeldete Benutzer und %(guest_count)s G&auml;"
-"ste\n"
-"       online."
+"\n"
+" \t   \t\t\tYou will be redirected automatically to the thread. <br />\n"
+" \t   \t\t\tIf this does not work, please click <a href=\"%(reurl)s\">here</"
+"a>.\n"
+" \t   \t\t"
 msgstr ""
+
+#: templates/board/delete_thread_success.html:17
+msgid "The thread was successfully deleted."
+msgstr "Das Thema wurde erfolgreich gelöscht."
+
+#: templates/board/delete_thread_success.html:19
+#, python-format
+msgid ""
+"\n"
+" \t   \t\t\tYou will be redirected automatically to the board of the thread. "
+"<br />\n"
+" \t   \t\t\tIf this does not work, please click <a href=\"%(reurl)s\">here</"
+"a>.\n"
+" \t   \t\t"
+msgstr ""
+
+#: templates/board/move_thread.html:16
+msgid "Move thread."
+msgstr "Thema verschieben"
+
+#: templates/board/move_thread.html:27
+msgid "move thread"
+msgstr "Thema verschieben"
+
+#: templates/cms/menu.html:36
+msgid "Admin"
+msgstr "Administration"
+
+#: templates/cms/page.html:42
+msgid "Gallary"
+msgstr "Gallerie"
+
+#: templates/create_post.html:27
+msgid "Create Post"
+msgstr "Beitrag anlegen"
+
+#: templates/create_post.html:42 templates/create_thread.html:59
+msgid "create"
+msgstr "Erstellen"
+
+#: templates/create_thread_success.html:9
+msgid "This thread was successfully created"
+msgstr ""
+
+#: templates/create_thread_success.html:10
+#, python-format
+msgid ""
+"\n"
+"If you are not redirected automaticcly, please click <a href="
+"\"%(view_thread)s\">here</a>.\n"
+msgstr ""
+
+#: templates/edit_post.html:54
+msgid "Preview"
+msgstr "Vorschau"
+
+#: templates/edit_post.html:59
+msgid "edit post"
+msgstr "Beitrag bearbeiten"
+
+#: templates/edit_post.html:71 templates/thread.html:89
+msgid "edit"
+msgstr "bearbeiten"
+
+#: templates/edit_post.html:72
+msgid "preview"
+msgstr "Vorschau"
+
+#: templates/error.html:5
+msgid "An error accured"
+msgstr ""
+
+#: templates/index.html:25
+#, python-format
+msgid "Threads: %(c_threads)s and Posts: %(c_posts)s"
+msgstr "Themen: %(c_threads)s und Beiträge: %(c_posts)s"
+
+#: templates/index.html:26
+msgid "Moderators"
+msgstr "Moderatoren"
 
 #: templates/index.html:40
+msgid "Statistics"
+msgstr "Statistik"
+
+#: templates/index.html:47
+#, python-format
+msgid "There are %(user_count)s users and %(guest_count)s guests online."
+msgstr ""
+
+#: templates/index.html:64
 #, python-format
 msgid ""
-"Das Forum besitzt %(all_user)s Benutzer, %(all_threads)s Themen und "
-"%(all_posts)s   \n"
-"      Beitr&auml;ge. Der neueste Benutzer im Forum ist "
+"This community does have %(all_user)s user, %(all_threads)s threads "
+"%(all_posts)s\n"
+"\t\tand posts. The last user that registrated himself was "
+msgstr ""
+
+#: templates/msg/create.html:34
+msgid "Create Message"
+msgstr ""
+
+#: templates/msg/create.html:54
+msgid "send"
+msgstr "senden"
+
+#: templates/msg/index.html:18
+msgid "Message"
+msgstr "Nachricht"
+
+#: templates/msg/index.html:21
+msgid "Sender"
+msgstr "Absender"
+
+#: templates/msg/index.html:24
+msgid "Time"
+msgstr "Zeit"
+
+#: templates/msg/index.html:27
+msgid "Options"
+msgstr "Optionen"
+
+#: templates/msg/index.html:64
+msgid "send message"
+msgstr "Nachricht senden"
+
+#: templates/msg/show.html:17
+msgid "sender"
+msgstr "Absender"
+
+#: templates/msg/show.html:25
+msgid "title"
+msgstr "Titel"
+
+#: templates/msg/show.html:33
+msgid "Content"
+msgstr "Inhalt"
+
+#: templates/msg/success.html:17
+msgid "The message was successfully created."
+msgstr ""
+
+#: templates/msg/success.html:19
+#, python-format
+msgid ""
+"\n"
+" \t   \t\t\tYou will be redirected automatically to you inbox. <br />\n"
+" \t   \t\t\tIf this does not work, please click <a href=\"%(reurl)s\">here</"
+"a>.\n"
+" \t   \t\t"
+msgstr ""
+
+#: templates/thread.html:82
+#, python-format
+msgid ""
+"\n"
+"\t\t\tCreated at %(time_created)s\n"
+"\t\t\t"
+msgstr ""
+
+#: templates/thread.html:107
+msgid "create post"
+msgstr "Beitrag anlegen"
+
+#: templates/user/all_ajax.html:6
+msgid "username"
+msgstr ""
+
+#: templates/user/all_ajax.html:9
+msgid "posts"
+msgstr ""
+
+#: templates/user/all_ajax.html:12
+msgid "threads"
+msgstr ""
+
+#: templates/user/login_successful.html:7
+msgid "Your login was successful."
+msgstr ""
+
+#: templates/user/login_successful.html:9
+#, python-format
+msgid ""
+"\n"
+"If you are not redirected automaticcly, please click <a href=\"%(referer)s"
+"\">here</a>.\n"
+msgstr ""
+
+#: templates/user/profile.html:11
+msgid "Your changes were saved."
+msgstr ""
+
+#: templates/user/profile.html:17
+msgid "Change Password"
+msgstr "Passwort bearbeiten"
+
+#: templates/user/profile.html:18
+msgid "Change Profile"
+msgstr "Profil bearbeiten"
+
+#: templates/user/profile.html:36 templates/user/profile.html:71
+msgid "change"
+msgstr ""
+
+#: templates/user/profile.html:45
+msgid "change profile"
+msgstr "Profil bearbeiten"
+
+#: templates/user/register.html:12
+msgid "General User Data"
+msgstr ""
+
+#: templates/user/register.html:38
+msgid "register"
+msgstr ""
+
+#: templates/user/register_successful.html:7
+msgid "Your registration was successful."
+msgstr ""
+
+#: templates/user/register_successful.html:9
+#, python-format
+msgid ""
+"\n"
+"If you are not redirected automatically, please click <a href="
+"\"%(index_page)s\">here</a>.\n"
 msgstr ""
