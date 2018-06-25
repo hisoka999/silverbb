@@ -2,7 +2,7 @@ from django.conf.urls import *
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 # Uncomment the next two lines to enable the admin:
-from django.contrib import admin
+from django.contrib import admin,admindocs
 
 import board,users,faq,msg,cms,blog,backend
 import cms.views,backend.views
@@ -20,7 +20,7 @@ urlpatterns = [
     url(r'^css/(?P<css_file1>\w+).css$',backend.views.show_css),
     url(r'^captcha/$',backend.views.captcha),
     # Uncomment the admin/doc line below to enable admin documentation:
-    #url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
+    url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
     # Uncomment the next line to enable the admin:
     url(r'^admin/', admin.site.urls),

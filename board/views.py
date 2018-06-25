@@ -3,6 +3,7 @@ from django.template import RequestContext
 from django.contrib import auth, messages
 from django.db.models import Q
 from models import Board,Thread,Post
+from users.models import User
 from users.models import UserSession,get_group
 from django.core.paginator import Paginator
 from backend.models import BBCode, Smilie
@@ -347,14 +348,17 @@ def search(request):
         if (search_type.lower() == 'keys'):
             search_string = request.GET['keywords']
             search_string.replace(' ','%')
-            result = Thread.objects.filter(Q(name__contains=search_string)|Q(post__text__contains=search_string)).distinct()#.order_by('-post__time_created')
+            result = Thread.objects.filter(Q(name__contains=search_string)|Q(post__text__icontains=search_string)).distinct()#.order_by('-post__time_created')
         elif(search_type.lower() == 'user'):
             try:
                 user_id = int(request.GET.get('user_id'))
-            except:
+                user = User.objects.get(pk = user_id)
+                search_string = "Username "+user.username
+            except Exception as e:
+                print e
                 raise Http404
             result = Thread.objects.filter(Q(author=user_id)|Q(post__user=user_id)).distinct()
-        return render_to_response('board/search_result.html',{'results':result},context_instance=RequestContext(request))
+        return render_to_response('board/search_result.html',{'results':result,'search_string':search_string},context_instance=RequestContext(request))
         
         
         
