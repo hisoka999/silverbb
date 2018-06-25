@@ -49,12 +49,19 @@
 			{% endif %}
 
 			<form action="{% url 'set_language' %}" method="post">
+			{% get_current_language as LANGUAGE_CODE %}
+				{{LANGUAGE_CODE}}
 				<div class="input-group">
 					{% csrf_token %} 
 					<select class="custom-select" name="language"> 
-					{% for lang in LANGUAGES %}
-						<option value="{{ lang.0 }}">{{ lang.1 }}</option> 
-					{%endfor %}
+				        
+				        {% get_available_languages as LANGUAGES %}
+				        {% get_language_info_list for LANGUAGES as languages %}
+				        {% for language in languages %}
+				            <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected{% endif %}>
+				                {{ language.name_local }} ({{ language.code }})
+				            </option>
+				        {% endfor %}
 					</select> 
 						<div class="input-group-append">
 							<input class="btn btn-outline-secondary" type="submit" value="Go" />

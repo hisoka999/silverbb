@@ -39,6 +39,7 @@
             <div class="d-flex justify-content-between align-items-center w-100">
               <strong class="text-gray-dark">
               {% if thread.moved_from == board %}<span class="badge badge-secondary">moved</span>{% endif %}
+              {% if thread.is_new %}<span class="badge badge-secondary">new</span>{% endif %}
               <a href="{% url 'board.views.show_thread' thread.id thread.get_url_name %}">{{thread.name}}</a></strong>
               <a href="{% url 'board.views.show_thread' thread.id thread.get_url_name %}#last">{%trans "last post"%}</a>
             </div>

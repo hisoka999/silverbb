@@ -20,7 +20,11 @@
           <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
             <div class="d-flex justify-content-between align-items-center w-100">
               <strong class="text-gray-dark"><a href="{% url 'board.views.show_board' child.id child.get_name_for_url%}">{{child.name}}</a></strong>
-              <a href="#">last post</a>
+              {%if child.thread_set.count > 0 %}
+              {% with child.get_last_post as last_post %}
+              <a href="{%url 'board.views.show_thread' last_post.thread.id last_post.thread.get_url_name%}">{%trans 'last post'%}</a>
+              {%endwith %}
+              {% endif%}
             </div>
             <span class="d-block">{% blocktrans with child.threads as c_threads and child.posts as c_posts%}Threads: {{c_threads}} and Posts: {{c_posts}}{% endblocktrans %}</span>
             <span  class="d-block">					{% trans "Moderators" %}:

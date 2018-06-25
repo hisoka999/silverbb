@@ -1,3 +1,3 @@
 function boardChange(){
-	window.location.pathname="/board/"+$("selector").getValue()+"/";
+	window.location.pathname="/forum/board/"+$("#selector").val()+"/";
 }
