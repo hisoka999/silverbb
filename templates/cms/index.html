@@ -9,7 +9,7 @@
 
 <div class="row">
 	<div class="col-md-8 blog-main">
-		<h3 class="pb-3 mb-4 font-italic border-bottom">From the Firehose
+		<h3 class="pb-3 mb-4 font-italic border-bottom">News
 		</h3>
 		{%for item in news %}
 		<div class="blog-post">
@@ -50,7 +50,6 @@
 
 			<form action="{% url 'set_language' %}" method="post">
 			{% get_current_language as LANGUAGE_CODE %}
-				{{LANGUAGE_CODE}}
 				<div class="input-group">
 					{% csrf_token %} 
 					<select class="custom-select" name="language"> 

@@ -38,7 +38,7 @@ tinyMCE.init({
 	
 	
     <div class="my-3 p-3 bg-white rounded box-shadow">
-    <form method="post" action="{% url 'msg.views.create' %}">
+    <form method="post" action="{% url 'msg.views.create' %}" novalidate>
     
     {% for field in form %}
     <div class="form-group row">

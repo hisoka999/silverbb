@@ -11,8 +11,8 @@ from django.contrib.auth.models import User
 
 class RegisterForm(ModelForm):
     email2 = forms.EmailField(label="EMail (again)")
-    password2 = forms.CharField( widget=forms.PasswordInput, label="Password (again)" )
-
+    password2 = forms.CharField(widget=forms.PasswordInput, label="Password (again)" )
+    password  = forms.CharField( widget=forms.PasswordInput ) 
     def __init__(self, *args, **kwargs):
         super(RegisterForm, self).__init__(*args, **kwargs)
         self.fields.keyOrder = ['username','password','password2','email','email2']    

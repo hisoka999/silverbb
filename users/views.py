@@ -16,7 +16,7 @@ from django.core import urlresolvers
 import datetime
 from board.models import Post
 from django.core.paginator import Paginator
-from django.http import HttpResponse,JsonResponse
+from django.http import JsonResponse
 from django.core.serializers import serialize
 from django.contrib.auth.decorators import login_required
 

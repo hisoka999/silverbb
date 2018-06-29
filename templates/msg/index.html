@@ -1,69 +1,84 @@
 {% extends BASE_PATH %}
 {% load i18n %}
 {% block head %}
+<link href="{{STATIC_THEME}}css/bootstrap-table.css" rel="stylesheet">
+<link href="{{STATIC_THEME}}css/fontawesome.css" rel="stylesheet">
 <style type="text/css">
-	@import url("{{STATIC_THEME}}css/forum.css");
+<!--
+@font-face {
+    font-family : "fontawesome";
+    src: url("../fonts/fontawesome-webfont.woff") format ("woff");
+}
+.fa{
+	font-family : "fontawesome";
+}
+-->
 </style>
-{% endblock %}
+{% endblock%}
+{% block js_scripts%} 
+<script src="{{STATIC_THEME}}js/fontawesome.js"></script>
+<script src="{{STATIC_THEME}}js/bootstrap-table.js"></script>
+<script src="{{STATIC_THEME}}js/table-formatter.js"></script>
+<script type="text/javascript">
+<!--
+function linkFormatter(message,row){
+	var result ="<a href=\"{%url 'msg.views.msg' '0' %}\">"+message+"</a>";
+	return result.replace('0',row.pk);
+}
+
+function optionsFormatter(id){
+	var result = "<a href =\"\" class=\"fa fa-trash\"> </a>"
+	return result.replace('0',id);
+}
+function checkFormatter(value,row,index){
+	return {
+		
+		checked: false,
+		disabled: true
+	};
+}
+//-->
+</script>
+{% endblock%}
 {% block content %}
 <div class="forum">
 	<a href="{% url 'board.views.index' %}">Silver-Boards Beta Forum</a>&raquo; <a href="{% url 'msg.views.inbox' %}">Inbox</a>
 </div>
 <form method ="post" action="{% url 'msg.views.delete' %}" style="width:100%;">
 
-		<table style ="width:100%; border-spacing:0;">
-			<tbody>
-				<tr >
-				<th>
-				<strong>{%trans "Message" %}</strong>
-			</th>
-			<th>
-				<strong>{% trans "Sender" %}</strong>
-			</th>
-			<th>
-				<strong>{% trans "Time"%}</strong>
-			</th>
-			<th>
-				<strong>{% trans "Options"%}</strong>
-			</th>
-		</tr>
-
-		{% for msg in user_msg.object_list %}
-		<tr>
-			<td>
-				{% if not msg.readed%}<strong><a href="{% url 'msg.views.msg' msg.id %}">{{msg.title}}</a></strong>{%else%} <a href="{% url 'msg.views.msg' msg.id %}">{{msg.title}}</a>
-				{% endif %}
-			</td>
-			<td>
-				{{msg.sender.username}}
-			</td>
-			<td>
-				{{msg.time}}
-			</td>
-			<td>
-				<input type="checkbox" name="delmsg[]" value="{{msg.id}}" />
-			</td>
-		</tr>
-		{% endfor %}
-		</tbody>
-		</table>
-<div class="form_settings">
-		<div class="viewforum">
-			<input class="submit" type="submit" value="delete" />
+	<div class="my-3 p-3 bg-white rounded box-shadow">
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="panel panel-default">
+				<div class="panel-heading"><strong>Users</strong></div>
+				<div class="panel-body">
+					<table data-toggle="table"
+						data-url="{% url 'msg.views.inbox' %}"
+						data-show-refresh="true" data-show-toggle="true"
+						data-show-columns="true" data-search="true"
+						data-select-item-name="delmsg[]" data-pagination="true"
+						data-click-to-select="true"
+						data-id-field="pk"
+						data-sort-name="username" data-sort-order="asc">
+						<thead>
+							<tr>
+								<th data-field="pk" data-checkbox="true" ></th>
+								<th data-field="title" data-sortable="true" data-formatter="linkFormatter">Message</th>
+								
+								<th data-field="sender__username" data-sortable="true" >Sender</th>
+								<th data-field="time" data-sortable="true" data-formatter="dateFormatter">Time</th>
+								<th data-field="pk" data-sortable="true" data-formatter="optionsFormatter">Options</th>
+							</tr>
+						</thead>
+					</table>
+				</div>
+			</div>
 		</div>
+	</div>
 
-		<div class="pagination">
-			<span class="step-links"> {% if msg.has_previous %} <a href="?page={{ msg.previous_page_number }}">{% trans "previous" %}</a> {% endif %} 
-				<span class="current"> {% blocktrans with msg.number as cur_page and msg.paginator.num_pages as all_pages %}
-					Page {{ cur_page }} of {{ all_pages }}.
-					{% endblocktrans %} 
-				</span> {% if msg.has_next %} <a href="?page={{ msg.next_page_number }}">{% trans "next" %}</a> {% endif %} 
-			</span>
-		</div>
-		<div class="viewforum">
-			<a href="{% url 'msg.views.create' %}" class="submit">{% trans "send message"%}</a>
-		</div>
+			<input class="btn btn-danger" type="submit" value="delete" />
 
+			<a href="{% url 'msg.views.create' %}" class="btn btn-primary">{% trans "send message"%}</a>
 	</div>
 </form>
 {% endblock %}

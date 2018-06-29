@@ -1,10 +1,22 @@
 {% extends BASE_PATH %}
 {% block head %}
 <link href="{{STATIC_THEME}}css/bootstrap-table.css" rel="stylesheet">
-
+<link href="{{STATIC_THEME}}css/fontawesome.css" rel="stylesheet">
+<style type="text/css">
+<!--
+@font-face {
+    font-family : "fontawesome";
+    src: url("../fonts/fa-regular-400.woff") format ("woff");
+}
+.fa{
+	font-family : "fontawesome";
+}
+-->
+</style>
 {% endblock%}
 {% block js_scripts%} 
 <script src="{{STATIC_THEME}}js/bootstrap-table.js"></script>
+<script src="{{STATIC_THEME}}js/table-formatter.js"></script>
 {% endblock%}
 {% block content %}
 
@@ -24,7 +36,7 @@
 						<thead>
 							<tr>
 								<th data-field="username" data-sortable="true">User Name</th>
-								<th data-field="last_login" data-sortable="true">Last Login</th>
+								<th data-field="last_login" data-sortable="true" data-formatter="dateFormatter">Last Login</th>
 								<th data-field="profile__posts" data-sortable="true">Posts</th>
 								<th data-field="profile__threads" data-sortable="true">Threads</th>
 							</tr>
