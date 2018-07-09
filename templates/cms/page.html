@@ -1,29 +1,19 @@
 {% extends BASE_PATH %}
 {% block head %}
-<script type="text/javascript" src="{{ STATIC_URL }}js/prototype.js"></script>
-<script type="text/javascript" src="{{ STATIC_URL }}js/scriptaculous.js?load=effects,builder"></script>
-<script type="text/javascript">
-	LightboxOptions = Object.extend({
-    fileLoadingImage:        '{{ STATIC_THEME }}images/loading.gif',     
-    fileBottomNavCloseImage: '{{ STATIC_THEME }}images/closelabel.gif',
 
+<link href ="{{STATIC_THEME}}css/ekko-lightbox.css" type ="text/css" />
 
-    overlayOpacity: 0.8,   // controls transparency of shadow overlay
-
-    animate: true,         // toggles resizing animations
-    resizeSpeed: 7,        // controls the speed of the image resizing animations (1=slowest and 10=fastest)
-
-    borderSize: 10,         //if you adjust the padding in the CSS, you will need to update this variable
-
-	// When grouping images this is used to write: Image # of #.
-	// Change it for non-english localization
-	labelImage: "Image",
-	labelOf: "of"
-}, window.LightboxOptions || {});
-</script>
-<script type="text/javascript" src="{{ STATIC_URL }}js/lightbox.js?path={{ STATIC_URL }}"></script>
-<link rel="stylesheet" href="{{STATIC_THEME}}css/lightbox.css" type="text/css" media="screen" />
 {%endblock %}
+ {% block js_scripts%} 
+ <script src="{{STATIC_THEME}}js/ekko-lightbox.min.js"></script>
+<script>
+$(document).on('click', '[data-toggle="lightbox"]', function(event) {
+    event.preventDefault();
+    $(this).ekkoLightbox();
+});
+</script>
+ {% endblock%}
+
 {% load i18n %}
 {% block navigation %}
 		{% with menu_path=THEME_PATH|add:"cms/menu.html" %}
@@ -41,12 +31,12 @@
 				<p class="boardtitle">
 					<h2>{% trans "Gallary" %}</h2>
 				</p>
-				<p>
-					{% for image in page.gallery.image_set.all %}
+
+  				{% for image in page.gallery.image_set.all %}
 					 
-					 <a href="{{ STATIC_URL }}/{{image.image}}" rel="lightbox"><img src="{{ STATIC_URL }}/{{image.thumb}}" class="post-img"/></a>
+					 <a href="{{ STATIC_URL }}/{{image.image}}" data-toggle="lightbox" data-gallery="example-gallery" data-type="image"><img src="{{ STATIC_URL }}/{{image.thumb}}" class="img-fluid"/></a>
 					{% endfor %}
-				</p>
+
 				{% endif %}
 <!-- board display end //-->
 </div>

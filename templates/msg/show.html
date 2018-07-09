@@ -7,11 +7,16 @@
     </style>
 {% endblock %}
 {% block content %}
-    <div class="forum">
-    		<a href="{% url 'board.views.index' %}">Silver-Boards Beta Forum</a>&raquo; <a href="{% url 'msg.views.inbox' %}">Inbox</a>
-    </div>
+	<nav aria-label="breadcrumb">
+	  <ol class="breadcrumb">
+	    <li class="breadcrumb-item"><a href="{%url 'board.views.index' %}">{{CURRENT_SITE.name}}</a></li>
+	    <li class="breadcrumb-item"><a href="{% url 'msg.views.inbox' %}">Inbox</a></li>
+	    <li class="breadcrumb-item active" aria-current="page">{{msg.title}}</li>
+	  </ol>
+	</nav>
 	
-    <div class="forum">
+	
+    <div class="my-3 p-3 bg-white rounded box-shadow">
    		<div class="viewforum">
         	<div class="viewthread">
 				{%trans 'sender' %}:

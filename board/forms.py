@@ -40,7 +40,7 @@ class PostGuestForm(ModelForm):
         return cleaned_data
 
 class ThreadModForm(Form):
-    CHOICES = (('C','close'),('M','move'),('d','delete') )
+    CHOICES = (('C','close/open'),('M','move'),('d','delete') )
     options = ChoiceField(choices=CHOICES)
 
 class MoveThreadForm(ModelForm):

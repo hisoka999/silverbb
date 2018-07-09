@@ -6,19 +6,17 @@
     </style>
 {% endblock %}
 {% block content %}
-    <div class="forum">
-    		<a href="{% url 'board.views.index' %}">Silver-Boards Beta Forum</a>&raquo; <a href="{% url 'faq.views.index' %}">FAQ</a>
-    </div>
-	
-    <div class="forum">
-    <div class="viewforum">
-      <div class="viewthread"><strong>{{topic.question}}</strong></div> 
-    </div>
-    <div class="viewforum">
-      <div class="viewthread">{{topic.answer|linebreaksbr}}</div>
-    </div> 
-	
 
-    </div>
+		<nav aria-label="breadcrumb">
+	  <ol class="breadcrumb">
+	    <li class="breadcrumb-item"><a href="{%url 'board.views.index' %}">{{CURRENT_SITE.name}}</a></li>
+	    <li class="breadcrumb-item active" aria-current="page"><a href="{% url 'faq.views.index' %}">FAQ</a></li>
+	  </ol>
+	</nav>
+    <div class="my-3 p-3 bg-white rounded box-shadow">
+      <div class="viewthread"><strong>{{topic.question}}</strong></div> 
+    {{topic.answer|linebreaksbr}}
+    </div> 
+
 
 {% endblock %}

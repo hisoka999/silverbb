@@ -314,7 +314,10 @@ def mod_thread(request,thread_id):
         if (options.lower() =='c'):
             thread.closed = not thread.closed
             thread.save()
-            messages.add_message(request, messages.INFO, 'The thread was closed successfully')
+            if thread.closed:
+                messages.add_message(request, messages.INFO, 'The thread was closed successfully')
+            else:
+                messages.add_message(request, messages.INFO, 'The thread was opened successfully')
             return redirect(urlresolvers.reverse('board.views.show_thread',args=[thread_id]))
         elif (options.lower() =='d'):
             board = thread.board

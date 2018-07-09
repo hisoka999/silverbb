@@ -21,13 +21,16 @@
 <script src="{{STATIC_THEME}}js/table-formatter.js"></script>
 <script type="text/javascript">
 <!--
-function linkFormatter(message,row){
+function linkFormatter(message,row,index,field){
 	var result ="<a href=\"{%url 'msg.views.msg' '0' %}\">"+message+"</a>";
+	if(!row.readed){
+		result = "<span class=\"badge badge-secondary\">new</span> "+result;
+	}
 	return result.replace('0',row.pk);
 }
 
 function optionsFormatter(id){
-	var result = "<a href =\"\" class=\"fa fa-trash\"> </a>"
+	var result = "<a href =\"\" class=\"fa fa-trash\"> </a>";
 	return result.replace('0',id);
 }
 function checkFormatter(value,row,index){
@@ -41,16 +44,20 @@ function checkFormatter(value,row,index){
 </script>
 {% endblock%}
 {% block content %}
-<div class="forum">
-	<a href="{% url 'board.views.index' %}">Silver-Boards Beta Forum</a>&raquo; <a href="{% url 'msg.views.inbox' %}">Inbox</a>
-</div>
+		<nav aria-label="breadcrumb">
+	  <ol class="breadcrumb">
+	    <li class="breadcrumb-item"><a href="{%url 'board.views.index' %}">{{CURRENT_SITE.name}}</a></li>
+	    <li class="breadcrumb-item active" aria-current="page">Inbox</li>
+	  </ol>
+	</nav>
+
 <form method ="post" action="{% url 'msg.views.delete' %}" style="width:100%;">
 
 	<div class="my-3 p-3 bg-white rounded box-shadow">
 	<div class="row">
 		<div class="col-lg-12">
 			<div class="panel panel-default">
-				<div class="panel-heading"><strong>Users</strong></div>
+				<div class="panel-heading"><strong>Inbox</strong></div>
 				<div class="panel-body">
 					<table data-toggle="table"
 						data-url="{% url 'msg.views.inbox' %}"
@@ -59,10 +66,11 @@ function checkFormatter(value,row,index){
 						data-select-item-name="delmsg[]" data-pagination="true"
 						data-click-to-select="true"
 						data-id-field="pk"
-						data-sort-name="username" data-sort-order="asc">
+						data-unique-id ="pk"
+						data-sort-name="time" data-sort-order="desc">
 						<thead>
 							<tr>
-								<th data-field="pk" data-checkbox="true" ></th>
+								<th data-field="" data-checkbox="true" ></th>
 								<th data-field="title" data-sortable="true" data-formatter="linkFormatter">Message</th>
 								
 								<th data-field="sender__username" data-sortable="true" >Sender</th>

@@ -27,7 +27,7 @@
 			<p class="blog-post-meta">{{entry.created_at|timesince}}</p>
 
 
-			<p>{% autoescape off %}{{entry.content|slice:":255"|linebreaks}}{% endautoescape %}</p>
+			<p>{% autoescape off %}{{entry.content|slice:":255"|striptags|linebreaks}}{% endautoescape %}</p>
 		</div>
 		<!-- /.blog-post -->
 		{%endfor %}

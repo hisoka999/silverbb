@@ -27,12 +27,11 @@ tinyMCE.init({
 {% endblock %}
 {% block content %}
 
-		<nav aria-label="breadcrumb">
+	<nav aria-label="breadcrumb">
 	  <ol class="breadcrumb">
 	    <li class="breadcrumb-item"><a href="{%url 'board.views.index' %}">{{CURRENT_SITE.name}}</a></li>
 	    <li class="breadcrumb-item"><a href="{% url 'msg.views.inbox' %}">Inbox</a></li>
-	    	<li class="breadcrumb-item active" aria-current="page">{%trans 'Create Message'%}</li>
-
+	    <li class="breadcrumb-item active" aria-current="page">{%trans 'Create Message'%}</li>
 	  </ol>
 	</nav>
 	

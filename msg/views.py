@@ -14,13 +14,18 @@ from django.http import JsonResponse
 # show the inbox
 @login_required
 def inbox(request):
+    sort = request.GET.get('sort')
     try:
         page = int(request.GET.get('page', '1'))
+        
     except ValueError:
         page = 1
-        
+    
+    if(sort is None):
+        sort = "-time"
+    
     if(request.is_ajax()):
-        messages = Message.objects.values('pk','title','sender__username','reciver__username','time').filter(reciver=request.user).order_by('-time')
+        messages = Message.objects.values('pk','title','sender__username','reciver__username','time','readed').filter(reciver=request.user).order_by(sort)
         pages = Paginator(messages, 10)
         page_list = list(pages.page(page))
         print type(page_list)
@@ -43,7 +48,7 @@ def create(request):
             messages.add_message(request, messages.INFO, 'Private message was sent to the user.')
             return redirect(urlresolvers.reverse('msg.views.inbox'))
         else:
-            render_to_response('msg/create.html',{'form':form},context_instance=RequestContext(request))
+            return render_to_response('msg/create.html',{'form':form},context_instance=RequestContext(request))
     
 
 @login_required

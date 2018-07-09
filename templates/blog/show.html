@@ -26,7 +26,7 @@
 
 			<p>{% autoescape off %}{{entry.content|linebreaks}}{% endautoescape %}</p>
 						<P>
-				Tags: {% for tag in entry.tags.all %}<a href="{%url 'blog.views.tag_search' tag.name %}"> {{tag.name}}</a>{%if not forloop.last %},{% endif %}{% endfor %}
+				Tags: {% for tag in entry.tags.all %}<a href="{%url 'blog.views.tag_search' tag.name|iriencode %}"> {{tag.name}}</a>{%if not forloop.last %},{% endif %}{% endfor %}
 			</p>
 			
 					{%if comments.count > 0 %}

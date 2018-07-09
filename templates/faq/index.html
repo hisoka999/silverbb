@@ -6,12 +6,16 @@
     </style>
 {% endblock %}
 {% block content %}
-    <div class="forum">
-    		<a href="{% url 'board.views.index' %}">Silver-Boards Beta Forum</a>&raquo; <a href="{% url 'faq.views.index' %}">FAQ</a>
-    </div>
+		<nav aria-label="breadcrumb">
+	  <ol class="breadcrumb">
+	    <li class="breadcrumb-item"><a href="{%url 'board.views.index' %}">{{CURRENT_SITE.name}}</a></li>
+	    <li class="breadcrumb-item active" aria-current="page"><a href="{% url 'faq.views.index' %}">FAQ</a></li>
+	  </ol>
+	</nav>
 	
-    <div class="forum">
+    <div class="my-3 p-3 bg-white rounded box-shadow">
     {% for cat in cats %}
+    {%if cat.topic_set.count > 0 %}
     <div class="viewforum">
       <div class="viewthread"><strong>{{cat.name}}</strong></div> 
     </div>
@@ -19,7 +23,9 @@
     <div class="viewforum">
       <div class="viewthread"><a href="{% url 'faq.views.topic' topic.id %}">{{topic.question}}</a></div>
     </div> 
+    
 	{% endfor %}
+	{% endif %}
 	{% endfor %}
 	
 
