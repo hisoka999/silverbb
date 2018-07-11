@@ -2,11 +2,6 @@
 {% load i18n %}
 {% block title %}{{CURRENT_SITE.name}} - Blog{% endblock %}
 {% block head %}
-<style type="text/css">
-	@import url("{{STATIC_THEME}}css/forum.css");
-
-</style>
-<script src="{{STATIC_URL}}js/board.js" type="text/javascript" ></script>
 <link rel="alternate" type="application/rss+xml" title="RSS" href="{% url 'blog-rss' %}">
 <link rel="alternate" type="application/rss+xml" title="Atom" href="{% url 'blog-atom' %}">
 {% endblock %}
@@ -110,7 +105,7 @@
 			<h4 class="font-italic">Archives</h4>
 			<ol class="list-unstyled mb-0">
 				{%for val in dates %}
-				<li><a href="#">{{val.month}} {{val.year}}</a></li>
+				<li><a href="{% url 'blog_archive' val.year val.month_num %}">{{val.month}} {{val.year}}</a></li>
 				{%endfor%}
 			</ol>
 		</div>

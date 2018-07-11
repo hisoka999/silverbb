@@ -9,5 +9,7 @@ urlpatterns = [
     url(r'^tag/(?P<tag_name>[\w\s\W]+)/page(?P<page>\d+)$',tag_search,name='blog.views.tag_search'),
     url(r'^rss/$',RssSiteNewsFeed(),name='blog-rss'),
     url(r'^atom/$',AtomSiteNewsFeed(),name='blog-atom'),
+    url(r'^archive/(?P<year>\d+)/(?P<month>\d+)/$',archive,name="blog_archive"),
+    url(r'^archive/(?P<year>\d+)/(?P<month>\d+)/page(?P<page>\d+)$',archive,name="blog_archive")
     
 ]
