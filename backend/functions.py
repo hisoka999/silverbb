@@ -3,11 +3,20 @@ from django.shortcuts import render_to_response as r_t_r
 from django.shortcuts import render
 from django.conf import settings
 from django.contrib.sites.shortcuts import get_current_site
-from models import Smilie
-from django.template import RequestContext
 from django.template.loader import get_template
-from templatetags.cssfilter import *
+import functools
 
+def memoize(method):
+    @functools.wraps(method)
+    def memoizer(*args, **kwargs):
+        method._cache = getattr(method, '_cache', {})
+        key = args
+        if key not in method._cache:
+            method._cache[key] = method(*args, **kwargs)
+        return method._cache[key]
+    return memoizer
+
+@memoize
 def get_path(user=None):
     if user == None or user.is_authenticated() == False:
         return Theme.objects.filter(default=True)[0].folder

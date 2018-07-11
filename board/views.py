@@ -25,7 +25,7 @@ def index(request):
         group = request.user.groups.all()[0]
     except:
         group = auth.models.Group.objects.get(name='Gast')
-    boards = Board.objects.filter(parent=None,boardrights__group=group,boardrights__can_view=True)
+    boards = Board.objects.prefetch_related('rights','board_set').filter(parent=None,boardrights__group=group,boardrights__can_view=True)
     
     #load statistic data (users online)
     users = UserSession.objects.filter(user__gt=0)
@@ -269,7 +269,7 @@ def create_thread(request,board_id):
             return render_to_response('create_thread_success.html',{'thread':thread,},context_instance=RequestContext(request))
     return render_to_response('create_thread.html',{'f_thread':f_thread,'f_post':f_post,'board_id':board_id},context_instance=RequestContext(request))
 
-
+@staff_member_required
 def mod_post(request,post_id):
     mod_form = ThreadModForm(request.GET)
     if (mod_form.is_valid()):

@@ -117,7 +117,9 @@ class MenuItem(models.Model):
     parent = models.ForeignKey('self',null=True,blank=True)
 
     def module_path(self):
-        return reverse(self.module)
+        if(self.module is not None):
+            return reverse(self.module)
+        return None
     
     def get_url_name(self):
         return self.title.replace(' ','_')
