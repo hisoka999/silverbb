@@ -1,4 +1,5 @@
 {% extends BASE_PATH %}
+{%load i18n %}
 {% block head %}
 <link href="{{STATIC_THEME}}css/bootstrap-table.css" rel="stylesheet">
 <link href="{{STATIC_THEME}}css/fontawesome.css" rel="stylesheet">
@@ -17,6 +18,14 @@
 {% block js_scripts%} 
 <script src="{{STATIC_THEME}}js/bootstrap-table.js"></script>
 <script src="{{STATIC_THEME}}js/table-formatter.js"></script>
+<script type="text/javascript">
+<!--
+function linkFormatter(link,row){
+	var result ="<a href=\"{%url 'users.views.show' '0' %}\">"+link+"</a>";
+	return result.replace('0',row.pk);
+}
+//-->
+</script>
 {% endblock%}
 {% block content %}
 
@@ -35,10 +44,10 @@
 						data-sort-name="username" data-sort-order="desc">
 						<thead>
 							<tr>
-								<th data-field="username" data-sortable="true">User Name</th>
-								<th data-field="last_login" data-sortable="true" data-formatter="dateFormatter">Last Login</th>
-								<th data-field="profile__posts" data-sortable="true">Posts</th>
-								<th data-field="profile__threads" data-sortable="true">Threads</th>
+								<th data-field="username" data data-sortable="true" data-formatter="linkFormatter">{%trans "User Name"%}</th>
+								<th data-field="last_login" data-sortable="true" data-formatter="dateFormatter">{%trans "Last Login"%}</th>
+								<th data-field="profile__posts" data-sortable="true">{%trans "Posts" %}</th>
+								<th data-field="profile__threads" data-sortable="true">{%trans "Threads" %}</th>
 							</tr>
 						</thead>
 					</table>

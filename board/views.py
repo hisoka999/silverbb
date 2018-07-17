@@ -86,7 +86,7 @@ def show_board(request,board_id,board_name=""):
 
 def show_thread(request,thread_id,thread_name=""):
     try:
-        thread = Thread.objects.get(pk=thread_id)
+        thread = Thread.objects.prefetch_related('author').get(pk=thread_id)
     except:
         raise Http404
     rights = BoardRights.objects.get(board= thread.board_id,group=get_group(request.user))
@@ -105,7 +105,7 @@ def show_thread(request,thread_id,thread_name=""):
     if rights.can_view:
         thread.views = thread.views+1
         thread.save()
-        _posts = Post.objects.filter(thread=thread_id)
+        _posts = Post.objects.select_related().filter(thread=thread_id).order_by('time_created')
         posts = Paginator(_posts,10)
         ppage = posts.page(page)
         

@@ -12,7 +12,7 @@ from django.contrib import messages
 from django.http import JsonResponse
 
 # show the inbox
-@login_required
+@login_required(login_url='/user/login/')
 def inbox(request):
     sort = request.GET.get('sort')
     try:
@@ -33,7 +33,7 @@ def inbox(request):
     else:
         return render_to_response('msg/index.html',{},context_instance=RequestContext(request))
 
-@login_required
+@login_required(login_url='/user/login/')
 def create(request):
     if(request.method == "GET"):
         form = MessageForm()
@@ -51,7 +51,7 @@ def create(request):
             return render_to_response('msg/create.html',{'form':form},context_instance=RequestContext(request))
     
 
-@login_required
+@login_required(login_url='/user/login/')
 def msg(request,msg_id):
     message = Message.objects.get(pk=msg_id)
     if(not message.readed and message.reciver == request.user):
@@ -62,7 +62,7 @@ def msg(request,msg_id):
     else:
         return HttpResponseNotAllowed()
 
-@login_required
+@login_required(login_url='/user/login/')
 def delete(request):
     try:
         msg_list = []

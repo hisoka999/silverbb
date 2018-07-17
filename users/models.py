@@ -7,7 +7,6 @@ from django.core.files.storage import FileSystemStorage
 from django.conf import settings 
 import datetime
 
-
 fs = FileSystemStorage(location=settings.STATICFILES_DIRS[0],base_url='/static/')  
 
 def get_group(user):
@@ -52,11 +51,15 @@ class UserProfile(models.Model):
     send_mail  = models.BooleanField(default=False)
     signature  = models.TextField(blank=True)
 
+
+    _rank = None
     def get_cleaned_signature(self):
         return get_clean_text(self.signature)
     
     def get_rank(self):
-        return Rank.objects.filter(posts__lte=self.posts).get(group=self.user.groups.all()[0])
+        if(self._rank is None):
+            self._rank = Rank.objects.filter(posts__lte=self.posts).get(group=self.user.groups.all()[0])
+        return self._rank
 
     def get_posts_per_day(self):
             diff = datetime.datetime.now()-self.user.date_joined
@@ -69,3 +72,4 @@ class UserSession(models.Model):
     thread = models.ForeignKey(Thread,blank=True,null=True)
     time = models.DateTimeField(auto_now=True)
     captcha = models.CharField(max_length= 20,blank=True,null=True)
+     

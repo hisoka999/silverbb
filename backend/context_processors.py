@@ -12,8 +12,6 @@ from functions import memoize
 
 @memoize
 def theme_path(request):
-    print "DEBUG CALLs"
-    print settings.STATIC_URL+get_path(request.user)
     return {'STATIC_THEME':settings.STATIC_URL+get_path(request.user)
             ,'BASE_PATH':get_path(request.user)+'base.html'
             ,'CURRENT_SITE':get_current_site(request)
@@ -21,5 +19,4 @@ def theme_path(request):
             ,'smilies':Smilie.objects.all()}
 
 def version(request):
-    print ver.sbb_version
     return {'version':ver.sbb_version,'revision':ver.revision()}

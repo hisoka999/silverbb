@@ -4,7 +4,7 @@
 	{% if page1.module == resolved_url.url_name %}
 	<li class="nav-item active">
 
-		{% elif page1.topic != None and page1.topic.id == page1.topic_set.all.0.id %}
+		{% elif page != None and page.topic != None and page.topic.id == page1.topic_set.all.0.id %}
 	<li class="nav-item active">
 		{% elif page1.menuitem_set.count != 0 %}
 		<li class="nav-item dropdown">

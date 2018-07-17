@@ -19,7 +19,7 @@ def memoize(method):
 @memoize
 def get_path(user=None):
     if user == None or user.is_authenticated() == False:
-        return Theme.objects.filter(default=True)[0].folder
+        return Theme.objects.get(default=True).folder
     else:
         return user.profile.theme.folder
 
@@ -28,9 +28,6 @@ def render_to_response(page,context=None,context_instance=None,mimetype=None):
     
     template_name=get_path(context_instance.request.user)+page
     if mimetype == None:
-        
-        render
-        
         return render(context_instance.request,template_name,context)
     else:
         return r_t_r(get_path(context_instance.request.user)+page,context,context_instance,content_type=mimetype)

@@ -10,25 +10,14 @@
 		{% endwith %}
 {% endblock %}
 {% block content %}
-<!-- Board display //-->
-
-		{% if category.download_category_set.count > 0 %}
-
-			<div class="my-3 p-3 bg-white rounded box-shadow">
-				{% for item in category.download_category_set.all %}
-				<strong><a href="{% url cms.views.downloads item.id %}">{{item.name}}</a></strong>
-				<ul>
-					{% for sub in item.downloadcategory_set.all %}
-					<li><a href="{% url cms.views.downloads sub.id %}">{{sub.name}}</a>({{sub.download_set.count}})</li>
-					{% endfor %}
-				</ul>
-				{% endfor %}
-			</div>
-
-		{% endif %}
-
-
-	
+	<nav aria-label="breadcrumb">
+	  <ol class="breadcrumb">
+	    <li class="breadcrumb-item"><a href="{%url 'board.views.index' %}">{{CURRENT_SITE.name}}</a></li>
+	    <li class="breadcrumb-item"><a href="{%url 'cms.views.downloads' %}">{%trans "Downloads"%}</a></li>
+	    <li class="breadcrumb-item active" aria-current="page">{{category.name}}</li>
+	  </ol>
+	</nav>
+		
 	    <div class="my-3 p-3 bg-white rounded box-shadow">
         <h6 class="border-bottom border-gray pb-2 mb-0">{{category.name}}</h6>
         

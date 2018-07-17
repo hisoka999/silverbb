@@ -10,35 +10,44 @@
 	<nav aria-label="breadcrumb">
 	  <ol class="breadcrumb">
 	    <li class="breadcrumb-item"><a href="{%url 'board.views.index' %}">{{CURRENT_SITE.name}}</a></li>
-	    <li class="breadcrumb-item"><a href="{% url 'msg.views.inbox' %}">Inbox</a></li>
+	    <li class="breadcrumb-item"><a href="{% url 'msg.views.inbox' %}">{%trans "Inbox"%}</a></li>
 	    <li class="breadcrumb-item active" aria-current="page">{{msg.title}}</li>
 	  </ol>
 	</nav>
 	
 	
     <div class="my-3 p-3 bg-white rounded box-shadow">
-   		<div class="viewforum">
-        	<div class="viewthread">
+   		<div class="row">
+        	<div class="col-sm">
 				{%trans 'sender' %}:
         	</div>
-        	<div class="viewthread">
+        	<div class="col-sm">
         		{{msg.sender}}
         	</div>
         </div>
-   		<div class="viewforum">
-        	<div class="viewthread">
+   		<div class="row">
+        	<div class="col-sm">
 				{%trans 'title' %}:
         	</div>
-        	<div class="viewthread">
+        	<div class="col-sm">
         		{{msg.title}}
         	</div>
         </div>
+           		<div class="row">
+        	<div class="col-sm">
+				{%trans 'time' %}:
+        	</div>
+        	<div class="col-sm">
+        		{{msg.time}}
+        	</div>
+        </div>
+        <hr />
    		<div class="viewforum">
         	<div class="viewthread">
 				{%trans 'Content' %}:
         	</div>
         	<div class="viewthread">
-        		<pre>{% autoescape off %}{{msg.get_clean_msg}}{% endautoescape %}<br /></pre>
+        		{% autoescape off %}{{msg.get_clean_msg|linebreaks}}{% endautoescape %}
         	</div>
         </div>        
     </div>
