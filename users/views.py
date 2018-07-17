@@ -106,9 +106,9 @@ def login_view(request):
         form = forms.AuthenticationForm(request,data=request.POST)
         if form.is_valid():
             user = form.get_user()
-            session = UserSession.objects.get(session_key = request.session.session_key)
-            if session is not None:
-                session.delete()
+            sessions = UserSession.objects.filter(session_key = request.session.session_key)
+            if sessions is not None:
+                sessions.delete()
             
             login(request, user)
             referer = request.META.get('HTTP_REFERER')
