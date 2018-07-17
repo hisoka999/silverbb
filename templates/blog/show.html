@@ -31,7 +31,7 @@
 			
 					{%if comments.count > 0 %}
 					<div class="statspanel">
-						<h3>Comments:</h3>
+						<h3>{%trans "Comments"%}:</h3>
 						{% for comment in comments%}
 						{% if comment.activated %}
 						<strong>{{comment.user_name}}</strong> <i>{{comment.created_at|timesince}}</i>
@@ -45,15 +45,27 @@
 					<form method="post" action="{% url 'blog.views.blog_post' entry.id %}" >
 					<div class="form-group row">
 						
-							{% for field in form %}
-						
-							{{ field.errors }}
-							<label for ="{{field.id_for_label}}" class="col-sm-2 col-form-label">{{field.label}}</label>
-							<div class="col-sm-10">
-								{{ field|addclass:"form-control" }}
+					<div class="form-row">
+							<div class="form-group col-md6">
+							<label for ="id_user_name">User Name</label>
+							
+								<input type="text" name="user_name" id="id_user_name" required class="inputbox form-control" maxlength="100" />
 							</div>
-						
-							{% endfor %}
+							
+							
+							<div class="form-group col-md6">
+								<label for ="id_user_mail" >E-Mail</label>
+								<input type="text" name="user_mail" id="id_user_mail" required class="inputbox form-control" maxlength="100" />
+							</div>
+							
+							
+							<div class="form-group">
+								<label for ="id_content" >Content</label>
+								<textarea name="content" id="id_content" class="form-control" rows="10" cols="40" required></textarea>
+							</div>
+			
+
+					</div>
 
 			
 					</div>

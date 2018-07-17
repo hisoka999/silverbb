@@ -106,7 +106,10 @@ def login_view(request):
         form = forms.AuthenticationForm(request,data=request.POST)
         if form.is_valid():
             user = form.get_user()
-            UserSession.objects.get(session_key = request.session.session_key).delete()
+            session = UserSession.objects.get(session_key = request.session.session_key)
+            if session is not None:
+                session.delete()
+            
             login(request, user)
             referer = request.META.get('HTTP_REFERER')
             ## create empty profile if missing
