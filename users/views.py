@@ -58,6 +58,7 @@ def register(request):
         form = RegisterForm(data=request.POST)
         f_profile = ProfileForm(data=request.POST)
         if(form.is_valid() and f_profile.is_valid()):
+            referer = request.META.get('HTTP_REFERER')
             user = form.save()
             user.groups.add(Group.objects.get(name='User'))
             user.is_active = False
@@ -77,7 +78,9 @@ def register(request):
             profile.theme = Theme.objects.get(default=True)
             profile.banned = False
             profile.save()            
-            return render_to_response('user/register_successful.html',{},context_instance=RequestContext(request))
+            messages.add_message(request, messages.INFO, 'User successful registrated.')
+            #return redirect(urlresolvers.reverse('board.views.index'))
+            return redirect(referer)
     else:
         form = RegisterForm()
         f_profile = ProfileForm()
