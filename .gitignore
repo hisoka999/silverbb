@@ -6,6 +6,7 @@ extras/documentation
 static/cms_images
 static/cms_thumbs
 static/avatars
+settings.py
 .svn/
 
 *.pydevproject
