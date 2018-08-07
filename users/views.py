@@ -1,5 +1,5 @@
-from models import User,Rank
-from forms import ProfileForm,RegisterForm,UserEditForm
+from users.models import User,Rank
+from users.forms import ProfileForm,RegisterForm,UserEditForm
 from django.shortcuts import redirect
 from django.template import RequestContext
 from django.contrib.auth import login,logout, forms
@@ -7,12 +7,12 @@ from django.contrib.auth.models import Group
 from backend.functions import render_to_response
 from django.conf import settings
 from django.core.mail import send_mail
-from models import UserProfile,UserSession
+from users.models import UserProfile,UserSession
 from django.http import Http404
 from backend.models import Theme
 from django.db import transaction
 from django.contrib import messages
-from django.core import urlresolvers
+from django.urls import reverse
 import datetime
 from board.models import Post
 from django.core.paginator import Paginator
@@ -114,7 +114,7 @@ def activate(request,uuid):
         user.save()
         return render_to_response('user/activated.html',{},context_instance=RequestContext(request))
     except Exception as e:
-        print e
+        print(e)
         raise Http404
 
 def login_view(request):
@@ -160,7 +160,7 @@ def logout_view(request):
     user_id = request.user.id
     logout(request)
     if user_id is not None:
-        print "uid"+str(user_id)
+        print("uid"+str(user_id))
         UserSession.objects.filter(user=user_id).delete()
     messages.add_message(request, messages.INFO, 'Logout successfull!')
     return redirect('board.views.index')

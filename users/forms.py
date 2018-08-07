@@ -3,7 +3,7 @@ Created on 02.01.2012
 
 @author: stefan
 '''
-from models import UserProfile
+from users.models import UserProfile
 from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm
 from django import forms

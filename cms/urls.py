@@ -1,6 +1,6 @@
 from django.conf.urls import  url
 from cms.feeds import AtomCmsNewsFeed, RssCmsNewsFeed
-from views import *
+from cms.views import *
 urlpatterns = [
     url(r'^$',index,name='cms.views.index'),
     url(r'^news/(?P<news_id>\d+)-(?P<news_name>\S+)/$',news,name='cms.views.news'),

@@ -2,17 +2,17 @@ from django.shortcuts import redirect
 from django.template import RequestContext
 from django.contrib import auth, messages
 from django.db.models import Q
-from models import Board,Thread,Post
+from board.models import Board,Thread,Post
 from users.models import User
 from users.models import UserSession,get_group
 from django.core.paginator import Paginator
 from backend.models import BBCode, Smilie
-from forms import *
+from board.forms import *
 from django.http import Http404,HttpResponseForbidden
 from datetime import datetime
 from board.models import BoardRights
 from django.contrib.admin.views.decorators import staff_member_required
-from django.core import urlresolvers
+from django.urls import reverse
 from backend.functions import render_to_response
 from django.db.models import Q
 from django.db.models.aggregates import Count
@@ -50,7 +50,7 @@ def mark_read(request,board_id,display=True):
     if (request.user.id != None):
         track,created = Track.objects.get_or_create(board_id=board_id,user_id = request.user.id,defaults={'marked': datetime.now()})
         if (created):
-            print "board_id = %d"%(board_id)
+            print("board_id = %d"%(board_id))
         track.marked = datetime.now()
         track.save()
     if (display):
@@ -99,7 +99,7 @@ def show_thread(request,thread_id,thread_name=""):
     page = 1
     try:
         page = int(request.GET.get('page','1'))
-    except Exception,e:
+    except Exception as e:
         page = 1
     #mod_form.initial = 
     if rights.can_view:
@@ -142,7 +142,7 @@ def create_post(request,thread_id):
         options = {'name':name,}
         if (quote_id):
             quote = Post.objects.get(pk = quote_id)
-            print quote.text
+
             options['text'] ="[quote]%s[/quote]"%( quote.text)
         if (request.user.id is None):
             f_post = PostGuestForm(initial=options)
@@ -177,7 +177,7 @@ def create_post(request,thread_id):
                     profile.posts=profile.posts+1
                     profile.save()
                 messages.add_message(request, messages.INFO, 'This post was successfully created.')
-                return redirect(urlresolvers.reverse('board.views.show_thread',args=[post.thread.id,post.thread.get_url_name()]))
+                return redirect(reverse('board.views.show_thread',args=[post.thread.id,post.thread.get_url_name()]))
     return render_to_response('create_post.html',{'f_post':f_post,'thread_id':thread_id},context_instance=RequestContext(request))
 
 def edit_post(request,post_id):
@@ -199,7 +199,7 @@ def edit_post(request,post_id):
                 p.time_edited = datetime.now()
                 p.save()
                 messages.add_message(request, messages.INFO, 'This reply was successfully edited.')
-                return redirect(urlresolvers.reverse('board.views.show_thread',args=[p.thread.id,p.thread.get_url_name()]))
+                return redirect(reverse('board.views.show_thread',args=[p.thread.id,p.thread.get_url_name()]))
     try:
         post = Post.objects.get(pk=post_id)
         if (post.user == request.user or request.user.is_staff):
@@ -212,12 +212,12 @@ def edit_post(request,post_id):
             return render_to_response(html_file,{'f_post':f_post,'post_id':post_id},context_instance=RequestContext(request))
         else:
             messages.add_message(request, messages.ERROR, 'You are not allowed to edit this post.')
-            return redirect(urlresolvers.reverse('board.views.show_thread',args=[p.thread.id,p.thread.get_url_name()]))
+            return redirect(reverse('board.views.show_thread',args=[p.thread.id,p.thread.get_url_name()]))
     except Exception as e:
         #return a 404 page
         #traceback.print_stack(e)
         traceback.print_exc(file=sys.stdout)
-        print e
+        print(e)
         raise Http404
 
 
@@ -284,7 +284,7 @@ def mod_post(request,post_id):
             thread.save()
             post.delete()
             messages.add_message(request, messages.INFO, 'The thread was closed successfully')
-            return redirect(urlresolvers.reverse('board.views.show_thread',args=[thread.id]))
+            return redirect(reverse('board.views.show_thread',args=[thread.id]))
             
 def report(request,post_id):
     raise Http404()
@@ -306,11 +306,11 @@ def mod_thread(request,thread_id):
         mod_form = ThreadModForm(request.POST)
     else:
         mod_form = ThreadModForm(request.GET)
-    print "Is valid: "+str(mod_form.is_valid())
+    print("Is valid: "+str(mod_form.is_valid()))
     if (mod_form.is_valid()):
         options= mod_form.cleaned_data['options']
         thread = Thread.objects.get(pk=thread_id)
-        print options
+        print(options)
         if (options.lower() =='c'):
             thread.closed = not thread.closed
             thread.save()
@@ -318,12 +318,12 @@ def mod_thread(request,thread_id):
                 messages.add_message(request, messages.INFO, 'The thread was closed successfully')
             else:
                 messages.add_message(request, messages.INFO, 'The thread was opened successfully')
-            return redirect(urlresolvers.reverse('board.views.show_thread',args=[thread_id]))
+            return redirect(reverse('board.views.show_thread',args=[thread_id]))
         elif (options.lower() =='d'):
             board = thread.board
             thread.delete()
             messages.add_message(request, messages.INFO, 'The thread was deleted successfully')
-            return redirect(urlresolvers.reverse('board.views.show_board',args=[board.id]))
+            return redirect(reverse('board.views.show_board',args=[board.id]))
         elif (options.lower() =='m'):
             # show move template
             f_move = MoveThreadForm()
@@ -339,7 +339,7 @@ def move_thread(request,thread_id):
         thread.board = f_move.cleaned_data['board']
         thread.save()
         messages.add_message(request, messages.INFO, 'The thread was moved successfully')
-        return redirect(urlresolvers.reverse('board.views.show_board',args=[thread.board.id]))
+        return redirect(reverse('board.views.show_board',args=[thread.board.id]))
     raise Http404()
 
 
@@ -358,7 +358,7 @@ def search(request):
                 user = User.objects.get(pk = user_id)
                 search_string = "Username "+user.username
             except Exception as e:
-                print e
+                print(e)
                 raise Http404
             result = Thread.objects.filter(Q(author=user_id)|Q(post__user=user_id)).distinct()
         return render_to_response('board/search_result.html',{'results':result,'search_string':search_string},context_instance=RequestContext(request))

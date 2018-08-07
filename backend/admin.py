@@ -3,7 +3,7 @@ Created on 24.12.2011
 
 @author: stefan
 '''
-from models import BBCode,Smilie,Theme
+from backend.models import BBCode,Smilie,Theme
 from django.contrib import admin
 
 class SmilieAdmin(admin.ModelAdmin):

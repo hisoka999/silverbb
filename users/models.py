@@ -10,7 +10,7 @@ import datetime
 fs = FileSystemStorage(location=settings.STATICFILES_DIRS[0],base_url='/static/')  
 
 def get_group(user):
-    if user.is_anonymous():
+    if user.is_anonymous:
         return auth.models.Group.objects.get(pk=2)
     else:
         return user.groups.all()[0]
@@ -23,11 +23,11 @@ class Rank(models.Model):
     """ number of posts required for this rank to appear """
     posts = models.IntegerField(default=0)
     """ accociated group for this rank """
-    group = models.ForeignKey(auth.models.Group,null=True)
+    group = models.ForeignKey(auth.models.Group,null=True,on_delete=models.CASCADE)
     
     def make_list(self):
         """ returns a list from 0 to times """
-        return xrange(0,self.times,1)
+        return range(0,self.times,1)
 
 class UserProfile(models.Model):
     """
@@ -35,7 +35,7 @@ class UserProfile(models.Model):
     :model:`board.Thread`.
 
     """
-    user       = models.OneToOneField(User,related_name="profile")#models.ForeignKey(User, unique=True,help_text="The current user associated with this profile")
+    user       = models.OneToOneField(User,related_name="profile",on_delete=models.CASCADE)#models.ForeignKey(User, unique=True,help_text="The current user associated with this profile")
     posts      = models.IntegerField(default=0)
     threads    = models.IntegerField(default=0)
     banned     = models.BooleanField(default=False)
@@ -45,7 +45,7 @@ class UserProfile(models.Model):
     # holds the filename for the avatar of the user
     avatar     = models.ImageField(blank=True,storage=fs,upload_to='avatars')
     activate   = models.CharField(blank=False, max_length=32)
-    theme      = models.ForeignKey(Theme,blank=True,default=False,null=True)
+    theme      = models.ForeignKey(Theme,blank=True,default=False,null=True,on_delete=models.CASCADE)
     show_email = models.BooleanField(default=False)
     show_name  = models.BooleanField(default=False)
     send_mail  = models.BooleanField(default=False)
@@ -66,10 +66,10 @@ class UserProfile(models.Model):
             return float(self.posts)/float(diff.days)
 
 class UserSession(models.Model):
-    user = models.ForeignKey(User,null=True,blank=True)
+    user = models.ForeignKey(User,null=True,blank=True,on_delete=models.CASCADE)
     session_key = models.CharField(max_length = 100)
-    board = models.ForeignKey(Board,blank=True,null=True)
-    thread = models.ForeignKey(Thread,blank=True,null=True)
+    board = models.ForeignKey(Board,blank=True,null=True,on_delete=models.CASCADE)
+    thread = models.ForeignKey(Thread,blank=True,null=True,on_delete=models.CASCADE)
     time = models.DateTimeField(auto_now=True)
     captcha = models.CharField(max_length= 20,blank=True,null=True)
      

@@ -1,6 +1,6 @@
 from django.conf.urls import url
-from feeds import AtomSiteNewsFeed,RssSiteNewsFeed
-from views import *
+from blog.feeds import AtomSiteNewsFeed,RssSiteNewsFeed
+from blog.views import *
 urlpatterns = [
     url(r'^$',index,name='blog.views.index'),
     url(r'^(?P<page>\d+)/$',index,name='blog.views.index'),

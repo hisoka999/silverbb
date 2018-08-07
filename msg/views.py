@@ -1,12 +1,12 @@
-from models import Message
+from msg.models import Message
 from django.shortcuts import redirect
 from django.template.context import RequestContext
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
-from froms import MessageForm
+from msg.forms import MessageForm
 from django.utils.datetime_safe import datetime
 from django.http import HttpResponseNotAllowed, HttpResponseForbidden
-from django.core import urlresolvers
+from django.urls import reverse
 from backend.functions import render_to_response
 from django.contrib import messages
 from django.http import JsonResponse
@@ -28,7 +28,6 @@ def inbox(request):
         messages = Message.objects.values('pk','title','sender__username','reciver__username','time','readed').filter(reciver=request.user).order_by(sort)
         pages = Paginator(messages, 10)
         page_list = list(pages.page(page))
-        print type(page_list)
         return JsonResponse(page_list,safe=False)
     else:
         return render_to_response('msg/index.html',{},context_instance=RequestContext(request))
@@ -46,7 +45,7 @@ def create(request):
             message.time = datetime.now()
             message.save()
             messages.add_message(request, messages.INFO, 'Private message was sent to the user.')
-            return redirect(urlresolvers.reverse('msg.views.inbox'))
+            return redirect(reverse('msg.views.inbox'))
         else:
             return render_to_response('msg/create.html',{'form':form},context_instance=RequestContext(request))
     
@@ -67,7 +66,7 @@ def delete(request):
     try:
         msg_list = []
         delmsg = request.POST.get('delmsg[]')
-        print type(delmsg)
+
         if type(delmsg) == 'unicode':
             msg_list.append(delmsg)
         else:
@@ -80,8 +79,7 @@ def delete(request):
             else:
                 return HttpResponseForbidden()
                 
-        return redirect(urlresolvers.reverse('msg.views.inbox'))
-    except Exception,e:
-        print 'ERROR: '+str(e)
+        return redirect(reverse('msg.views.inbox'))
+    except Exception as e:
         raise
         #return HttpResponseForbidden()

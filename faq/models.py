@@ -9,7 +9,7 @@ class Category(models.Model):
 class Topic(models.Model):
     question = models.CharField(max_length=250)
     answer = models.TextField()
-    category = models.ForeignKey(Category)
+    category = models.ForeignKey(Category,on_delete=models.CASCADE)
     
     def __unicode__(self):
         return self.question

@@ -1,5 +1,5 @@
 # Create your views here.
-from functions import render_to_response
+from backend.functions import render_to_response
 from django.template import RequestContext
 from django.http.response import HttpResponse
 from django.conf import settings
@@ -7,7 +7,7 @@ from users.models import UserSession
 
 def show_css(request,css_file1):
     #print 'css/'+css_file+'.css'
-    print request.user
+    print(request.user)
     return render_to_response('css/'+css_file1+'.css',{},context_instance=RequestContext(request),mimetype="text/css")
 
 
@@ -63,7 +63,7 @@ def captcha(request):
     session = UserSession.objects.get(session_key = request.session.session_key)
     session.captcha = text
     session.save()
-    print session
+    print(session)
     # We need an HttpResponse object with the correct mimetype
     response = HttpResponse(mimetype="image/png")
     # now, we tell the image to save as a PNG to the 

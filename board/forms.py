@@ -3,7 +3,7 @@ Created on 31.12.2011
 
 @author: stefan
 '''
-from models import Thread,Post
+from board.models import Thread,Post
 from django.forms import ModelForm,Form
 from django.forms.fields import ChoiceField
 class ThreadForm(ModelForm):
@@ -31,7 +31,6 @@ class PostGuestForm(ModelForm):
         cleaned_data = super(PostGuestForm, self).clean()
         guest_name = cleaned_data.get("guest_name")
         confirm_code = cleaned_data.get("confirm_code")
-        print confirm_code
         print (len(guest_name))
         if (len(guest_name) == 0):
             msg = "The Name can not be empty"

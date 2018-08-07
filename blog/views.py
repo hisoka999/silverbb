@@ -1,6 +1,6 @@
 # Create your views here.
-from models import Entry,Tag
-from forms import CommentForm
+from blog.models import Entry,Tag
+from blog.forms import CommentForm
 #from django.shortcuts import redirect
 from django.template import RequestContext
 from django.core.paginator import Paginator

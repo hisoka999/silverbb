@@ -4,8 +4,8 @@ Created on 31.03.2013
 @author: stefan
 '''
 from django.contrib.syndication.views import Feed
-from django.core.urlresolvers import reverse
-from models import NewsItem
+from django.urls import reverse
+from cms.models import NewsItem
 from django.utils.feedgenerator import Atom1Feed
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.http import urlquote_plus

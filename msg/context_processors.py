@@ -3,9 +3,9 @@ Created on 21.05.2011
 
 @author: stefan
 '''
-from models import Message
+from msg.models import Message
 def msg_stats(request):
-    if (request.user.is_anonymous()):
+    if (request.user.is_anonymous):
         msg_new = 0
         msg_all = 0
     else:

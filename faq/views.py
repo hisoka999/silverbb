@@ -1,4 +1,4 @@
-from models import Category,Topic
+from faq.models import Category,Topic
 from backend.functions import render_to_response
 from django.template.context import RequestContext
 def index(request):

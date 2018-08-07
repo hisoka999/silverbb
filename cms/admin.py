@@ -1,5 +1,5 @@
 from django.contrib import admin
-from models import *
+from cms.models import *
 
 class ImageInline(admin.TabularInline):
     model = Image

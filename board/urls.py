@@ -4,7 +4,7 @@ Created on 21.05.2012
 @author: stefan
 '''
 from django.conf.urls import url
-from views import *
+from board.views import *
 urlpatterns = [
     url(r'^$',index,name='board.views.index'),
     url(r'^board/(?P<board_id>\d+)/$',show_board,name='board.views.show_board'),

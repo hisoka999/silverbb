@@ -3,12 +3,12 @@ from backend.functions import render_to_response
 from django.conf import settings
 from django.shortcuts import redirect
 from django.template import RequestContext
-from models import NewsItem,Page,MenuItem,Gallery,DownloadCategory, Download
+from cms.models import NewsItem,Page,MenuItem,Gallery,DownloadCategory, Download
 from django.core.paginator import Paginator
 from django.http import Http404
 from django.http import HttpResponse
 from wsgiref.util import FileWrapper
-import os
+from os import path
 
 def index(request,page=1):
     news = NewsItem.objects.order_by('-time')
@@ -27,8 +27,8 @@ def page(request,page_id,page_name):
         menu_item = MenuItem.objects.get(pk=page_id)
         page = menu_item.topic.pages.all()[0]
         return render_to_response('cms/page.html',{'page':page},context_instance=RequestContext(request))
-    except Exception,e:
-        print e 
+    except Exception as e:
+        print(e)
         raise Http404
 
 
@@ -41,7 +41,7 @@ def gallery(request,gall_id=None,gall_name=None):
             gallery = Gallery.objects.get(pk = gall_id)
             return render_to_response('cms/gallery.html',{'gallery':gallery},context_instance=RequestContext(request))
     except Exception as e:
-        print e
+        print(e)
         raise Http404
     
 def downloads(request,cat_id=None):
@@ -66,7 +66,7 @@ def download_file(request,download_id):
     try:
         download= Download.objects.get(pk = download_id)
         response = HttpResponse(FileWrapper(download.data), content_type=download.mime_type)
-        print os.path.basename(download.data.name)
+        print(path.basename(download.data.name))
         response['Content-Disposition'] = 'attachment; filename='+os.path.basename(download.data.name)
         return response
     except:

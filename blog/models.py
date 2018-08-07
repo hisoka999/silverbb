@@ -12,7 +12,7 @@ class Entry(models.Model):
     title = models.CharField(max_length=100)
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
     tags = models.ManyToManyField(Tag)
     
     def __unicode__(self):
@@ -31,5 +31,5 @@ class Comment(models.Model):
     user_name = models.CharField(max_length=20,blank = True,null=True)
     user_mail = models.EmailField(blank = True,null=True)
     activated = models.BooleanField(default=False)
-    entry = models.ForeignKey(Entry)
+    entry = models.ForeignKey(Entry,on_delete=models.CASCADE)
 #    user = models.ForeignKey(User,blank = True,null=True)

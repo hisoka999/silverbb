@@ -3,7 +3,7 @@ Created on 25.03.2013
 
 @author: stefan
 '''
-from models import Comment
+from blog.models import Comment
 from django.forms import ModelForm
 from django import forms
 

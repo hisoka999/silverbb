@@ -1,7 +1,7 @@
 from django.db import models
 from django.core.files.storage import FileSystemStorage
 from django.conf import settings 
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.contrib.auth.models import Group
 
 fs = FileSystemStorage(location=settings.STATICFILES_DIRS[0],base_url='/static/')
@@ -9,7 +9,7 @@ fs_data = FileSystemStorage(location=settings.PROJECT_ROOT+'/cms_data/',base_url
 
 class Gallery(models.Model):
     name = models.CharField(max_length=100)
-    parent = models.ForeignKey('self',null=True,blank=True)
+    parent = models.ForeignKey('self',null=True,blank=True,on_delete=models.CASCADE)
     show   = models.BooleanField(default=True)
 
     def get_url_name(self):
@@ -22,7 +22,7 @@ class Image(models.Model):
     name = models.CharField(max_length=100)
     image = models.ImageField(upload_to='cms_images',storage=fs)
     thumb = models.ImageField(upload_to='cms_thumbs',storage=fs,blank=True,null=True)
-    gallery = models.ForeignKey(Gallery)
+    gallery = models.ForeignKey(Gallery,on_delete=models.CASCADE)
     
     def __unicode__(self):
         return self.name
@@ -92,7 +92,7 @@ class Image(models.Model):
 class Page(models.Model):
     title = models.CharField(max_length=100)
     content = models.TextField(null=True,blank=True)
-    gallery = models.ForeignKey(Gallery,null=True,blank=True)
+    gallery = models.ForeignKey(Gallery,null=True,blank=True,on_delete=models.CASCADE)
     
     def __unicode__(self):
         return self.title
@@ -112,9 +112,9 @@ class Topic(models.Model):
 class MenuItem(models.Model):
     title = models.CharField(max_length=100)
     external_link = models.URLField(null=True,blank=True)
-    topic = models.ForeignKey(Topic,null=True,blank=True)
+    topic = models.ForeignKey(Topic,null=True,blank=True,on_delete=models.CASCADE)
     module = models.CharField(max_length=150,null=True,blank=True)
-    parent = models.ForeignKey('self',null=True,blank=True)
+    parent = models.ForeignKey('self',null=True,blank=True,on_delete=models.CASCADE)
 
     def module_path(self):
         if(self.module is not None):
@@ -137,7 +137,7 @@ class NewsItem(models.Model):
     
 class DownloadCategory(models.Model):
     name = models.CharField(max_length=100)
-    parent = models.ForeignKey('self',null=True,blank=True)
+    parent = models.ForeignKey('self',null=True,blank=True,on_delete=models.CASCADE)
     visible = models.BooleanField(default=True)
 
     def __unicode__(self):
@@ -148,11 +148,11 @@ class Download(models.Model):
     data = models.FileField(upload_to='cms_data',storage=fs_data)
     mime_type = models.CharField(max_length = 30,null=True,blank=True) 
     size = models.IntegerField(default = 0)
-    group = models.ForeignKey(Group,null=True,blank=True)
+    group = models.ForeignKey(Group,null=True,blank=True,on_delete=models.CASCADE)
     descrption = models.TextField()
     visible = models.BooleanField()
     count = models.IntegerField(default=0)
-    category = models.ForeignKey(DownloadCategory)
+    category = models.ForeignKey(DownloadCategory,on_delete=models.CASCADE)
 
 
     def get_type(self):

@@ -3,7 +3,7 @@ Created on 31.12.2011
 
 @author: stefan
 '''
-from models import UserSession
+from users.models import UserSession
 from datetime import date
 from django.utils.datetime_safe import datetime
 from datetime import timedelta
@@ -11,6 +11,11 @@ from django.contrib.sessions.backends.db import SessionStore
 from django.conf import settings
 
 class UserMiddleware:
+    def __init__(self, get_response):
+        self.get_response = get_response
+
+    def __call__(self, request):
+        return self.get_response(request)
     
     def process_request(self, request):
         user = None

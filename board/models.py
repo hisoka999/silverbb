@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.contrib import auth
 from backend.models import get_clean_text
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.template.loader import render_to_string
 from django.shortcuts import render
 
@@ -10,7 +10,7 @@ from django.shortcuts import render
 class Board(models.Model):
     name        = models.CharField(max_length=40)
     description = models.TextField(null=True,blank=True)
-    parent      = models.ForeignKey('self',null=True,blank=True)
+    parent      = models.ForeignKey('self',null=True,blank=True,on_delete=models.CASCADE)
     threads     = models.IntegerField(default=0)
     posts       = models.IntegerField(default=0)
     moderators  = models.ManyToManyField(User,blank=True)
@@ -57,13 +57,13 @@ class Board(models.Model):
         return render_to_string('board/list.html',{'board':self,'list':ret,'parent':'&nbsp;'*parent*2})
 
 class Track(models.Model):
-    board = models.ForeignKey(Board)
-    user  = models.ForeignKey(auth.models.User)
+    board = models.ForeignKey(Board,on_delete=models.CASCADE)
+    user  = models.ForeignKey(auth.models.User,on_delete=models.CASCADE)
     marked = models.DateTimeField()
 
 class BoardRights(models.Model):
-    board = models.ForeignKey(Board)
-    group = models.ForeignKey(auth.models.Group)
+    board = models.ForeignKey(Board,on_delete=models.CASCADE)
+    group = models.ForeignKey(auth.models.Group,on_delete=models.CASCADE)
     can_view   = models.BooleanField()
     can_post   = models.BooleanField()
     can_thread = models.BooleanField()
@@ -72,27 +72,27 @@ class BoardRights(models.Model):
 class Thread(models.Model):
     name   = models.CharField(max_length=100)
     posts  = models.IntegerField(default=0)
-    author = models.ForeignKey(User,null=True,blank=True)
+    author = models.ForeignKey(User,null=True,blank=True,on_delete=models.CASCADE)
     guest  = models.CharField(max_length=100,null=True,blank=True)
-    board  = models.ForeignKey(Board)
-    moved_from = models.ForeignKey(Board,blank=True,null=True,related_name='moved_from')
+    board  = models.ForeignKey(Board,on_delete=models.CASCADE)
+    moved_from = models.ForeignKey(Board,blank=True,null=True,related_name='moved_from',on_delete=models.CASCADE)
     closed = models.BooleanField(blank=True,default=False)
     views  = models.IntegerField(default=0)
 
     def is_new(self,user):
         try:
-            print "board id: %d"%(self.board.id)
-            print "user id : %d"%(user)
+            print("board id: %d"%(self.board.id))
+            print("user id : %d"%(user))
             track = Track.objects.get(board_id = self.board.id,user_id = user)
             time = self.get_last_post().time_created
-            print "track time: "+str(track.marked)
-            print "thread_time: "+str(time)
+            print("track time: "+str(track.marked))
+            print("thread_time: "+str(time))
             if(track.marked < time):
                 return True
             else:
                 return False
-        except Exception,e:
-            print e
+        except Exception as e:
+            print(e)
             return False
     
     def get_url_name(self):
@@ -109,11 +109,11 @@ class Thread(models.Model):
     
 class Post(models.Model):
     name         = models.CharField(max_length=100)
-    thread       = models.ForeignKey(Thread)
+    thread       = models.ForeignKey(Thread,on_delete=models.CASCADE)
     time_created = models.DateTimeField(auto_now=True)
     time_edited  = models.DateTimeField(null=True)
     text         = models.TextField()
-    user         = models.ForeignKey(User,null=True)
+    user         = models.ForeignKey(User,null=True,on_delete=models.CASCADE)
     guest_name   = models.CharField(max_length=100,null=True,blank=True)
     smilies      = models.BooleanField()
     use_html     = models.BooleanField()

@@ -4,8 +4,8 @@ Created on 21.05.2011
 @author: stefan
 '''
 from django.conf import settings
-from models import MenuItem
-from django.core.urlresolvers import resolve
+from cms.models import MenuItem
+from django.urls import resolve
 from backend.functions import memoize
 
 @memoize

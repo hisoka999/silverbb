@@ -5,10 +5,9 @@ Created on 21.05.2011
 '''
 import version as ver
 from django.conf import settings
-from functions import get_path
+from backend.functions import get_path,memoize
 from django.contrib.sites.shortcuts import get_current_site
-from models import Smilie
-from functions import memoize
+from backend.models import Smilie
 
 @memoize
 def theme_path(request):

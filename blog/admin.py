@@ -4,7 +4,7 @@ Created on 25.03.2013
 @author: stefan
 '''
 from django.contrib import admin
-from models import Comment,Entry,Tag
+from blog.models import Comment,Entry,Tag
 
 class TagInline(admin.StackedInline):
     model = Entry.tags.through
