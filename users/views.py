@@ -19,7 +19,7 @@ from django.core.paginator import Paginator
 from django.http import JsonResponse
 from django.core.serializers import serialize
 from django.contrib.auth.decorators import login_required
-
+from django.contrib.sites.shortcuts import get_current_site
 '''
 def handle_uploaded_file(f):
     destination = open(settings.STATICFILES_DIRS[0]+'/avatars/'+f.name, 'wb+')
@@ -28,13 +28,13 @@ def handle_uploaded_file(f):
     destination.close()
 '''
 def show(request,userid,username=""):
-    user = User.objects.get(pk=userid)
-    profile = user.profile
+    showuser = User.objects.get(pk=userid)
+    profile = showuser.profile
     posts = float(Post.objects.count())
     posts_from_total = 0
     if(posts > 0):
         posts_from_total = float(profile.posts)/posts*100.0
-    return render_to_response('user/show.html',{'user':user,'profile':profile,'posts_from_total':posts_from_total},context_instance=RequestContext(request))
+    return render_to_response('user/show.html',{'showuser':showuser,'profile':profile,'posts_from_total':posts_from_total},context_instance=RequestContext(request))
 
 
 def index(request):
@@ -66,10 +66,23 @@ def register(request):
             user.save()
             import uuid
             lv_uuid = str(uuid.uuid1())[0:30]
-            send_mail('Registration at silver-boards.de', 'Hello '+user.username+
+            
+            message = """<html>
+            <body>
+                <h3>Registration at """+get_current_site(request).name+"""</h3><br/>
+                <p>
+                    Please click the following link to end your registration.
+                </p>
+                <p>
+                    <a href='https://"""+get_current_site(request).domain+""""/user/activate/"""+lv_uuid+"""/'>Activation Link</a>
+                </p>
+            </html>
+            """
+            
+            send_mail('Registration at '+get_current_site(request).name, 'Hello '+user.username+
                       '\n\nPlease click the following the link to end your registration.\n\n'+
-                      'http://localhost:8000/user/activate/'+lv_uuid+'/', settings.SYSTEMMAIL,
-                    [user.email], fail_silently=False)
+                      'Activation Link: https://'+get_current_site(request).domain+'/user/activate/'+lv_uuid+'/', settings.SYSTEMMAIL,
+                    [user.email], fail_silently=False,html_message=message)
             profile = f_profile.save(commit=False)
             profile.user = user
             profile.posts = 0

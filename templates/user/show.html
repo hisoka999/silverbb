@@ -5,29 +5,29 @@
 {% block content %}
 <div class="my-3 p-3 bg-white rounded box-shadow">
 	<div id="profile_left">
-		{% if user.profile.avatar %}
-		<img src="{{ STATIC_URL }}{{user.profile.avatar}}" />
+		{% if showuser.profile.avatar %}
+		<img src="{{ STATIC_URL }}{{showuser.profile.avatar}}" />
 		{% endif %}
 		<p>
-			<b>{{user.username}}</b>
+			<b>{{showuser.username}}</b>
 		</p>
 		{% for r in user.profile.get_rank.make_list %}
-		<img src="{{ STATIC_THEME }}images/{{user.profile.get_rank.image}}" />
+		<img src="{{ STATIC_THEME }}images/{{showuser.profile.get_rank.image}}" />
 		{% empty %}
-		<img src="{{ STATIC_THEME }}images/{{user.profile.get_rank.image}}" />
+		<img src="{{ STATIC_THEME }}images/{{showuser.profile.get_rank.image}}" />
 		{% endfor %}
 		<br />
-		Name: {{user.first_name}}	 {{user.last_name}}
+		Name: {{showuser.first_name}}	 {{showuser.last_name}}
 		<br />
-		{% if user.profile.website %}
-		Website: <a href="{{user.profile.website}}">{{user.profile.website}}</a>
+		{% if showuser.profile.website %}
+		Website: <a href="{{showuser.profile.website}}">{{showuser.profile.website}}</a>
 		<br />
 		{% endif %}
 	</div>
 	<div id="content">
-		Posts: {{user.profile.posts}}
+		Posts: {{showuser.profile.posts}}
 		<br />
-		Threads: {{user.profile.threads}}
+		Threads: {{showuser.profile.threads}}
 	</div>
 </div>
 {% endblock %}
