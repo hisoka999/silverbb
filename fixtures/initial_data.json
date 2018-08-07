@@ -462,7 +462,7 @@
 		"model": "backend.theme",
 		"fields": {
 			"default": true,
-			"folder": "base_theme/",
+			"folder": "",
 			"version": 1,
 			"name": "New Base Theme"
 		}

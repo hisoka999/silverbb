@@ -11,7 +11,7 @@
 		<p>
 			<b>{{showuser.username}}</b>
 		</p>
-		{% for r in user.profile.get_rank.make_list %}
+		{% for r in showuser.profile.get_rank.make_list %}
 		<img src="{{ STATIC_THEME }}images/{{showuser.profile.get_rank.image}}" />
 		{% empty %}
 		<img src="{{ STATIC_THEME }}images/{{showuser.profile.get_rank.image}}" />

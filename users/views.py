@@ -20,6 +20,7 @@ from django.http import JsonResponse
 from django.core.serializers import serialize
 from django.contrib.auth.decorators import login_required
 from django.contrib.sites.shortcuts import get_current_site
+from django.core.exceptions import ObjectDoesNotExist
 '''
 def handle_uploaded_file(f):
     destination = open(settings.STATICFILES_DIRS[0]+'/avatars/'+f.name, 'wb+')
@@ -28,13 +29,16 @@ def handle_uploaded_file(f):
     destination.close()
 '''
 def show(request,userid,username=""):
-    showuser = User.objects.get(pk=userid)
-    profile = showuser.profile
-    posts = float(Post.objects.count())
-    posts_from_total = 0
-    if(posts > 0):
-        posts_from_total = float(profile.posts)/posts*100.0
-    return render_to_response('user/show.html',{'showuser':showuser,'profile':profile,'posts_from_total':posts_from_total},context_instance=RequestContext(request))
+    try:
+        showuser = User.objects.get(pk=userid)
+        profile = showuser.profile
+        posts = float(Post.objects.count())
+        posts_from_total = 0
+        if(posts > 0):
+            posts_from_total = float(profile.posts)/posts*100.0
+        return render_to_response('user/show.html',{'showuser':showuser,'profile':profile,'posts_from_total':posts_from_total},context_instance=RequestContext(request))
+    except ObjectDoesNotExist as e:
+        raise Http404("User does not exist")
 
 
 def index(request):
