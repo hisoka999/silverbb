@@ -19,12 +19,24 @@
 <script src="{{STATIC_THEME}}js/fontawesome.js"></script>
 <script src="{{STATIC_THEME}}js/bootstrap-table.js"></script>
 <script src="{{STATIC_THEME}}js/table-formatter.js"></script>
+
 <script type="text/javascript">
+{% get_current_language as LANGUAGE_CODE %}
 <!--
 function linkFormatter(link,row){
 	var result ="<a href=\"{%url 'users.views.show' '0' %}\">"+link+"</a>";
 	return result.replace('0',row.pk);
 }
+$('#table').bootstrapTable({
+  locale: 'de-DE'
+})
+
+function dateFormatterLocal(value){
+    var date = new Date(value);
+	 var locale = "{{LANGUAGE_CODE}}";
+    return date.toLocaleDateString(locale)
+}
+
 //-->
 </script>
 {% endblock%}
@@ -34,7 +46,7 @@ function linkFormatter(link,row){
 	<div class="row">
 		<div class="col-lg-12">
 			<div class="panel panel-default">
-				<div class="panel-heading"><strong>Users</strong></div>
+				<div class="panel-heading"><strong>{%trans "Users"%}</strong></div>
 				<div class="panel-body">
 					<table data-toggle="table"
 						data-url="{% url 'users.views.index' %}"
@@ -45,7 +57,7 @@ function linkFormatter(link,row){
 						<thead>
 							<tr>
 								<th data-field="username" data data-sortable="true" data-formatter="linkFormatter">{%trans "User Name"%}</th>
-								<th data-field="last_login" data-sortable="true" data-formatter="dateFormatter">{%trans "Last Login"%}</th>
+								<th data-field="last_login" data-sortable="true" data-formatter="dateFormatterLocal">{%trans "Last Login"%}</th>
 								<th data-field="profile__posts" data-sortable="true">{%trans "Posts" %}</th>
 								<th data-field="profile__threads" data-sortable="true">{%trans "Threads" %}</th>
 							</tr>

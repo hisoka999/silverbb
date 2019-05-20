@@ -266,7 +266,9 @@ def create_thread(request,board_id):
             profile = request.user.profile 
             profile.posts=profile.posts+1
             profile.save()
-            return render_to_response('create_thread_success.html',{'thread':thread,},context_instance=RequestContext(request))
+            messages.add_message(request, messages.INFO, 'The thread was successfully created.')
+            return redirect(reverse('board.views.show_thread',args=[thread.id]))
+
     return render_to_response('create_thread.html',{'f_thread':f_thread,'f_post':f_post,'board_id':board_id},context_instance=RequestContext(request))
 
 @staff_member_required

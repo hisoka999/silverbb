@@ -65,6 +65,9 @@ class UserProfile(models.Model):
             diff = datetime.datetime.now()-self.user.date_joined
             return float(self.posts)/float(diff.days)
 
+    def get_default_group(self):
+        return self.user.groups.all()[0]
+
 class UserSession(models.Model):
     user = models.ForeignKey(User,null=True,blank=True,on_delete=models.CASCADE)
     session_key = models.CharField(max_length = 100)

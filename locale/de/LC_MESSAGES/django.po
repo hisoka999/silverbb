@@ -7,96 +7,92 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-25 21:58+0200\n"
-"PO-Revision-Date: 2018-06-25 22:26+0200\n"
-"Last-Translator: Stefan Luedtke <gandalf@silver-boards.de>\n"
+"POT-Creation-Date: 2019-05-20 11:48-0500\n"
+"PO-Revision-Date: 2019-05-20 19:09+0200\n"
+"Last-Translator: Stefan Luedtke <gandalf@silver-boards.com>\n"
+"Language-Team: \n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"Language-Team: \n"
-"X-Generator: Poedit 2.0.4\n"
+"X-Generator: Poedit 2.1.1\n"
 
-#: settings.py:41
+#: settings.py:44
 msgid "German"
 msgstr "Deutsch"
 
-#: settings.py:42
+#: settings.py:45
 msgid "English"
 msgstr "Englisch"
 
-#: templates/base.html:54
+#: templates/base.html:49
 msgid "Forum"
 msgstr "Forum"
 
-#: templates/base.html:57 templates/user/register.html:25
+#: templates/base.html:52 templates/user/register.html:25
 msgid "Profile"
 msgstr "Profil"
 
-#: templates/base.html:58
+#: templates/base.html:53
 msgid "Logout"
 msgstr "Abmelden"
 
-#: templates/base.html:59
+#: templates/base.html:54 templates/msg/index.html:50
+#: templates/msg/show.html:13
 msgid "Inbox"
 msgstr "Posteingang"
 
-#: templates/base.html:63
+#: templates/base.html:58
 msgid "Register"
 msgstr "Registrieren"
 
-#: templates/base.html:65
+#: templates/base.html:60
 msgid "Users"
 msgstr "Benutzer"
 
-#: templates/base.html:66
+#: templates/base.html:61
 msgid "Team"
 msgstr "Team"
 
-#: templates/base.html:67
+#: templates/base.html:62
 msgid "FAQ"
 msgstr "FAQ"
 
-#: templates/blog/index.html:73 templates/blog/show.html:107
-#: templates/cms/index.html:34
-msgid "Login"
-msgstr ""
-
-#: templates/blog/show.html:60
-msgid "Add Comment"
-msgstr "Kommentar erstellen"
-
-#: templates/blog/tag.html:22
+#: templates/blog/archive.html:18 templates/blog/tag.html:18
 msgid "Blog"
 msgstr "Blog"
 
-#: templates/blog/tag.html:49 templates/msg/index.html:56
-msgid "previous"
-msgstr "zurück"
+#: templates/blog/archive.html:19 templates/blog/tag.html:19
+msgid "Archive"
+msgstr "Aktiv"
 
-#: templates/blog/tag.html:49 templates/msg/index.html:57
-#, python-format
-msgid ""
-"\n"
-"\t\t\t\t\tPage %(cur_page)s of %(all_pages)s.\n"
-"\t\t\t\t\t"
-msgstr ""
+#: templates/blog/archive.html:76 templates/blog/index.html:68
+#: templates/blog/show.html:121 templates/blog/tag.html:76
+#: templates/cms/index.html:34
+msgid "Login"
+msgstr "Login"
 
-#: templates/blog/tag.html:51 templates/msg/index.html:60
-msgid "next"
-msgstr "weiter"
+#: templates/blog/show.html:34
+#, fuzzy
+#| msgid "Add Comment"
+msgid "Comments"
+msgstr "Kommentar erstellen"
 
-#: templates/board.html:43 templates/board.html:49
-#: templates/board/search_result.html:21 templates/thread.html:85
+#: templates/blog/show.html:74
+msgid "Add Comment"
+msgstr "Kommentar erstellen"
+
+#: templates/board.html:44 templates/board.html:50
+#: templates/board/search_result.html:21 templates/index.html:25
 msgid "last post"
 msgstr "Letzer Beitrag"
 
-#: templates/board.html:45
+#: templates/board.html:46
 msgid "Answers"
 msgstr "Antworten"
 
-#: templates/board.html:98 templates/create_thread.html:32
+#: templates/board.html:99 templates/create_thread.html:32
 msgid "create thread"
 msgstr "Thema erstellen"
 
@@ -137,11 +133,15 @@ msgstr "Thema verschieben"
 msgid "move thread"
 msgstr "Thema verschieben"
 
+#: templates/cms/dl_cats.html:16 templates/cms/show_cat.html:16
+msgid "Downloads"
+msgstr "Downloads"
+
 #: templates/cms/menu.html:36
 msgid "Admin"
 msgstr "Administration"
 
-#: templates/cms/page.html:42
+#: templates/cms/page.html:32
 msgid "Gallary"
 msgstr "Gallerie"
 
@@ -155,7 +155,7 @@ msgstr "Erstellen"
 
 #: templates/create_thread_success.html:9
 msgid "This thread was successfully created"
-msgstr ""
+msgstr "Das Thema wurde erfolgreich angelegt."
 
 #: templates/create_thread_success.html:10
 #, python-format
@@ -173,7 +173,7 @@ msgstr "Vorschau"
 msgid "edit post"
 msgstr "Beitrag bearbeiten"
 
-#: templates/edit_post.html:71 templates/thread.html:89
+#: templates/edit_post.html:71 templates/thread.html:73
 msgid "edit"
 msgstr "bearbeiten"
 
@@ -183,27 +183,27 @@ msgstr "Vorschau"
 
 #: templates/error.html:5
 msgid "An error accured"
-msgstr ""
+msgstr "Ein Fehler ist aufgetreten."
 
-#: templates/index.html:25
+#: templates/index.html:29
 #, python-format
 msgid "Threads: %(c_threads)s and Posts: %(c_posts)s"
 msgstr "Themen: %(c_threads)s und Beiträge: %(c_posts)s"
 
-#: templates/index.html:26
+#: templates/index.html:30
 msgid "Moderators"
 msgstr "Moderatoren"
 
-#: templates/index.html:40
+#: templates/index.html:44
 msgid "Statistics"
 msgstr "Statistik"
 
-#: templates/index.html:47
+#: templates/index.html:51
 #, python-format
 msgid "There are %(user_count)s users and %(guest_count)s guests online."
-msgstr ""
+msgstr "Es sind %(user_count)s Benutzer und %(guest_count)s Gäste anwesend."
 
-#: templates/index.html:64
+#: templates/index.html:68
 #, python-format
 msgid ""
 "This community does have %(all_user)s user, %(all_threads)s threads "
@@ -215,45 +215,33 @@ msgstr ""
 msgid "Create Message"
 msgstr ""
 
-#: templates/msg/create.html:54
+#: templates/msg/create.html:53
 msgid "send"
 msgstr "senden"
 
-#: templates/msg/index.html:18
-msgid "Message"
-msgstr "Nachricht"
-
-#: templates/msg/index.html:21
-msgid "Sender"
-msgstr "Absender"
-
-#: templates/msg/index.html:24
-msgid "Time"
-msgstr "Zeit"
-
-#: templates/msg/index.html:27
-msgid "Options"
-msgstr "Optionen"
-
-#: templates/msg/index.html:64
+#: templates/msg/index.html:89
 msgid "send message"
 msgstr "Nachricht senden"
 
-#: templates/msg/show.html:17
+#: templates/msg/show.html:22
 msgid "sender"
 msgstr "Absender"
 
-#: templates/msg/show.html:25
+#: templates/msg/show.html:30
 msgid "title"
 msgstr "Titel"
 
-#: templates/msg/show.html:33
+#: templates/msg/show.html:38
+msgid "time"
+msgstr "Zeit"
+
+#: templates/msg/show.html:47
 msgid "Content"
 msgstr "Inhalt"
 
 #: templates/msg/success.html:17
 msgid "The message was successfully created."
-msgstr ""
+msgstr "Die Nachricht wurde erfolgreich angelegt."
 
 #: templates/msg/success.html:19
 #, python-format
@@ -265,7 +253,7 @@ msgid ""
 " \t   \t\t"
 msgstr ""
 
-#: templates/thread.html:82
+#: templates/thread.html:69
 #, python-format
 msgid ""
 "\n"
@@ -273,25 +261,41 @@ msgid ""
 "\t\t\t"
 msgstr ""
 
-#: templates/thread.html:107
+#: templates/thread.html:94
 msgid "create post"
 msgstr "Beitrag anlegen"
 
+#: templates/user/all.html:47 templates/user/team.html:47
+msgid "User Name"
+msgstr "Benutzername"
+
+#: templates/user/all.html:48 templates/user/team.html:48
+msgid "Last Login"
+msgstr "Letzte Anmeldung"
+
+#: templates/user/all.html:49 templates/user/team.html:49
+msgid "Posts"
+msgstr "Beiträge"
+
+#: templates/user/all.html:50 templates/user/team.html:50
+msgid "Threads"
+msgstr "Themen"
+
 #: templates/user/all_ajax.html:6
 msgid "username"
-msgstr ""
+msgstr "Benutzername"
 
 #: templates/user/all_ajax.html:9
 msgid "posts"
-msgstr ""
+msgstr "Beiträge"
 
 #: templates/user/all_ajax.html:12
 msgid "threads"
-msgstr ""
+msgstr "Themen"
 
 #: templates/user/login_successful.html:7
 msgid "Your login was successful."
-msgstr ""
+msgstr "Die Anmeldung war erfolgreich."
 
 #: templates/user/login_successful.html:9
 #, python-format
@@ -303,7 +307,7 @@ msgstr ""
 
 #: templates/user/profile.html:11
 msgid "Your changes were saved."
-msgstr ""
+msgstr "Die Änderungen wurden gespeichert."
 
 #: templates/user/profile.html:17
 msgid "Change Password"
@@ -315,7 +319,7 @@ msgstr "Profil bearbeiten"
 
 #: templates/user/profile.html:36 templates/user/profile.html:71
 msgid "change"
-msgstr ""
+msgstr "Ändern"
 
 #: templates/user/profile.html:45
 msgid "change profile"
@@ -323,15 +327,15 @@ msgstr "Profil bearbeiten"
 
 #: templates/user/register.html:12
 msgid "General User Data"
-msgstr ""
+msgstr "Allgemeine Nutzerdaten"
 
 #: templates/user/register.html:38
 msgid "register"
-msgstr ""
+msgstr "anmelden"
 
 #: templates/user/register_successful.html:7
 msgid "Your registration was successful."
-msgstr ""
+msgstr "Die Registrierung war erfolgreich."
 
 #: templates/user/register_successful.html:9
 #, python-format
@@ -340,3 +344,21 @@ msgid ""
 "If you are not redirected automatically, please click <a href="
 "\"%(index_page)s\">here</a>.\n"
 msgstr ""
+
+#~ msgid "previous"
+#~ msgstr "zurück"
+
+#~ msgid "next"
+#~ msgstr "weiter"
+
+#~ msgid "Message"
+#~ msgstr "Nachricht"
+
+#~ msgid "Sender"
+#~ msgstr "Absender"
+
+#~ msgid "Time"
+#~ msgstr "Zeit"
+
+#~ msgid "Options"
+#~ msgstr "Optionen"

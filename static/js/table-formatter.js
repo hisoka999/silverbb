@@ -5,6 +5,6 @@ function dateFormatter(value){
   var month = months[a.getMonth()];
   var date = a.getDate();
   var time = date + ' ' + month + ' ' + year;
-  //return value;
-  return time;
+  return value;
+  //return a.toLocaleDateString('de-DE');
 }
