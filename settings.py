@@ -19,6 +19,9 @@ DATABASES = {
         'PASSWORD': 'hisoka999',                  # Not used with sqlite3.
         'HOST': 'localhost',                      # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+        'TEST':{
+            'NAME' : 'silverbbtest',
+        }
     }
 }
 
@@ -76,7 +79,7 @@ ADMIN_MEDIA_PREFIX = '/static/admin/'
 SECRET_KEY = '31w689-k)zz^u26$q+^apj&w-yfr$y0ordfxa0j^nnww^#@%m&'
 
 
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
 #    'django.middleware.csrf.CsrfViewMiddleware',
