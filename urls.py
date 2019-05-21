@@ -18,7 +18,7 @@ urlpatterns = [
     url(r'^blog/', include('blog.urls')),
     url(r'^i18n/', include('django.conf.urls.i18n')),
     url(r'^css/(?P<css_file1>\w+).css$',backend.views.show_css),
-    url(r'^captcha/$',backend.views.captcha),
+    url(r'^captcha/$',backend.views.captcha,name="captcha"),
     # Uncomment the admin/doc line below to enable admin documentation:
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 

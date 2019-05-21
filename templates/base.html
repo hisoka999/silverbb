@@ -1,4 +1,5 @@
 {% load i18n %}
+{% load bootstrap4 %}
 <!doctype html>
 <html lang="en">
   <head>
@@ -69,7 +70,7 @@
 				<div class="container">
 					{% if messages %}
 					  {% for message in messages %}
-					<div {% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %} role="alert">
+					<div {% if message.tags %} class="alert alert-{{ message|bootstrap_message_classes }}"{% endif %} role="alert">
 					    {{ message }}
 					</div>
 					{% endfor %}

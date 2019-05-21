@@ -60,48 +60,55 @@ def index(request):
 def register(request):
     if (request.method=='POST'):
         form = RegisterForm(data=request.POST)
-        f_profile = ProfileForm(data=request.POST)
-        if(form.is_valid() and f_profile.is_valid()):
-            referer = request.META.get('HTTP_REFERER')
-            user = form.save()
-            user.groups.add(Group.objects.get(name='User'))
-            user.is_active = False
-            user.set_password(user.password)
-            user.save()
-            import uuid
-            lv_uuid = str(uuid.uuid1())[0:30]
-            
-            message = """<html>
-            <body>
-                <h3>Registration at """+get_current_site(request).name+"""</h3><br/>
-                <p>
-                    Please click the following link to end your registration.
-                </p>
-                <p>
-                    <a href='https://"""+get_current_site(request).domain+""""/user/activate/"""+lv_uuid+"""/'>Activation Link</a>
-                </p>
-            </html>
-            """
-            
-            send_mail('Registration at '+get_current_site(request).name, 'Hello '+user.username+
-                      '\n\nPlease click the following the link to end your registration.\n\n'+
-                      'Activation Link: https://'+get_current_site(request).domain+'/user/activate/'+lv_uuid+'/', settings.SYSTEMMAIL,
-                    [user.email], fail_silently=False,html_message=message)
-            profile = f_profile.save(commit=False)
-            profile.user = user
-            profile.posts = 0
-            profile.threads = 0
-            profile.activate = lv_uuid
-            profile.theme = Theme.objects.get(default=True)
-            profile.banned = False
-            profile.save()            
-            messages.add_message(request, messages.INFO, 'User successful registrated.')
-            #return redirect(urlresolvers.reverse('board.views.index'))
-            return redirect(referer)
+        if(form.is_valid()):
+            #check captcha first
+            session = UserSession.objects.get(session_key=request.session.session_key)
+            print("session captcha: "+session.captcha)
+            print("form captcha: "+form.cleaned_data["captcha"])
+            if(session.captcha != form.cleaned_data["captcha"]):
+                print("send message wrong captcha")
+                messages.add_message(request, messages.ERROR, 'The captcha was entered wrong.')
+            else:
+                referer = request.META.get('HTTP_REFERER')
+                user = form.save()
+                user.groups.add(Group.objects.get(name='User'))
+                user.is_active = False
+                user.set_password(user.password)
+                user.save()
+                import uuid
+                lv_uuid = str(uuid.uuid1())[0:30]
+
+                message = """<html>
+                <body>
+                    <h3>Registration at """+get_current_site(request).name+"""</h3><br/>
+                    <p>
+                        Please click the following link to end your registration.
+                    </p>
+                    <p>
+                        <a href='https://"""+get_current_site(request).domain+""""/user/activate/"""+lv_uuid+"""/'>Activation Link</a>
+                    </p>
+                </html>
+                """
+
+                send_mail('Registration at '+get_current_site(request).name, 'Hello '+user.username+
+                          '\n\nPlease click the following the link to end your registration.\n\n'+
+                          'Activation Link: https://'+get_current_site(request).domain+'/user/activate/'+lv_uuid+'/', settings.SYSTEMMAIL,
+                        [user.email], fail_silently=False,html_message=message)
+                profile = UserProfile()
+                profile.user = user
+                profile.posts = 0
+                profile.threads = 0
+                profile.activate = lv_uuid
+                profile.theme = Theme.objects.get(default=True)
+                profile.banned = False
+                profile.save()
+                messages.add_message(request, messages.INFO, 'User successful registrated.')
+                #return redirect(urlresolvers.reverse('board.views.index'))
+                return redirect(referer)
     else:
         form = RegisterForm()
         f_profile = ProfileForm()
-    return render_to_response('user/register.html',{'form':form,'f_profile':f_profile},context_instance=RequestContext(request))        
+    return render_to_response('user/register.html',{'form':form},context_instance=RequestContext(request))
 
 def activate(request,uuid):
     try:

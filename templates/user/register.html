@@ -12,15 +12,24 @@
 				<legend>{% trans "General User Data"%}</legend>
 				{% for field in form %}
 				<div class="row">
-				{{ field.errors }}
-				<label for ="{{field.id_for_label}}" class="col-sm-2 col-form-label">{{field.label}}</label>
-				<div class="col-sm-10">
-					{{ field|addclass:"form-control" }}
+
+					<label for ="{{field.id_for_label}}" class="col-sm-2 col-form-label">{{field.label}}</label>
+					<div class="col-sm-10">
+						{{ field.errors }}
+						{{ field|addclass:"form-control" }}
+						{% if field.id_for_label == "id_captcha" %}
+						<br />
+						<img src="{% url 'captcha'%}" />
+						{% endif %}
+					</div>
 				</div>
-				</div>
+
 				{% endfor %}
+
+				</div>
 			</fieldset>
-			
+
+			<!--
 			<fieldset class="form-group">
 				<legend>{% trans "Profile"%}</legend>
 				{% for field in f_profile %}
@@ -33,6 +42,7 @@
 				</div>
 				{% endfor %}
 			</fieldset>
+			-->
 			<div class="form-group row">
 		    	<div class="col-sm-10">
 		      		<button type="submit" class="btn btn-primary">{%trans 'register' %}</button>

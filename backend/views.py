@@ -35,9 +35,9 @@ def captcha(request):
     im = Image.new('RGB', size) # create the image
     draw = ImageDraw.Draw(im)   # create a drawing object that is
                                 # used to draw on the new image
-    FONTS = ["actionj","ArchitectsDaughter","arial","minya"]
+    FONTS = ["ArchitectsDaughter","arial","minya"]
     CHARACTERS = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'
-                  ,'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
+                  ,'a','b','c','d','e','f','g','h','i','j','k','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
     
     #draw.setFont(font)
     white = (random.randint(200,255),random.randint(200,255),random.randint(200,255)) # color of the background
@@ -45,7 +45,7 @@ def captcha(request):
     text = "" # text to draw
     # Now, we'll do the drawing:
     draw.rectangle([(0,0),size],fill=white)
-    for i in xrange(0,10,1):
+    for i in range(0,10,1):
         font = ImageFont.truetype(settings.PROJECT_ROOT+"/fonts/"+FONTS[random.randrange(len(FONTS))]+".ttf", random.randint(20,25))
         char = CHARACTERS[random.randrange(len(CHARACTERS))]
         text=text+char
@@ -61,11 +61,12 @@ def captcha(request):
     
     # get the user session to save the captcha
     session = UserSession.objects.get(session_key = request.session.session_key)
+
     session.captcha = text
     session.save()
     print(session)
     # We need an HttpResponse object with the correct mimetype
-    response = HttpResponse(mimetype="image/png")
+    response = HttpResponse(content_type="image/png")
     # now, we tell the image to save as a PNG to the 
     # provided file-like object
     im.save(response, "png")

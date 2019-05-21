@@ -15,14 +15,15 @@ class UserMiddleware:
         self.get_response = get_response
 
     def __call__(self, request):
+        self.process_request2(request)
         return self.get_response(request)
     
-    def process_request(self, request):
+    def process_request2(self, request):
         user = None
         if request.path.startswith('/css') or request.path.startswith('/fav'):
             return
         #request.session.set_test_cookie()
-        if request.user.id>0:
+        if request.user.id is not None and request.user.id>0:
             user = request.user.id
         try:
             sess=UserSession.objects.get(user__id=user)
@@ -35,9 +36,10 @@ class UserMiddleware:
                 s = SessionStore(session_key)
                 s['last_login'] = datetime.isoformat(datetime.now())
                 s.save()
-                request.COOKIES['last_login'] =  s['last_login'] 
+                request.COOKIES['last_login'] =  s['last_login']
             else:
                 s = request.session
+
             sess,created=UserSession.objects.get_or_create(user_id=user,session_key=s.session_key,board_id=None,thread_id=None)
             sess.time = datetime.now()
             sess.session_key=s.session_key
