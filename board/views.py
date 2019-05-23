@@ -1,24 +1,27 @@
-from django.shortcuts import redirect
-from django.template import RequestContext
-from django.contrib import auth, messages
-from django.db.models import Q
-from board.models import Board,Thread,Post
-from users.models import User
-from users.models import UserSession,get_group
-from django.core.paginator import Paginator
-from backend.models import BBCode, Smilie
-from board.forms import *
-from django.http import Http404,HttpResponseForbidden
+import sys
+import traceback
 from datetime import datetime
-from board.models import BoardRights
+
+from django.contrib import auth, messages
 from django.contrib.admin.views.decorators import staff_member_required
-from django.urls import reverse
-from backend.functions import render_to_response
+from django.core.paginator import Paginator
 from django.db.models import Q
 from django.db.models.aggregates import Count
+from django.http import Http404, HttpResponseForbidden
+from django.shortcuts import redirect
+from django.template import RequestContext
+from django.urls import reverse
+from django.utils.translation import gettext as _
+
+from backend.functions import render_to_response
+from backend.models import BBCode, Smilie
+from board.forms import *
+from board.models import Board
+from board.models import BoardRights
 from board.models import Track
-import traceback
-import sys
+from users.models import User
+from users.models import UserSession, get_group
+
 
 def index(request):
     try:
@@ -176,7 +179,7 @@ def create_post(request,thread_id):
                     profile = request.user.profile
                     profile.posts=profile.posts+1
                     profile.save()
-                messages.add_message(request, messages.INFO, 'This post was successfully created.')
+                messages.add_message(request, messages.INFO, _('This post was successfully created.'))
                 return redirect(reverse('board.views.show_thread',args=[post.thread.id,post.thread.get_url_name()]))
     return render_to_response('create_post.html',{'f_post':f_post,'thread_id':thread_id},context_instance=RequestContext(request))
 
@@ -198,7 +201,7 @@ def edit_post(request,post_id):
                 p=f_post.save(commit=False)
                 p.time_edited = datetime.now()
                 p.save()
-                messages.add_message(request, messages.INFO, 'This reply was successfully edited.')
+                messages.add_message(request, messages.INFO, _('This reply was successfully edited.'))
                 return redirect(reverse('board.views.show_thread',args=[p.thread.id,p.thread.get_url_name()]))
     try:
         post = Post.objects.get(pk=post_id)
@@ -266,7 +269,7 @@ def create_thread(request,board_id):
             profile = request.user.profile 
             profile.posts=profile.posts+1
             profile.save()
-            messages.add_message(request, messages.INFO, 'The thread was successfully created.')
+            messages.add_message(request, messages.INFO, _('The thread was successfully created.'))
             return redirect(reverse('board.views.show_thread',args=[thread.id]))
 
     return render_to_response('create_thread.html',{'f_thread':f_thread,'f_post':f_post,'board_id':board_id},context_instance=RequestContext(request))
@@ -285,7 +288,7 @@ def mod_post(request,post_id):
             user.save()
             thread.save()
             post.delete()
-            messages.add_message(request, messages.INFO, 'The thread was closed successfully')
+            messages.add_message(request, messages.INFO, _('The thread was closed successfully'))
             return redirect(reverse('board.views.show_thread',args=[thread.id]))
             
 def report(request,post_id):
@@ -317,14 +320,14 @@ def mod_thread(request,thread_id):
             thread.closed = not thread.closed
             thread.save()
             if thread.closed:
-                messages.add_message(request, messages.INFO, 'The thread was closed successfully')
+                messages.add_message(request, messages.INFO, _('The thread was closed successfully'))
             else:
-                messages.add_message(request, messages.INFO, 'The thread was opened successfully')
+                messages.add_message(request, messages.INFO, _('The thread was opened successfully'))
             return redirect(reverse('board.views.show_thread',args=[thread_id]))
         elif (options.lower() =='d'):
             board = thread.board
             thread.delete()
-            messages.add_message(request, messages.INFO, 'The thread was deleted successfully')
+            messages.add_message(request, messages.INFO, _('The thread was deleted successfully'))
             return redirect(reverse('board.views.show_board',args=[board.id]))
         elif (options.lower() =='m'):
             # show move template
@@ -340,7 +343,7 @@ def move_thread(request,thread_id):
         thread.moved_from = thread.board
         thread.board = f_move.cleaned_data['board']
         thread.save()
-        messages.add_message(request, messages.INFO, 'The thread was moved successfully')
+        messages.add_message(request, messages.INFO, _('The thread was moved successfully'))
         return redirect(reverse('board.views.show_board',args=[thread.board.id]))
     raise Http404()
 
@@ -364,6 +367,3 @@ def search(request):
                 raise Http404
             result = Thread.objects.filter(Q(author=user_id)|Q(post__user=user_id)).distinct()
         return render_to_response('board/search_result.html',{'results':result,'search_string':search_string},context_instance=RequestContext(request))
-        
-        
-        

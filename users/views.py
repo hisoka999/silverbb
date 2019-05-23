@@ -1,26 +1,26 @@
-from users.models import User,Rank
-from users.forms import ProfileForm,RegisterForm,UserEditForm
-from django.shortcuts import redirect
-from django.template import RequestContext
-from django.contrib.auth import login,logout, forms
-from django.contrib.auth.models import Group
-from backend.functions import render_to_response
 from django.conf import settings
-from django.core.mail import send_mail
-from users.models import UserProfile,UserSession
-from django.http import Http404
-from backend.models import Theme
-from django.db import transaction
 from django.contrib import messages
-from django.urls import reverse
-import datetime
-from board.models import Post
-from django.core.paginator import Paginator
-from django.http import JsonResponse
-from django.core.serializers import serialize
+from django.contrib.auth import login, logout, forms
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import Group
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.exceptions import ObjectDoesNotExist
+from django.core.mail import send_mail
+from django.core.paginator import Paginator
+from django.db import transaction
+from django.http import Http404
+from django.http import JsonResponse
+from django.shortcuts import redirect
+from django.template import RequestContext
+from django.utils.translation import gettext as _
+
+from backend.functions import render_to_response
+from backend.models import Theme
+from board.models import Post
+from users.forms import ProfileForm, RegisterForm, UserEditForm
+from users.models import User
+from users.models import UserProfile, UserSession
+
 '''
 def handle_uploaded_file(f):
     destination = open(settings.STATICFILES_DIRS[0]+'/avatars/'+f.name, 'wb+')
@@ -38,7 +38,7 @@ def show(request,userid,username=""):
             posts_from_total = float(profile.posts)/posts*100.0
         return render_to_response('user/show.html',{'showuser':showuser,'profile':profile,'posts_from_total':posts_from_total},context_instance=RequestContext(request))
     except ObjectDoesNotExist as e:
-        raise Http404("User does not exist")
+        raise Http404(_("User does not exist"))
 
 
 def index(request):
@@ -66,8 +66,7 @@ def register(request):
             print("session captcha: "+session.captcha)
             print("form captcha: "+form.cleaned_data["captcha"])
             if(session.captcha != form.cleaned_data["captcha"]):
-                print("send message wrong captcha")
-                messages.add_message(request, messages.ERROR, 'The captcha was entered wrong.')
+                messages.add_message(request, messages.ERROR, _('The captcha was entered wrong.'))
             else:
                 referer = request.META.get('HTTP_REFERER')
                 user = form.save()
@@ -102,7 +101,7 @@ def register(request):
                 profile.theme = Theme.objects.get(default=True)
                 profile.banned = False
                 profile.save()
-                messages.add_message(request, messages.INFO, 'User successful registrated.')
+                messages.add_message(request, messages.INFO, _('User successful registrated.'))
                 #return redirect(urlresolvers.reverse('board.views.index'))
                 return redirect(referer)
     else:
@@ -125,9 +124,7 @@ def activate(request,uuid):
         raise Http404
 
 def login_view(request):
-    #username = request.POST['username']
-    #password = request.POST['password']
-    #user = authenticate(username=username, password=password)
+
     if (request.method=='POST'):
         request.session.set_test_cookie()
         form = forms.AuthenticationForm(request,data=request.POST)
@@ -154,10 +151,10 @@ def login_view(request):
                     profile.theme  = Theme.objects.filter(default=True)[0]
                     profile.save()
                     user.save()
-            messages.add_message(request, messages.INFO, 'Login successfull!')
+            messages.add_message(request, messages.INFO, _('Login successfull!'))
             #return redirect(urlresolvers.reverse('board.views.index'))
             return redirect(referer)
-            #return render_to_response('user/login_successful.html',{'referer':referer},context_instance=RequestContext(request))
+
         return render_to_response('user/login_error.html',{'form':form},context_instance=RequestContext(request))
     else:
         form = forms.AuthenticationForm(request)
@@ -169,7 +166,7 @@ def logout_view(request):
     if user_id is not None:
         print("uid"+str(user_id))
         UserSession.objects.filter(user=user_id).delete()
-    messages.add_message(request, messages.INFO, 'Logout successfull!')
+    messages.add_message(request, messages.INFO, _('Logout successfull!'))
     return redirect('board.views.index')
 
 def team(request,team_name=None):
@@ -185,7 +182,6 @@ def team_json(request,team_name):
     groups=Group.objects.filter(user__is_staff=True,name=team_name)
     users = User.objects.values('pk','username','profile__posts','profile__threads','last_login').filter(is_staff=True,groups__name=team_name)
     return JsonResponse(list(users),safe=False)
-    #return HttpResponse(serialize('json', users))
 
 
 @login_required(login_url='/user/login/')

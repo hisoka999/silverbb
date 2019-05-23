@@ -1,15 +1,18 @@
-from msg.models import Message
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
+from django.http import HttpResponseNotAllowed, HttpResponseForbidden
+from django.http import JsonResponse
 from django.shortcuts import redirect
 from django.template.context import RequestContext
-from django.core.paginator import Paginator
-from django.contrib.auth.decorators import login_required
-from msg.forms import MessageForm
-from django.utils.datetime_safe import datetime
-from django.http import HttpResponseNotAllowed, HttpResponseForbidden
 from django.urls import reverse
+from django.utils.datetime_safe import datetime
+from django.utils.translation import gettext as _
+
 from backend.functions import render_to_response
-from django.contrib import messages
-from django.http import JsonResponse
+from msg.forms import MessageForm
+from msg.models import Message
+
 
 # show the inbox
 @login_required(login_url='/user/login/')
@@ -44,7 +47,7 @@ def create(request):
             message.sender = request.user
             message.time = datetime.now()
             message.save()
-            messages.add_message(request, messages.INFO, 'Private message was sent to the user.')
+            messages.add_message(request, messages.INFO, _('Private message was sent to the user.'))
             return redirect(reverse('msg.views.inbox'))
         else:
             return render_to_response('msg/create.html',{'form':form},context_instance=RequestContext(request))

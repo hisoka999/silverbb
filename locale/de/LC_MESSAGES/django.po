@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-20 11:48-0500\n"
-"PO-Revision-Date: 2019-05-20 19:09+0200\n"
+"POT-Creation-Date: 2019-05-23 12:38-0500\n"
+"PO-Revision-Date: 2019-05-23 19:43+0200\n"
 "Last-Translator: Stefan Luedtke <gandalf@silver-boards.com>\n"
 "Language-Team: \n"
 "Language: de\n"
@@ -18,6 +18,46 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.1.1\n"
 
+#: blog/views.py:42
+msgid "comment successfully added."
+msgstr "Der Kommentar wurde angelegt."
+
+#: board/views.py:181
+msgid "This post was successfully created."
+msgstr "Der Beitrag wurde erfolgreich angelegt."
+
+#: board/views.py:203
+msgid "This reply was successfully edited."
+msgstr "Das Antwort wurde erfolgreich bearbeitet."
+
+#: board/views.py:271
+#, fuzzy
+#| msgid "This thread was successfully created"
+msgid "The thread was successfully created."
+msgstr "Das Thema wurde erfolgreich angelegt."
+
+#: board/views.py:290 board/views.py:322
+#, fuzzy
+#| msgid "The thread was successfully closed."
+msgid "The thread was closed successfully"
+msgstr "Das Thema wurde erfolgreich geschlossen."
+
+#: board/views.py:324
+msgid "The thread was opened successfully"
+msgstr "Das Thema wurde angelegt."
+
+#: board/views.py:329
+msgid "The thread was deleted successfully"
+msgstr "Das Thema wurde erfolgreich gelöscht."
+
+#: board/views.py:345
+msgid "The thread was moved successfully"
+msgstr "Das Thema wurde erfolgreich verschoben."
+
+#: msg/views.py:49
+msgid "Private message was sent to the user."
+msgstr "Die private Nachricht wurde versandt."
+
 #: settings.py:44
 msgid "German"
 msgstr "Deutsch"
@@ -26,36 +66,41 @@ msgstr "Deutsch"
 msgid "English"
 msgstr "Englisch"
 
-#: templates/base.html:49
+#: templates/base.html:41 templates/base.html:42
+msgid "Search"
+msgstr "Suche"
+
+#: templates/base.html:50
 msgid "Forum"
 msgstr "Forum"
 
-#: templates/base.html:52 templates/user/register.html:25
+#: templates/base.html:53 templates/user/register.html:34
 msgid "Profile"
 msgstr "Profil"
 
-#: templates/base.html:53
+#: templates/base.html:54
 msgid "Logout"
 msgstr "Abmelden"
 
-#: templates/base.html:54 templates/msg/index.html:50
+#: templates/base.html:55 templates/msg/create.html:33
+#: templates/msg/index.html:50 templates/msg/index.html:60
 #: templates/msg/show.html:13
 msgid "Inbox"
 msgstr "Posteingang"
 
-#: templates/base.html:58
+#: templates/base.html:59
 msgid "Register"
 msgstr "Registrieren"
 
-#: templates/base.html:60
+#: templates/base.html:61 templates/user/all.html:49
 msgid "Users"
 msgstr "Benutzer"
 
-#: templates/base.html:61
+#: templates/base.html:62
 msgid "Team"
 msgstr "Team"
 
-#: templates/base.html:62
+#: templates/base.html:63
 msgid "FAQ"
 msgstr "FAQ"
 
@@ -65,7 +110,7 @@ msgstr "Blog"
 
 #: templates/blog/archive.html:19 templates/blog/tag.html:19
 msgid "Archive"
-msgstr "Aktiv"
+msgstr "Archiv"
 
 #: templates/blog/archive.html:76 templates/blog/index.html:68
 #: templates/blog/show.html:121 templates/blog/tag.html:76
@@ -74,10 +119,8 @@ msgid "Login"
 msgstr "Login"
 
 #: templates/blog/show.html:34
-#, fuzzy
-#| msgid "Add Comment"
 msgid "Comments"
-msgstr "Kommentar erstellen"
+msgstr "Kommentare"
 
 #: templates/blog/show.html:74
 msgid "Add Comment"
@@ -137,6 +180,30 @@ msgstr "Thema verschieben"
 msgid "Downloads"
 msgstr "Downloads"
 
+#: templates/cms/index.html:37
+msgid "Username"
+msgstr "Benutzername"
+
+#: templates/cms/index.html:39
+msgid "We'll never share your email with anyone else."
+msgstr "Wir werden ihre E-Mail Adresse niemals mit jemandem teilen."
+
+#: templates/cms/index.html:42
+msgid "Password"
+msgstr "Passwort"
+
+#: templates/cms/index.html:77
+msgid "Archives"
+msgstr "Archive"
+
+#: templates/cms/index.html:97
+msgid "Older"
+msgstr "Ältere"
+
+#: templates/cms/index.html:98
+msgid "Newer"
+msgstr "Neuere"
+
 #: templates/cms/menu.html:36
 msgid "Admin"
 msgstr "Administration"
@@ -152,18 +219,6 @@ msgstr "Beitrag anlegen"
 #: templates/create_post.html:42 templates/create_thread.html:59
 msgid "create"
 msgstr "Erstellen"
-
-#: templates/create_thread_success.html:9
-msgid "This thread was successfully created"
-msgstr "Das Thema wurde erfolgreich angelegt."
-
-#: templates/create_thread_success.html:10
-#, python-format
-msgid ""
-"\n"
-"If you are not redirected automaticcly, please click <a href="
-"\"%(view_thread)s\">here</a>.\n"
-msgstr ""
 
 #: templates/edit_post.html:54
 msgid "Preview"
@@ -203,21 +258,42 @@ msgstr "Statistik"
 msgid "There are %(user_count)s users and %(guest_count)s guests online."
 msgstr "Es sind %(user_count)s Benutzer und %(guest_count)s Gäste anwesend."
 
+#: templates/index.html:64
+msgid "Activity"
+msgstr "Aktivität"
+
 #: templates/index.html:68
 #, python-format
 msgid ""
-"This community does have %(all_user)s user, %(all_threads)s threads "
-"%(all_posts)s\n"
-"\t\tand posts. The last user that registrated himself was "
+"This community does have %(all_user)s user, %(all_threads)s threads\n"
+"\t\tand %(all_posts)s posts. The last user that registrated himself was "
 msgstr ""
+"Diese Community hat %(all_user)s Nutzer, %(all_threads)s und %(all_posts)s "
+"Beiträge. Der zuletzt registrierte Nutzer war"
 
 #: templates/msg/create.html:34
 msgid "Create Message"
-msgstr ""
+msgstr "Nachricht erstellen"
 
 #: templates/msg/create.html:53
 msgid "send"
 msgstr "senden"
+
+#: templates/msg/index.html:74
+msgid "Message"
+msgstr "Nachricht"
+
+#: templates/msg/index.html:77
+msgid "Time"
+msgstr "Zeit"
+
+#: templates/msg/index.html:78
+msgid "Options"
+msgstr "Optionen"
+
+#: templates/msg/index.html:87
+msgid "delete"
+msgstr "löschen"
 
 #: templates/msg/index.html:89
 msgid "send message"
@@ -260,24 +336,27 @@ msgid ""
 "\t\t\tCreated at %(time_created)s\n"
 "\t\t\t"
 msgstr ""
+"\n"
+"\t\\ŧ\tErstellt am %(time_created)s\n"
+"\t\t\t"
 
 #: templates/thread.html:94
 msgid "create post"
 msgstr "Beitrag anlegen"
 
-#: templates/user/all.html:47 templates/user/team.html:47
+#: templates/user/all.html:59 templates/user/team.html:47
 msgid "User Name"
 msgstr "Benutzername"
 
-#: templates/user/all.html:48 templates/user/team.html:48
+#: templates/user/all.html:60 templates/user/team.html:48
 msgid "Last Login"
 msgstr "Letzte Anmeldung"
 
-#: templates/user/all.html:49 templates/user/team.html:49
+#: templates/user/all.html:61 templates/user/team.html:49
 msgid "Posts"
 msgstr "Beiträge"
 
-#: templates/user/all.html:50 templates/user/team.html:50
+#: templates/user/all.html:62 templates/user/team.html:50
 msgid "Threads"
 msgstr "Themen"
 
@@ -292,18 +371,6 @@ msgstr "Beiträge"
 #: templates/user/all_ajax.html:12
 msgid "threads"
 msgstr "Themen"
-
-#: templates/user/login_successful.html:7
-msgid "Your login was successful."
-msgstr "Die Anmeldung war erfolgreich."
-
-#: templates/user/login_successful.html:9
-#, python-format
-msgid ""
-"\n"
-"If you are not redirected automaticcly, please click <a href=\"%(referer)s"
-"\">here</a>.\n"
-msgstr ""
 
 #: templates/user/profile.html:11
 msgid "Your changes were saved."
@@ -329,21 +396,28 @@ msgstr "Profil bearbeiten"
 msgid "General User Data"
 msgstr "Allgemeine Nutzerdaten"
 
-#: templates/user/register.html:38
+#: templates/user/register.html:48
 msgid "register"
 msgstr "anmelden"
 
-#: templates/user/register_successful.html:7
-msgid "Your registration was successful."
+#: users/views.py:43
+msgid "User does not exist"
+msgstr ""
+
+#: users/views.py:71
+msgid "The captcha was entered wrong."
+msgstr ""
+
+#: users/views.py:106
+msgid "User successful registrated."
 msgstr "Die Registrierung war erfolgreich."
 
-#: templates/user/register_successful.html:9
-#, python-format
-msgid ""
-"\n"
-"If you are not redirected automatically, please click <a href="
-"\"%(index_page)s\">here</a>.\n"
-msgstr ""
+#: users/views.py:156
+msgid "Login successfull!"
+msgstr "Die Anmeldung war erfolgreich."
+
+#~ msgid "Your registration was successful."
+#~ msgstr "Die Registrierung war erfolgreich."
 
 #~ msgid "previous"
 #~ msgstr "zurück"
@@ -351,14 +425,5 @@ msgstr ""
 #~ msgid "next"
 #~ msgstr "weiter"
 
-#~ msgid "Message"
-#~ msgstr "Nachricht"
-
 #~ msgid "Sender"
 #~ msgstr "Absender"
-
-#~ msgid "Time"
-#~ msgstr "Zeit"
-
-#~ msgid "Options"
-#~ msgstr "Optionen"

@@ -1,13 +1,15 @@
-# Create your views here.
-from blog.models import Entry,Tag
-from blog.forms import CommentForm
-#from django.shortcuts import redirect
-from django.template import RequestContext
-from django.core.paginator import Paginator
-from backend.functions import render_to_response
-from django.contrib import messages
-from django.db import connection
 from collections import namedtuple
+
+from django.contrib import messages
+from django.core.paginator import Paginator
+from django.db import connection
+from django.template import RequestContext
+from django.utils.translation import gettext as _
+
+from backend.functions import render_to_response
+from blog.forms import CommentForm
+from blog.models import Entry, Tag
+
 
 def namedtuplefetchall(cursor):
     "Return all rows from a cursor as a namedtuple"
@@ -40,7 +42,7 @@ def blog_post(request,entry_id):
             post = comment_form.save(False)
             post.entry = entry
             post.save()
-            messages.add_message(request, messages.INFO, 'comment successfully added.')
+            messages.add_message(request, messages.INFO, _('comment successfully added.'))
     else:        
         comment_form = CommentForm()
     return render_to_response('blog/show.html',{'entry':entry,'form':comment_form,'comments':entry.get_comments(request.user)},context_instance=RequestContext(request))

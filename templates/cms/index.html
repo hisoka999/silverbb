@@ -34,12 +34,14 @@
 					<h4>{% trans "Login" %}</h4>
 					
 					  <div class="form-group">
-					    <label for="username1">Username</label>
+						  <label for="username1">{%trans "Username"%}</label>
 					    <input type="text" class="form-control" id="username1" aria-describedby="usernameHelp" placeholder="Enter username" name="username">
-					    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+						  <small id="emailHelp" class="form-text text-muted">{%trans "We'll never share your email with
+							  anyone else."%}
+						  </small>
 					  </div>
 					  <div class="form-group">
-					    <label for="exampleInputPassword1">Password</label>
+						  <label for="exampleInputPassword1">{%trans "Password"%}</label>
 					    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" name="password">
 					  </div>
 					  <button type="submit" class="btn btn-primary">Login</button>
@@ -74,7 +76,7 @@
 
 
 		<div class="p-3">
-			<h4 class="font-italic">Archives</h4>
+			<h4 class="font-italic">{%trans "Archives"%}</h4>
 			<ol class="list-unstyled mb-0">
 				<li><a href="#">March 2014</a></li>
 				<li><a href="#">February 2014</a></li>
@@ -94,8 +96,8 @@
 
 	</aside>
 	<nav class="blog-pagination">
-		<a class="btn btn-outline-primary" href="#">Older</a> <a
-			class="btn btn-outline-secondary disabled" href="#">Newer</a>
+		<a class="btn btn-outline-primary" href="#">{%trans "Older"%}</a> <a
+			class="btn btn-outline-secondary disabled" href="#">{%trans "Newer"%}</a>
 	</nav>
 
 </div>
