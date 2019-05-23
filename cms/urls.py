@@ -1,8 +1,11 @@
-from django.conf.urls import  url
+from django.conf.urls import url
+
 from cms.feeds import AtomCmsNewsFeed, RssCmsNewsFeed
 from cms.views import *
+
 urlpatterns = [
     url(r'^$',index,name='cms.views.index'),
+    url(r'^news/(?P<news_id>\d+)/$', news, name='cms.views.news'),
     url(r'^news/(?P<news_id>\d+)-(?P<news_name>\S+)/$',news,name='cms.views.news'),
     url(r'^gallery/(?P<gall_id>\d+)-(?P<gall_name>\w+)/$',gallery,name='cms.views.gallery'),
     url(r'^gallery/',gallery,name='cms.views.gallery'),
@@ -12,4 +15,7 @@ urlpatterns = [
     url(r'^download/(?P<download_id>\d+)/$',download_file,name='cms.views.download_file'),
     url(r'^rss/$',RssCmsNewsFeed(),name='cms-news-rss'),
     url(r'^atom/$',AtomCmsNewsFeed(),name='cms-news-atom'),
+    url(r'^archive/(?P<year>\d+)/(?P<month>\d+)/$', archive, name="cms_archive"),
+    url(r'^archive/(?P<year>\d+)/(?P<month>\d+)/page(?P<page>\d+)$', archive, name="cms_archive")
+
 ]
