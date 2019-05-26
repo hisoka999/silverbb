@@ -1,11 +1,15 @@
-from django.db import models
 from django.contrib.auth.models import User
+from django.db import models
+
 
 class Tag(models.Model):
     name = models.CharField(max_length=40)
     usage = models.IntegerField(default=0)
     
     def __unicode__(self):
+        return self.name
+
+    def __str__(self):
         return self.name
 
 class Entry(models.Model):
@@ -16,6 +20,9 @@ class Entry(models.Model):
     tags = models.ManyToManyField(Tag)
     
     def __unicode__(self):
+        return self.title
+
+    def __str__(self):
         return self.title
     
     def get_comments(self,user):

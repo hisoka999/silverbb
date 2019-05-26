@@ -1,13 +1,16 @@
 from collections import namedtuple
 
 from django.contrib import messages
+from django.contrib.auth.decorators import permission_required
 from django.core.paginator import Paginator
 from django.db import connection
+from django.shortcuts import redirect
 from django.template import RequestContext
+from django.urls import reverse
 from django.utils.translation import gettext as _
 
 from backend.functions import render_to_response
-from blog.forms import CommentForm
+from blog.forms import CommentForm, EntryForm
 from blog.models import Entry, Tag
 
 
@@ -63,3 +66,20 @@ def archive(request,year,month,page=1):
     pages = Paginator(entries,10)                                   
     return render_to_response('blog/archive.html',{'entries':pages.page(page),'month':month,'year':year},context_instance=RequestContext(request))
 
+
+@permission_required('blog.can_add_entry', login_url='/user/login/')
+def create_entry(request):
+    form = EntryForm()
+    if (request.method == 'POST'):
+        form = EntryForm(data=request.POST)
+
+        if (form.is_valid()):
+            entry = form.save(False)
+
+            entry.user = request.user
+            entry.save()
+
+            return redirect(reverse('blog.views.blog_post', args=[entry.id]))
+
+    return render_to_response('blog/create_entry.html', {'form': form},
+                              context_instance=RequestContext(request))

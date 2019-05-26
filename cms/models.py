@@ -1,8 +1,8 @@
-from django.db import models
-from django.core.files.storage import FileSystemStorage
-from django.conf import settings 
-from django.urls import reverse
+from django.conf import settings
 from django.contrib.auth.models import Group
+from django.core.files.storage import FileSystemStorage
+from django.db import models
+from django.urls import reverse
 
 fs = FileSystemStorage(location=settings.STATICFILES_DIRS[0],base_url='/static/')
 fs_data = FileSystemStorage(location=settings.PROJECT_ROOT+'/cms_data/',base_url='/cms/data/')    
@@ -16,6 +16,9 @@ class Gallery(models.Model):
         return self.name.replace(' ','_')
 
     def __unicode__(self):
+        return self.name
+
+    def __str__(self):
         return self.name
 
 class Image(models.Model):
@@ -93,8 +96,8 @@ class Page(models.Model):
     title = models.CharField(max_length=100)
     content = models.TextField(null=True,blank=True)
     gallery = models.ForeignKey(Gallery,null=True,blank=True,on_delete=models.CASCADE)
-    
-    def __unicode__(self):
+
+    def __str__(self):
         return self.title
     
     def get_url_name(self):
@@ -103,9 +106,8 @@ class Page(models.Model):
 class Topic(models.Model):
     title = models.CharField(max_length=100)
     pages = models.ManyToManyField(Page)
-    
-    
-    def __unicode__(self):
+
+    def __str__(self):
         return self.title
     
 
@@ -123,8 +125,8 @@ class MenuItem(models.Model):
     
     def get_url_name(self):
         return self.title.replace(' ','_')
-    
-    def __unicode__(self):
+
+    def __str__(self):
         return self.title
     
 class NewsItem(models.Model):

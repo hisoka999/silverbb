@@ -2,14 +2,17 @@ from collections import namedtuple
 from os import path
 from wsgiref.util import FileWrapper
 
+from django.contrib import messages
 from django.core.paginator import Paginator
 from django.db import connection
 from django.http import Http404
 from django.http import HttpResponse
 # from silverbb import settings
 from django.template import RequestContext
+from django.utils.translation import gettext as _
 
 from backend.functions import render_to_response
+from cms.forms import PageForm
 from cms.models import NewsItem, MenuItem, Gallery, DownloadCategory, Download
 
 
@@ -40,9 +43,20 @@ def news(request,news_id=None,news_name=None):
 
 def page(request,page_id,page_name):
     try:
+
         menu_item = MenuItem.objects.get(pk=page_id)
         page = menu_item.topic.pages.all()[0]
-        return render_to_response('cms/page.html',{'page':page},context_instance=RequestContext(request))
+        page_form = PageForm(instance=page)
+        if (request.method == "POST"):
+            page_form = PageForm(instance=page, data=request.POST)
+            if (page_form.is_valid()):
+                page = page_form.save(commit=False)
+                page.save()
+                print("page saved")
+                messages.add_message(request, messages.INFO, _('This page was successfully saved.'))
+
+        return render_to_response('cms/page.html', {'page': page, 'form': page_form, 'menu_item': menu_item},
+                                  context_instance=RequestContext(request))
     except Exception as e:
         print(e)
         raise Http404
